@@ -420,3 +420,50 @@ console.log(JSON.stringify(cases.map(item=>{
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class ProviderHardeningTests(unittest.TestCase):
+    def test_api_key_is_trimmed_and_unquoted(self):
+        import os
+        from unittest.mock import patch
+        from ai import server
+        for raw in ['  unit-key\n', '"unit-key"', "'unit-key' "]:
+            with patch.dict(os.environ, {'ANTHROPIC_API_KEY': raw}):
+                self.assertEqual(server.api_key(), 'unit-key')
+
+    def test_error_summary_has_status_and_type_only(self):
+        import io
+        import urllib.error
+        from ai import server
+        body = io.BytesIO(b'{"type":"error","error":{"type":"not_found_error","message":"model: secret-user-text"}}')
+        error = urllib.error.HTTPError('https://api.anthropic.com/v1/messages', 404, 'Not Found', {}, body)
+        summary = server.provider_error_summary(error)
+        self.assertEqual(summary, 'provider_error HTTPError status=404 type=not_found_error')
+        self.assertNotIn('secret-user-text', summary)
+        self.assertEqual(server.provider_error_summary(TimeoutError()), 'provider_error TimeoutError status=- type=-')
+        error = urllib.error.HTTPError('https://api.anthropic.com/v1/messages', 402, 'Payment Required', {},
+                                       io.BytesIO(b'{"error":{"type":"billing_error","message":"secret-user-text"}}'))
+        self.assertEqual(server.provider_error_summary(error), 'provider_error HTTPError status=402 type=billing_error')
+        for kind in ['secret-user-text', {'message': 'secret-user-text'}, ['secret-user-text']]:
+            body = io.BytesIO(json.dumps({'error': {'type': kind}}).encode())
+            error = urllib.error.HTTPError('https://api.anthropic.com/v1/messages', 400, 'Bad Request', {}, body)
+            self.assertEqual(server.provider_error_summary(error), 'provider_error HTTPError status=400 type=unknown_error')
+
+    def test_debug_flag_prints_summary_only_when_enabled(self):
+        import contextlib
+        import os
+        from unittest.mock import patch
+        from ai import server
+        from ai.domain import prepare
+        payload = {'experience': '비밀 문장 secret-user-text', 'useAI': True}
+        env = {'PARIVIEW_AI_ENABLED': '1', 'ANTHROPIC_API_KEY': 'unit-key', 'PARIVIEW_AI_MODEL': 'claude-sonnet-5-5'}
+        for debug, expected in [('', ''), ('1', 'provider_error TimeoutError status=- type=-\n')]:
+            server.AI_COOLDOWN_UNTIL = 0
+            out = io.StringIO()
+            with patch.dict(os.environ, {**env, 'PARIVIEW_AI_DEBUG': debug}), \
+                    patch.object(server, 'call_provider', side_effect=TimeoutError()), contextlib.redirect_stdout(out):
+                result = server.recommend(payload)
+            self.assertEqual(result['status'], 'default_provider')
+            self.assertEqual(out.getvalue(), expected)
+            self.assertNotIn('secret-user-text', out.getvalue())
+        server.AI_COOLDOWN_UNTIL = 0

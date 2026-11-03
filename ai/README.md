@@ -13,10 +13,11 @@ Python 표준 라이브러리만 사용하며 서버는 파일이나 사용자 �
 | `HOST` | 기본 `0.0.0.0` |
 | `PORT` | Railway 제공값 또는 기본 `8080` |
 | `PARIVIEW_AI_MAX_CALLS_PER_HOUR` | 선택 사항 · 기본 `60` |
+| `PARIVIEW_AI_DEBUG` | 선택 사항 · `1`이면 공급자 호출 실패 시 `provider_error <예외> status=<HTTP 코드> type=<Anthropic 오류 종류>` 한 줄만 로그에 남김 · 응답 본문·키·사용자 문장은 남기지 않음 · 원인 확인 후 끄기 |
 
 모델은 환경변수로 명시하며 코드가 다른 모델을 자동 선택하지 않음
 `claude-sonnet-5-5`를 사용함 · 준비된 후보 ID만 고르는 작업이라 `output_config.effort`는 `low`, thinking 토큰을 포함해 `max_tokens`는 4000으로 둠 · `claude-haiku-5-5`로 바꿔도 같은 설정으로 동작하며 실제 계정의 접근 권한과 호출 성공은 배포 후 확인 필요
-키는 프런트 코드·정적 파일·요청 본문·로그에 포함하지 않음
+키는 프런트 코드·정적 파일·요청 본문·로그에 포함하지 않음 · 붙여넣을 때 들어간 앞뒤 공백·줄바꿈·따옴표는 서버가 제거함
 
 - [Claude 모델 공식 문서](https://platform.claude.com/docs/en/models/overview)
 - [Claude Structured Outputs 공식 문서](https://platform.claude.com/docs/en/build-with-claude/structured-outputs)

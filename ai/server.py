@@ -102,10 +102,33 @@ class StaticGzipCache:
 GZIP_CACHE = StaticGzipCache()
 
 
+def api_key():
+    # Railway values pasted with spaces, newlines or quotes would pass the configured check but break the header
+    return os.environ.get('ANTHROPIC_API_KEY', '').strip().strip('"\'').strip()
+
+
+def provider_error_summary(error):
+    # Status code and Anthropic error type only; never bodies' messages, credentials, or user text
+    status = getattr(error, 'code', None)
+    if not isinstance(status, int) or not 100 <= status <= 599:
+        status = None
+    kind = ''
+    if isinstance(error, urllib.error.HTTPError):
+        try:
+            kind = json.loads(error.read(4096) or b'{}').get('error', {}).get('type', '')
+        except (ValueError, OSError, AttributeError):
+            kind = ''
+    known_types = {'invalid_request_error', 'authentication_error', 'permission_error', 'not_found_error', 'billing_error',
+                   'request_too_large', 'rate_limit_error', 'api_error', 'overloaded_error'}
+    if kind and (not isinstance(kind, str) or kind not in known_types):
+        kind = 'unknown_error'
+    return f'provider_error {type(error).__name__} status={status or "-"} type={kind or "-"}'
+
+
 def configuration():
     enabled = os.environ.get('PARIVIEW_AI_ENABLED', '').strip() == '1'
     model = os.environ.get('PARIVIEW_AI_MODEL', '').strip()
-    return {'configured': enabled and bool(os.environ.get('ANTHROPIC_API_KEY', '').strip()) and model.startswith('claude-'),
+    return {'configured': enabled and bool(api_key()) and model.startswith('claude-'),
             'model': model}
 
 
@@ -146,7 +169,7 @@ def call_provider(plan):
         'output_config': {'effort': 'low', 'format': {'type': 'json_schema', 'schema': schema}}
     }
     request = urllib.request.Request('https://api.anthropic.com/v1/messages', data=json.dumps(packet).encode(),
-                                     headers={'x-api-key': os.environ['ANTHROPIC_API_KEY'], 'anthropic-version': '2023-06-01', 'Content-Type': 'application/json'}, method='POST')
+                                     headers={'x-api-key': api_key(), 'anthropic-version': '2023-06-01', 'Content-Type': 'application/json'}, method='POST')
     # No retries: a slow/unavailable provider yields the ready-to-use default.
     with urllib.request.urlopen(request, timeout=10) as response:
         raw = response.read(262_145)
@@ -189,8 +212,10 @@ def recommend(payload):
             # Validation rejects invented IDs, sources, numbers and extra fields.
             offered = ai_plan(plan)
             return compose(offered, call_provider(offered), source='ai', status='ai_generated')
-        except Exception:
-            # Never expose/log provider bodies, credentials, or user answers.
+        except Exception as error:
+            # Silent by default. PARIVIEW_AI_DEBUG=1 prints status and error type only (no bodies, credentials, or user text).
+            if os.environ.get('PARIVIEW_AI_DEBUG', '').strip() == '1':
+                print(provider_error_summary(error), flush=True)
             AI_COOLDOWN_UNTIL = time.monotonic() + 30
             return compose(plan, status='default_provider')
     finally:
