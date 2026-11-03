@@ -3,6 +3,7 @@
 Run: python3 ai/server.py
 Secrets stay in process environment and never enter static files or logs.
 """
+import gzip
 import json
 import mimetypes
 import os
@@ -12,6 +13,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+from collections import OrderedDict
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
@@ -28,6 +30,76 @@ AI_COOLDOWN_UNTIL = 0
 MIME = {'.js': 'application/javascript', '.css': 'text/css', '.json': 'application/json',
         '.woff2': 'font/woff2', '.woff': 'font/woff', '.zip': 'application/zip', '.mp4': 'video/mp4',
         '.svg': 'image/svg+xml', '.vtt': 'text/vtt'}
+GZIP_SUFFIXES = {'.html', '.htm', '.js', '.mjs', '.css', '.json', '.svg'}
+
+
+def encoding_preferences(value):
+    """Prefer an accepted gzip unless identity has an explicit higher quality."""
+    qualities = {}
+    for item in value.split(','):
+        parts = [part.strip().lower() for part in item.split(';')]
+        if not parts[0]:
+            continue
+        quality = 1.0
+        for parameter in parts[1:]:
+            name, _, raw = parameter.partition('=')
+            if name.strip() == 'q':
+                try:
+                    quality = float(raw)
+                except ValueError:
+                    quality = 0.0
+                if not 0 <= quality <= 1:
+                    quality = 0.0
+        # An explicit exclusion wins, including over a wildcard or duplicate.
+        qualities[parts[0]] = min(qualities.get(parts[0], 1.0), quality)
+    gzip_q = qualities.get('gzip', qualities.get('*', 0))
+    identity_q = qualities.get('identity', 0 if qualities.get('*') == 0 else 1)
+    return gzip_q > 0 and ('identity' not in qualities or gzip_q >= identity_q), identity_q > 0
+
+
+class StaticGzipCache:
+    """Bound retained compressed bytes and entries; invalidate on file changes.
+
+    Only one bounded source file is compressed at a time, even on a cold burst.
+    No disk writes, package dependency, or public HTTP cache lifetime changes.
+    """
+    def __init__(self, max_bytes=8 * 1024 * 1024, max_entries=32, max_source_bytes=8 * 1024 * 1024):
+        self.max_bytes = max_bytes
+        self.max_entries = max_entries
+        self.max_source_bytes = max_source_bytes
+        self.entries = OrderedDict()
+        self.bytes = 0
+        self.lock = threading.Lock()
+
+    @staticmethod
+    def stamp(stat):
+        return stat.st_mtime_ns, stat.st_size, stat.st_ino
+
+    def get(self, path, file, stat):
+        with self.lock:
+            old = self.entries.pop(path, None)
+            if old:
+                self.bytes -= len(old[1])
+                if old[0] == self.stamp(stat):
+                    self.entries[path] = old
+                    self.bytes += len(old[1])
+                    return old[1]
+            if stat.st_size > self.max_source_bytes:
+                return None
+            raw = file.read(self.max_source_bytes + 1)
+            if len(raw) > self.max_source_bytes:
+                return None
+            encoded = gzip.compress(raw, compresslevel=6, mtime=0)
+            if len(encoded) <= self.max_bytes and self.max_entries > 0 and self.stamp(os.fstat(file.fileno())) == self.stamp(stat):
+                while self.entries and (self.bytes + len(encoded) > self.max_bytes or len(self.entries) >= self.max_entries):
+                    _, (_, removed) = self.entries.popitem(last=False)
+                    self.bytes -= len(removed)
+                self.entries[path] = (self.stamp(stat), encoded)
+                self.bytes += len(encoded)
+            return encoded
+
+
+GZIP_CACHE = StaticGzipCache()
 
 
 def configuration():
@@ -190,20 +262,39 @@ class Handler(BaseHTTPRequestHandler):
                 self._json({'error': 'not_found'}, code=404, head=head)
                 return
             with target.open('rb') as file:
-                size = os.fstat(file.fileno()).st_size
+                stat = os.fstat(file.fileno())
+                size = stat.st_size
                 start, end = 0, size - 1
                 code = 200
                 extra = {'Accept-Ranges': 'bytes'}
+                suffix = target.suffix.lower()
+                content_type = MIME.get(suffix) or mimetypes.guess_type(target.name)[0] or 'application/octet-stream'
+                compressible = suffix in GZIP_SUFFIXES
+                if compressible:
+                    extra['Vary'] = 'Accept-Encoding'
+                prefer_gzip, identity_ok = encoding_preferences(','.join(self.headers.get_all('Accept-Encoding', [])))
+                # Range bytes retain the existing identity representation, including
+                # HEAD+Range full-length metadata; video/zip are never compressed.
+                if compressible and prefer_gzip and not self.headers.get('Range'):
+                    encoded = GZIP_CACHE.get(target, file, stat)
+                    if encoded is not None:
+                        extra['Content-Encoding'] = 'gzip'
+                        self._headers(200, len(encoded), content_type, extra)
+                        if not head:
+                            self.wfile.write(encoded)
+                        return
+                if not identity_ok:
+                    self._headers(406, 0, content_type, {'Vary': 'Accept-Encoding'})
+                    return
                 # Range is defined for GET; HEAD reports the full representation.
                 if self.headers.get('Range') and not head:
                     try:
                         start, end = byte_range(self.headers['Range'], size)
                     except ValueError:
-                        self._headers(416, 0, 'text/plain', {'Content-Range': f'bytes */{size}', 'Accept-Ranges': 'bytes'})
+                        self._headers(416, 0, 'text/plain', {**extra, 'Content-Range': f'bytes */{size}'})
                         return
                     code = 206
                     extra['Content-Range'] = f'bytes {start}-{end}/{size}'
-                content_type = MIME.get(target.suffix.lower()) or mimetypes.guess_type(target.name)[0] or 'application/octet-stream'
                 length = max(0, end - start + 1)
                 self._headers(code, length, content_type, extra)
                 if head:
