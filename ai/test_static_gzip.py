@@ -68,7 +68,7 @@ class StaticGzipTests(unittest.TestCase):
                 self.assertEqual(status, 200)
                 self.assertEqual(headers['Content-Encoding'], 'gzip')
                 self.assertEqual(headers['Vary'], 'Accept-Encoding')
-                self.assertEqual(headers['Cache-Control'], 'no-cache')
+                self.assertEqual(headers['Cache-Control'], 'no-cache, no-transform')
                 self.assertEqual(headers['Content-Type'], mime)
                 self.assertEqual(int(headers['Content-Length']), len(body))
                 self.assertEqual(gzip.decompress(body), self.text)
@@ -99,12 +99,26 @@ class StaticGzipTests(unittest.TestCase):
                     self.assertEqual(headers.get(key), head_headers.get(key))
                 self.assertEqual(len(body), int(head_headers['Content-Length']))
 
+    def test_edge_gzip_exclusions_have_no_transform_on_get_and_head(self):
+        raw = (self.root / 'vendor/three.module.js').read_bytes()
+        for encoding in ['gzip;q=0,*;q=1', 'gzip;q=0,identity;q=1,*;q=0']:
+            for method in ['GET', 'HEAD']:
+                with self.subTest(encoding=encoding, method=method):
+                    status, headers, body = self.request('/vendor/three.module.js', method=method, headers={'Accept-Encoding':encoding})
+                    self.assertEqual(status,200)
+                    self.assertEqual(headers['Cache-Control'],'no-cache, no-transform')
+                    self.assertEqual(headers['Vary'],'Accept-Encoding')
+                    self.assertNotIn('Content-Encoding',headers)
+                    self.assertEqual(int(headers['Content-Length']),len(raw))
+                    self.assertEqual(body,raw if method=='GET' else b'')
+
     def test_range_and_head_range_keep_identity_bytes(self):
         for path, raw in [('/app.js',self.text),('/movie.mp4',self.binary),('/extension.zip',self.binary)]:
             for value, begin, end in [('bytes=0-19',0,19),('bytes=-20',len(raw)-20,len(raw)-1),('bytes=20-',20,len(raw)-1)]:
                 with self.subTest(path=path, value=value):
                     status, headers, body = self.request(path, headers={'Accept-Encoding':'gzip','Range':value})
                     self.assertEqual(status,206)
+                    self.assertEqual(headers['Cache-Control'],'no-cache, no-transform')
                     self.assertNotIn('Content-Encoding',headers)
                     self.assertEqual(headers['Content-Range'],f'bytes {begin}-{end}/{len(raw)}')
                     self.assertEqual(body,raw[begin:end+1])
@@ -147,6 +161,11 @@ class StaticGzipTests(unittest.TestCase):
         self.assertEqual(status,200)
         self.assertNotIn('Content-Encoding',headers)
         self.assertEqual(json.loads(body)['source'],'rules')
+        self.assertEqual(headers['Cache-Control'],'no-store')
+        status,headers,body=self.request('/healthz',headers={'Accept-Encoding':'gzip'})
+        self.assertEqual(status,200)
+        self.assertEqual(headers['Cache-Control'],'no-cache')
+        self.assertNotIn('Content-Encoding',headers)
 
     def test_cache_reuse_and_same_size_mtime_invalidation(self):
         path=self.root/'changing.js';path.write_bytes(b'a'*5000)

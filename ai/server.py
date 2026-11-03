@@ -215,13 +215,15 @@ class Handler(BaseHTTPRequestHandler):
     def log_message(self, *args):
         pass
 
-    def _headers(self, code, length, content_type, extra=None):
+    def _headers(self, code, length, content_type, extra=None, *, static=False):
         self.send_response(code)
         self.send_header('Content-Type', content_type)
         self.send_header('Content-Length', str(length))
         self.send_header('X-Content-Type-Options', 'nosniff')
         self.send_header('Referrer-Policy', 'strict-origin-when-cross-origin')
-        self.send_header('Cache-Control', 'no-store' if self.path.startswith('/api/') else 'no-cache')
+        # Preserve origin encoding choices when a reverse proxy could recompress.
+        cache_control = 'no-cache, no-transform' if static else 'no-cache'
+        self.send_header('Cache-Control', 'no-store' if self.path.startswith('/api/') else cache_control)
         for key, value in (extra or {}).items():
             self.send_header(key, str(value))
         self.end_headers()
@@ -279,24 +281,24 @@ class Handler(BaseHTTPRequestHandler):
                     encoded = GZIP_CACHE.get(target, file, stat)
                     if encoded is not None:
                         extra['Content-Encoding'] = 'gzip'
-                        self._headers(200, len(encoded), content_type, extra)
+                        self._headers(200, len(encoded), content_type, extra, static=True)
                         if not head:
                             self.wfile.write(encoded)
                         return
                 if not identity_ok:
-                    self._headers(406, 0, content_type, {'Vary': 'Accept-Encoding'})
+                    self._headers(406, 0, content_type, {'Vary': 'Accept-Encoding'}, static=True)
                     return
                 # Range is defined for GET; HEAD reports the full representation.
                 if self.headers.get('Range') and not head:
                     try:
                         start, end = byte_range(self.headers['Range'], size)
                     except ValueError:
-                        self._headers(416, 0, 'text/plain', {**extra, 'Content-Range': f'bytes */{size}'})
+                        self._headers(416, 0, 'text/plain', {**extra, 'Content-Range': f'bytes */{size}'}, static=True)
                         return
                     code = 206
                     extra['Content-Range'] = f'bytes {start}-{end}/{size}'
                 length = max(0, end - start + 1)
-                self._headers(code, length, content_type, extra)
+                self._headers(code, length, content_type, extra, static=True)
                 if head:
                     return
                 file.seek(start)
