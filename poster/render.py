@@ -4,7 +4,7 @@ Usage: uv run --with playwright python poster/render.py
 Requires Google Chrome and Poppler (pdfinfo/pdftoppm) on PATH.
 Serves the repo root locally so the poster can read web/dist data.
 """
-import functools, http.server, json, subprocess, threading
+import functools, http.server, json, subprocess, sys, threading
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
@@ -17,8 +17,11 @@ def main():
     handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(ROOT))
     server = http.server.ThreadingHTTPServer(('127.0.0.1', 0), handler)
     threading.Thread(target=server.serve_forever, daemon=True).start()
-    url = f'http://127.0.0.1:{server.server_port}/poster/PariView_A1.html'
-    pdf = HERE / 'PariView_A1.pdf'
+    # Optional: render another copy, e.g. a versions/ snapshot — python3 poster/render.py poster/versions/v5/PariView_A1.html
+    html = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else HERE / 'PariView_A1.html'
+    out = html.parent
+    url = f'http://127.0.0.1:{server.server_port}/{html.relative_to(ROOT).as_posix()}'
+    pdf = out / 'PariView_A1.pdf'
     try:
         with sync_playwright() as p:
             browser = p.chromium.launch(executable_path=CHROME)
@@ -32,8 +35,8 @@ def main():
             browser.close()
     finally:
         server.shutdown()
-    subprocess.run(['pdftoppm', '-singlefile', '-png', '-r', '300', '-scale-to-x', '7016', '-scale-to-y', '9933', str(pdf), str(HERE / 'PariView_A1_300dpi')], check=True)
-    subprocess.run(['pdftoppm', '-singlefile', '-png', '-scale-to', '2000', str(pdf), str(HERE / 'PariView_A1_preview')], check=True)
+    subprocess.run(['pdftoppm', '-singlefile', '-png', '-r', '300', '-scale-to-x', '7016', '-scale-to-y', '9933', str(pdf), str(out / 'PariView_A1_300dpi')], check=True)
+    subprocess.run(['pdftoppm', '-singlefile', '-png', '-scale-to', '2000', str(pdf), str(out / 'PariView_A1_preview')], check=True)
     info = subprocess.run(['pdfinfo', str(pdf)], capture_output=True, text=True).stdout
     print('Created', pdf.name, 'PariView_A1_300dpi.png PariView_A1_preview.png')
     print('\n'.join(l for l in info.splitlines() if l.startswith(('Pages', 'Page size'))))
