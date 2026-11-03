@@ -1,0 +1,273 @@
+"""PariView same-origin API and streaming static server — Python stdlib only.
+
+Run: python3 ai/server.py
+Secrets stay in process environment and never enter static files or logs.
+"""
+import json
+import mimetypes
+import os
+import re
+import threading
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
+
+try:
+    from .domain import CATALOG, ROOT, compose, output_schema, prepare
+except ImportError:
+    from domain import CATALOG, ROOT, compose, output_schema, prepare
+
+STATIC_ROOT = (ROOT / 'web/dist').resolve()
+MAX_BODY = 16_384
+AI_LOCK = threading.Lock()
+AI_CALL_TIMES = []
+AI_COOLDOWN_UNTIL = 0
+MIME = {'.js': 'application/javascript', '.css': 'text/css', '.json': 'application/json',
+        '.woff2': 'font/woff2', '.woff': 'font/woff', '.zip': 'application/zip', '.mp4': 'video/mp4',
+        '.svg': 'image/svg+xml', '.vtt': 'text/vtt'}
+
+
+def configuration():
+    enabled = os.environ.get('PARIVIEW_AI_ENABLED', '').strip() == '1'
+    model = os.environ.get('PARIVIEW_AI_MODEL', '').strip()
+    return {'configured': enabled and bool(os.environ.get('ANTHROPIC_API_KEY', '').strip()) and model.startswith('claude-'),
+            'model': model}
+
+
+def call_provider(plan):
+    """No external tools, no user free text, no generated factual prose."""
+    config = configuration()
+    schema = output_schema(plan)
+    # Anthropic supports minItems 0/1, not maxItems; compose enforces <= 3.
+    schema['properties']['actionIds'].pop('maxItems', None)
+    packet = {
+        'model': config['model'], 'max_tokens': 1600,
+        'system': (
+            'You select editable viewing-preference starting options for PariView. '
+            'Choose one to three unique candidate IDs and one available next comparison ID. '
+            'Use only the supplied reviewed research catalogue, user answers, and offered candidates. '
+            'Research supports design principles, NOT numeric settings, diagnoses, treatments, optimality, or safety claims. '
+            'Do not infer medical conditions. Do not produce new sources, numbers, prose, or tools. '
+            'Preserve previous explicit choices. When uncertain select keep. Keep cannot be combined with other candidates. '
+            'Prioritize the user concerns, then current environment and preference. '
+            'The next comparison should address an unresolved relevant axis without forcing repeated or skipped questions.'
+        ),
+        'messages': [{'role': 'user', 'content': json.dumps({'answers': plan['answers'], 'settings': plan['settings'], 'priorResponses': plan['history'],
+                             'candidates': plan['candidates'], 'nextComparisons': plan['comparisons'],
+                             'reviewedResearch': list(CATALOG['sources'].values()), 'boundary': CATALOG['boundary']}, ensure_ascii=False)}],
+        'output_config': {'format': {'type': 'json_schema', 'schema': schema}}
+    }
+    request = urllib.request.Request('https://api.anthropic.com/v1/messages', data=json.dumps(packet).encode(),
+                                     headers={'x-api-key': os.environ['ANTHROPIC_API_KEY'], 'anthropic-version': '2023-06-01', 'Content-Type': 'application/json'}, method='POST')
+    # No retries: a slow/unavailable provider yields the ready-to-use default.
+    with urllib.request.urlopen(request, timeout=10) as response:
+        raw = response.read(262_145)
+    if len(raw) > 262_144:
+        raise ValueError('Provider response too large')
+    data = json.loads(raw)
+    if not isinstance(data, dict) or data.get('stop_reason') != 'end_turn':
+        raise ValueError('Incomplete response')
+    texts = []
+    for part in data.get('content', []):
+        if part.get('type') == 'text':
+            texts.append(part['text'])
+    if len(texts) != 1:
+        raise ValueError('Missing structured output')
+    return json.loads(texts[0])
+
+
+def recommend(payload):
+    global AI_COOLDOWN_UNTIL
+    plan = prepare(payload)
+    if payload.get('useAI') is False:
+        return compose(plan, status='default')
+    if not configuration()['configured']:
+        return compose(plan, status='unconfigured')
+    if not AI_LOCK.acquire(blocking=False):
+        return compose(plan, status='default_busy')
+    try:
+        now = time.monotonic()
+        if now < AI_COOLDOWN_UNTIL:
+            return compose(plan, status='default_cooldown')
+        AI_CALL_TIMES[:] = [stamp for stamp in AI_CALL_TIMES if now - stamp < 3600]
+        try:
+            limit = max(0, min(1000, int(os.environ.get('PARIVIEW_AI_MAX_CALLS_PER_HOUR', '60'))))
+        except ValueError:
+            limit = 60
+        if len(AI_CALL_TIMES) >= limit:
+            return compose(plan, status='default_limit')
+        AI_CALL_TIMES.append(now)
+        try:
+            # Validation rejects invented IDs, sources, numbers and extra fields.
+            return compose(plan, call_provider(plan), source='ai', status='ai_generated')
+        except Exception:
+            # Never expose/log provider bodies, credentials, or user answers.
+            AI_COOLDOWN_UNTIL = time.monotonic() + 30
+            return compose(plan, status='default_provider')
+    finally:
+        AI_LOCK.release()
+
+
+def byte_range(value, size):
+    """Return one inclusive range or raise ValueError (416)."""
+    match = re.fullmatch(r'bytes=(\d*)-(\d*)', value.strip())
+    if not match or size <= 0:
+        raise ValueError('Invalid range')
+    first, last = match.groups()
+    if not first and not last:
+        raise ValueError('Empty range')
+    if not first:
+        length = int(last)
+        if length <= 0:
+            raise ValueError('Empty suffix')
+        return max(0, size - length), size - 1
+    start = int(first)
+    end = min(int(last), size - 1) if last else size - 1
+    if start >= size or start > end:
+        raise ValueError('Unsatisfiable range')
+    return start, end
+
+
+class Handler(BaseHTTPRequestHandler):
+    server_version = 'PariView'
+    sys_version = ''
+    protocol_version = 'HTTP/1.1'
+
+    def setup(self):
+        super().setup()
+        self.connection.settimeout(15)
+
+    def log_message(self, *args):
+        pass
+
+    def _headers(self, code, length, content_type, extra=None):
+        self.send_response(code)
+        self.send_header('Content-Type', content_type)
+        self.send_header('Content-Length', str(length))
+        self.send_header('X-Content-Type-Options', 'nosniff')
+        self.send_header('Referrer-Policy', 'strict-origin-when-cross-origin')
+        self.send_header('Cache-Control', 'no-store' if self.path.startswith('/api/') else 'no-cache')
+        for key, value in (extra or {}).items():
+            self.send_header(key, str(value))
+        self.end_headers()
+
+    def _json(self, data, code=200, head=False):
+        body = json.dumps(data, ensure_ascii=False, allow_nan=False).encode()
+        self._headers(code, len(body), 'application/json; charset=utf-8')
+        if not head:
+            self.wfile.write(body)
+
+    def do_HEAD(self):
+        self.do_GET(head=True)
+
+    def do_GET(self, head=False):
+        try:
+            path = urllib.parse.urlsplit(self.path).path
+            if path == '/healthz':
+                self._json({'status': 'ok'}, head=head)
+                return
+            if path == '/api/recommendation/status':
+                self._json({'configured': configuration()['configured'], 'provider': 'anthropic',
+                            'evidenceVersion': CATALOG['version'], 'defaultAvailable': True}, head=head)
+                return
+            if path.startswith('/api/'):
+                self._json({'error': 'not_found'}, code=404, head=head)
+                return
+            decoded = urllib.parse.unquote(path)
+            if '\\' in decoded or '\x00' in decoded or any(part.startswith('.') for part in decoded.split('/') if part):
+                self._json({'error': 'not_found'}, code=404, head=head)
+                return
+            target = (STATIC_ROOT / decoded.lstrip('/')).resolve()
+            if not target.is_relative_to(STATIC_ROOT):
+                self._json({'error': 'not_found'}, code=404, head=head)
+                return
+            if target.is_dir():
+                target = (target / 'index.html').resolve()
+            if not target.is_relative_to(STATIC_ROOT) or not target.is_file():
+                self._json({'error': 'not_found'}, code=404, head=head)
+                return
+            with target.open('rb') as file:
+                size = os.fstat(file.fileno()).st_size
+                start, end = 0, size - 1
+                code = 200
+                extra = {'Accept-Ranges': 'bytes'}
+                # Range is defined for GET; HEAD reports the full representation.
+                if self.headers.get('Range') and not head:
+                    try:
+                        start, end = byte_range(self.headers['Range'], size)
+                    except ValueError:
+                        self._headers(416, 0, 'text/plain', {'Content-Range': f'bytes */{size}', 'Accept-Ranges': 'bytes'})
+                        return
+                    code = 206
+                    extra['Content-Range'] = f'bytes {start}-{end}/{size}'
+                content_type = MIME.get(target.suffix.lower()) or mimetypes.guess_type(target.name)[0] or 'application/octet-stream'
+                length = max(0, end - start + 1)
+                self._headers(code, length, content_type, extra)
+                if head:
+                    return
+                file.seek(start)
+                while length:
+                    chunk = file.read(min(length, 65536))
+                    if not chunk:
+                        break
+                    self.wfile.write(chunk)
+                    length -= len(chunk)
+        except (BrokenPipeError, ConnectionResetError, TimeoutError):
+            self.close_connection = True
+        except (ValueError, OSError):
+            self.close_connection = True
+
+    def do_POST(self):
+        try:
+            if urllib.parse.urlsplit(self.path).path != '/api/recommendation':
+                self.close_connection = True
+                self._json({'error': 'not_found'}, code=404)
+                return
+            origin = self.headers.get('Origin')
+            if origin:
+                parsed = urllib.parse.urlsplit(origin)
+                if parsed.scheme not in {'http', 'https'} or parsed.netloc.lower() != self.headers.get('Host', '').lower():
+                    self.close_connection = True
+                    self._json({'error': 'origin_not_allowed'}, code=403)
+                    return
+            if self.headers.get('Sec-Fetch-Site') == 'cross-site':
+                self.close_connection = True
+                self._json({'error': 'origin_not_allowed'}, code=403)
+                return
+            if self.headers.get('Content-Type', '').split(';')[0].strip().lower() != 'application/json':
+                self.close_connection = True
+                self._json({'error': 'json_required'}, code=415)
+                return
+            if self.headers.get('Transfer-Encoding'):
+                raise ValueError('Unsupported transfer encoding')
+            length = int(self.headers.get('Content-Length', '0'))
+            if not 0 < length <= MAX_BODY:
+                self.close_connection = True
+                self._json({'error': 'request_size'}, code=413)
+                return
+            body = self.rfile.read(length)
+            if len(body) != length:
+                raise ValueError('Incomplete body')
+            payload = json.loads(body, parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Non-finite JSON')))
+            self._json(recommend(payload))
+        except (ValueError, TypeError, UnicodeError):
+            self.close_connection = True
+            self._json({'error': 'invalid_request'}, code=400)
+        except (BrokenPipeError, ConnectionResetError, TimeoutError):
+            self.close_connection = True
+
+
+def main():
+    host = os.environ.get('HOST', '0.0.0.0')
+    port = int(os.environ.get('PORT', '8080'))
+    print(f'PariView server ready on port {port}', flush=True)
+    server = ThreadingHTTPServer((host, port), Handler)
+    server.daemon_threads = True
+    server.serve_forever()
+
+
+if __name__ == '__main__':
+    main()

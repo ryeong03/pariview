@@ -1,10 +1,39 @@
-Tears of Steel (2012)
+PariView demo film excerpts
+
+All three films: Creative Commons Attribution 3.0 Unported
+License: https://creativecommons.org/licenses/by/3.0/
+Changes: excerpts, resized to 1280px width, re-encoded as H.264/AAC stereo
+Posters are frames from the corresponding excerpts
+The user can adjust image/audio parameters and compare at 0.75x speed
+No endorsement by Blender Foundation or the filmmakers is implied
+
+1 Tears of Steel (2012)
 Copyright Blender Foundation | mango.blender.org
-Creative Commons Attribution 3.0 Unported
-https://creativecommons.org/licenses/by/3.0/
-Official film and license: https://mango.blender.org/about/
-Official YouTube: https://www.youtube.com/watch?v=R6MlUcmOul8
+License statement: https://mango.blender.org/about/
+Official film: https://www.youtube.com/watch?v=R6MlUcmOul8
 Source: https://download.blender.org/demo/movies/ToS/tears_of_steel_720p.mov
-This prototype uses a 12-second excerpt, 00:47–00:59, resized and re-encoded
-The viewer can adjust brightness, contrast and audio
-The excerpt is not an endorsement by the Blender Foundation
+Files: scenes/tears-lab.mp4, scenes/tears-lab.jpg
+Excerpt: 00:47-01:32, 45 seconds
+Captions translated/adapted from https://download.blender.org/demo/movies/ToS/subtitles/TOS-en.srt
+
+2 Sintel (2010)
+Copyright Blender Foundation | durian.blender.org
+License statement: https://durian.blender.org/sharing/
+Official film: https://durian.blender.org/download/
+Source: https://download.blender.org/durian/movies/Sintel.2010.1080p.mkv
+Files: scenes/sintel.mp4, scenes/sintel.jpg
+Excerpt: 02:20-03:05, 45 seconds
+Captions adapted from https://download.blender.org/durian/subs/sintel_ko.srt
+
+3 Big Buck Bunny (2008)
+(c) copyright 2008, Blender Foundation / www.bigbuckbunny.org
+License statement: https://peach.blender.org/about/
+Official film: https://peach.blender.org/download/
+Source: https://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_720p_h264.mov.zip
+Files: scenes/bunny.mp4, scenes/bunny.jpg
+Excerpt: 00:50-01:35, 45 seconds
+No spoken dialogue in this excerpt
+
+Legacy assets movie-hologram.mp4 and hologram-still.jpg use Tears of Steel 00:47-00:59 under the same license
+Scene summaries and simplified captions are authored examples, not AI-generated output
+Signal map JSON files are computed from each excerpt via analysis/sensory_map.py

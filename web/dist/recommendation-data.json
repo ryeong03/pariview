@@ -1,0 +1,52 @@
+{
+  "version": "2026-11-04-v1",
+  "boundary": "연구는 개인차와 조절 과정의 설계 근거예요 아래 조합과 수치, 추천 성능을 직접 검증한 것은 아니에요",
+  "defaults": {"profileId":"everyday","brightness":85,"contrast":90,"saturation":100,"warmth":0,"volume":35,"highCut":0,"compression":true,"notices":true,"dialogueBoost":false,"autoBrightness":false,"captions":true,"easyCaptions":false,"captionSize":20,"boldCaptions":false,"breakReminder":false,"backgroundReduction":0,"transitionSoftening":false},
+  "ranges": {"brightness":[45,100],"contrast":[65,110],"saturation":[40,110],"warmth":[0,60],"volume":[0,70],"highCut":[0,100],"captionSize":[16,30],"backgroundReduction":[0,60]},
+  "profiles": ["gentle","focus","clarity","soft","everyday"],
+  "inputs": {
+    "concerns": {"light":"밝은 화면","sound":"전체 소리 크기","changes":"갑작스러운 소리 변화","dialogue":"대사 듣기","text":"자막 읽기","highPitch":"높은 소리"},
+    "goal": {"keep":"지금 설정에서 조금씩","softer":"더 부드럽게","clearer":"더 또렷하게","original":"현재 설정 유지"},
+    "room": {"unspecified":"환경 선택 안 함","dim":"어두운 곳","bright":"밝은 곳","ordinary":"평소와 비슷한 곳"},
+    "device": {"unspecified":"기기 선택 안 함","headphones":"이어폰·헤드폰","speakers":"스피커"},
+    "captionStyle": {"keep":"지금 자막 유지","simple":"쉬운 자막","standard":"기본 자막"}
+  },
+  "sources": {
+    "R1": {"id":"R1","title":"MacLennan 등 · 자폐 성인의 감각 경험","url":"https://pmc.ncbi.nlm.nih.gov/articles/PMC9213348/","basis":"자폐 성인의 자기보고에서 개인과 상황에 따른 감각 경험의 차이와 통제에 대한 요구가 보고됐어요","limit":"특정 표본의 경험 연구이며 이 서비스나 설정값의 효과 검증은 아니에요"},
+    "M1": {"id":"M1","title":"AAO · Refractive Errors Preferred Practice Pattern","url":"https://www.aaojournal.org/article/S0161-6420%2822%2900867-3/fulltext/","basis":"자각적 굴절 조정에서 응답을 참고해 비교하는 절차를 설계 비유로 참고했어요","limit":"화면 비교는 굴절검사나 처방을 재현하지 않으며 시력·감각 역치를 측정하지 않아요"},
+    "M2": {"id":"M2","title":"AOA · 성인 눈과 시각 검사 지침","url":"https://www.aoa.org/AOA/Documents/Practice%20Management/Clinical%20Guidelines/EBO%20Guidelines/Comprehensive%20Adult%20Eye%20and%20Vision%20Examination%2C%20Second%20Edition.pdf","basis":"시각 평가에서 대비와 눈부심 등을 구별해 살피는 관점을 참고했어요","limit":"밝기·대비·자막의 제안값은 제품 설계 선택이며 임상 지침의 처방값이 아니에요"},
+    "M3": {"id":"M3","title":"ASHA · Tinnitus and Hyperacusis","url":"https://www.asha.org/practice-portal/clinical-topics/tinnitus-and-hyperacusis/","basis":"소리 내성 평가에서 개인의 경험과 생활 맥락, 변동성을 함께 살피는 관점을 참고했어요","limit":"앱 음량은 임상 음압 측정값이 아니며 청각과민 평가나 치료를 수행하지 않아요"},
+    "M5": {"id":"M5","title":"NICE CG142 · 감각 환경 조정","url":"https://www.nice.org.uk/guidance/CG142/chapter/Recommendations","basis":"자폐 성인을 평가·지원·돌보는 환경에서 빛·소리 조정과 필요시 휴식을 고려하도록 권고해요","limit":"영상 필터나 AI 추천, 모든 시청자에 대한 효과를 검증한 지침은 아니에요"}
+  },
+  "controls": {
+    "brightness":{"label":"화면 밝기","unit":"%"},
+    "contrast":{"label":"대비","unit":"%"},
+    "volume":{"label":"전체 음량","unit":"%"},
+    "highCut":{"label":"높은 소리 완화","unit":"%"},
+    "captionSize":{"label":"자막 크기","unit":"px"},
+    "compression":{"label":"음량 변화 완화"},
+    "dialogueBoost":{"label":"말소리 대역 강조"},
+    "captions":{"label":"자막"},
+    "easyCaptions":{"label":"쉬운 자막"}
+  },
+  "actions": [
+    {"id":"softer_light","title":"밝기를 조금 낮춰 보기","axis":"brightness","matchAny":["concerns:light","room:dim"],"unlessAny":["goal:original"],"adjust":{"brightness":{"delta":-8}},"sources":["R1","M2","M5"]},
+    {"id":"sound_changes","title":"소리 변화 완화를 켜서 확인","axis":"compression","matchAny":["concerns:changes","concerns:sound"],"unlessAny":["goal:original"],"adjust":{"compression":{"set":true}},"sources":["R1","M3"]},
+    {"id":"lower_sound","title":"전체 음량을 조금 낮춰 보기","axis":"volume","matchAny":["concerns:sound"],"unlessAny":["goal:original"],"adjust":{"volume":{"delta":-5}},"sources":["R1","M3"]},
+    {"id":"dialogue","title":"말소리 대역을 강조해 확인","axis":"volume","matchAny":["concerns:dialogue"],"unlessAny":["goal:original"],"adjust":{"dialogueBoost":{"set":true},"captions":{"set":true}},"sources":["R1","M3"]},
+    {"id":"large_text","title":"자막을 조금 크게 보기","axis":"easyCaptions","matchAny":["concerns:text"],"unlessAny":["goal:original"],"adjust":{"captionSize":{"delta":4},"captions":{"set":true}},"sources":["R1","M2"]},
+    {"id":"high_sound","title":"높은 소리를 완화해 확인","axis":"volume","matchAny":["concerns:highPitch"],"unlessAny":["goal:original"],"adjust":{"highCut":{"delta":15}},"sources":["R1","M3"]},
+    {"id":"soft_contrast","title":"윤곽의 대비를 부드럽게","axis":"contrast","matchAny":["goal:softer"],"unlessAny":["goal:original"],"adjust":{"contrast":{"delta":-8}},"sources":["R1","M2"]},
+    {"id":"clear_contrast","title":"윤곽의 대비를 또렷하게","axis":"contrast","matchAny":["goal:clearer","room:bright"],"unlessAny":["goal:original","concerns:light","goal:softer"],"adjust":{"contrast":{"delta":8}},"sources":["R1","M2"]},
+    {"id":"simple_text","title":"쉬운 자막으로 확인","axis":"easyCaptions","matchAny":["captionStyle:simple"],"unlessAny":["goal:original"],"adjust":{"easyCaptions":{"set":true},"captions":{"set":true}},"sources":["R1"]},
+    {"id":"standard_text","title":"기본 자막으로 확인","axis":"easyCaptions","matchAny":["captionStyle:standard"],"unlessAny":["goal:original"],"adjust":{"easyCaptions":{"set":false},"captions":{"set":true}},"sources":["R1"]},
+    {"id":"keep","title":"지금 설정에서 비교 시작","axis":null,"matchAny":[],"unlessAny":[],"adjust":{},"sources":["R1","M1"]}
+  ],
+  "comparisons": [
+    {"id":"brightness","title":"화면 밝기 비교","matchAny":["concerns:light","room:dim"],"sources":["R1","M1","M2"]},
+    {"id":"contrast","title":"대비 비교","matchAny":["goal:softer","goal:clearer","room:bright"],"sources":["R1","M2"]},
+    {"id":"volume","title":"소리 크기 비교","matchAny":["concerns:sound","concerns:dialogue","concerns:highPitch","device:headphones","device:speakers"],"sources":["R1","M3"]},
+    {"id":"compression","title":"소리 변화 폭 비교","matchAny":["concerns:changes"],"sources":["R1","M3"]},
+    {"id":"easyCaptions","title":"자막 표현 비교","matchAny":["concerns:text","captionStyle:simple","captionStyle:standard"],"sources":["R1"]}
+  ]
+}

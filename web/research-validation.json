@@ -1,0 +1,57 @@
+{
+  "filters": {
+    "difference": "개인차 · 3편",
+    "control": "통제권 · 1편",
+    "audiovisual": "시청각 · 1편",
+    "prediction": "사전 안내 · 1편",
+    "all": "전체 · 6편"
+  },
+  "external_links": 20,
+  "viewports": [
+    {
+      "width": 1440,
+      "overflow": 0
+    },
+    {
+      "width": 768,
+      "overflow": 0
+    },
+    {
+      "width": 390,
+      "overflow": 0
+    },
+    {
+      "width": 320,
+      "overflow": 0
+    }
+  ],
+  "errors": [],
+  "failed_resources": [],
+  "final_revision": {
+    "medical_research_hero": true,
+    "six_papers_and_filters": true,
+    "guidelines_patterns_treatment_notes": true,
+    "keyboard_details": true,
+    "recommendation_selection": [
+      1440,
+      768,
+      390,
+      320
+    ],
+    "horizontal_overflow": false,
+    "errors": [],
+    "failed_resources": []
+  },
+  "copy_revision": {
+    "copy_updated_to_scope_and_method": true,
+    "reviewed_academic_papers": 11,
+    "professional_sources": 6,
+    "core_cards": 6,
+    "viewports": [
+      1440,
+      390,
+      320
+    ],
+    "errors": []
+  }
+}

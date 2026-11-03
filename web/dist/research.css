@@ -1,0 +1,184 @@
+/* Research page: evidence, interpretation and limits stay visually distinct */
+#research-view{max-width:1080px;margin:0 auto;color:#191f28;padding-bottom:24px}
+#research-view p{word-break:keep-all;overflow-wrap:anywhere}
+#research-view a{color:#003cdc;text-underline-offset:4px;overflow-wrap:anywhere}
+#research-view a:hover{text-decoration:underline}
+#research-view :is(button,a,input,summary,[tabindex]):focus-visible{outline:3px solid #003cdc;outline-offset:5px}
+#research-view .research-hero{text-align:center;padding:66px 0 44px}
+#research-view .research-hero .kicker{color:#6b7684;font-size:13px;letter-spacing:1.4px;margin-bottom:22px}
+#research-view .research-hero h1{font-size:42px;line-height:1.4;letter-spacing:-1.2px;font-weight:750}
+#research-view .research-hero h1 em{color:#fa0030;font-style:normal}
+#research-view .research-hero>p{font-size:19px;line-height:1.7;color:#4e5968;margin-top:24px}
+#research-view .research-updated{display:block;font-size:13px;line-height:1.65;color:#6b7684;margin-top:18px}
+#research-view .research-jump-nav{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:32px}
+#research-view .research-jump-nav button{display:flex;align-items:center;justify-content:center;gap:20px;min-height:46px;padding:10px 17px;border:1px solid #dfe2e7;border-radius:30px;background:#fff;color:#333d4b;font-size:14px;font-weight:600}
+#research-view .research-jump-nav button:hover{background:#f5f6f8}
+#research-view .research-jump-nav button span{color:#6b7684}
+#research-view .evidence-reading-guide{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding:25px 28px;border-radius:16px;background:#f5f6f8;gap:28px}
+#research-view .evidence-reading-guide>div+div{border-left:1px solid #dfe2e7;padding-left:28px}
+#research-view .evidence-label{display:block;font-size:13px;font-weight:650;line-height:1.5;color:#6b7684}
+#research-view .evidence-reading-guide .evidence-label{color:#333d4b;font-size:14px}
+#research-view .evidence-reading-guide p{font-size:15px;line-height:1.7;color:#4e5968;margin-top:8px}
+#research-view .research-section{margin-top:88px}
+#research-view .research-section-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:30px}
+#research-view .section-eyebrow{display:block;font-size:13px;font-weight:600;color:#6b7684;line-height:1.6;margin-bottom:10px}
+#research-view .research-section-heading h2{font-size:32px;line-height:1.45;letter-spacing:-.8px;font-weight:700;word-break:keep-all;scroll-margin-top:36px}
+#research-view .research-section-heading p{font-size:16px;color:#4e5968;line-height:1.75;margin-top:14px}
+#research-view .evidence-toolbar{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:22px}
+#research-view .evidence-filters{display:flex;gap:8px;flex-wrap:wrap}
+#research-view .evidence-filters button{display:flex;align-items:center;gap:9px;min-height:44px;padding:9px 16px;border:1px solid #e5e8eb;border-radius:30px;background:#fff;color:#4e5968;font-size:14px;font-weight:600}
+#research-view .evidence-filters button span{font-size:12px;font-weight:500;opacity:.85}
+#research-view .evidence-filters button:hover{background:#f2f4f6}
+#research-view .evidence-filters button[aria-pressed=true]{background:#191f28;border-color:#191f28;color:#fff}
+#research-view #research-count{color:#6b7684;font-size:13px;flex:none}
+#research-view .research-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;max-width:none;margin:0;align-items:start}
+#research-view .research-card{background:#fff;border:1px solid #e5e8eb;border-radius:16px;padding:28px;min-width:0;box-shadow:none}
+#research-view .evidence-card-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+#research-view .research-card .tag{font-size:13px;font-weight:600;color:#4e5968;line-height:1.5}
+#research-view .evidence-number{font-size:13px;color:#6b7684;font-variant-numeric:tabular-nums}
+#research-view .research-card h3{font-size:24px;line-height:1.4;letter-spacing:-.55px;font-weight:700;word-break:keep-all}
+#research-view .evidence-meta{display:flex;flex-wrap:wrap;gap:5px 14px;margin-top:12px;color:#6b7684;font-size:13px;line-height:1.6}
+#research-view .research-card p{font-size:15px;line-height:1.8;color:#4e5968;margin:0}
+#research-view .evidence-finding{margin-top:25px}
+#research-view .evidence-finding p,#research-view .evidence-design p{margin-top:7px}
+#research-view .evidence-design{margin-top:20px;padding:18px;background:#f5f6f8;border-radius:10px}
+#research-view .evidence-design .evidence-label{color:#333d4b}
+#research-view .evidence-design p{color:#333d4b}
+#research-view .evidence-details{margin-top:22px;border-top:1px solid #e5e8eb}
+#research-view summary{cursor:pointer;list-style:none}
+#research-view summary::-webkit-details-marker{display:none}
+#research-view .evidence-details>summary{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:52px;font-size:14px;font-weight:600;color:#4e5968;padding:12px 0}
+#research-view .details-symbol{display:inline-flex;width:24px;flex:none;align-items:center;justify-content:center;font-size:0;color:#6b7684;font-weight:400}
+#research-view .details-symbol::before{content:'+';font-size:23px;line-height:1}
+#research-view details[open]>summary .details-symbol::before{content:'−'}
+#research-view .evidence-detail-body{padding:3px 0 18px}
+#research-view .evidence-detail-body>.evidence-label{color:#333d4b;margin-bottom:7px}
+#research-view .evidence-citation{margin-top:20px;padding-top:18px;border-top:1px solid #e5e8eb;overflow-wrap:anywhere}
+#research-view .reading-level{display:block;font-size:12px;color:#6b7684;margin-bottom:8px}
+#research-view .evidence-citation strong{display:block;font-size:14px;font-weight:600;margin-bottom:7px}
+#research-view .evidence-citation p{font-size:13px;line-height:1.7;word-break:normal}
+#research-view .source-identifier{display:block;font-size:12px;color:#6b7684;margin-top:8px;overflow-wrap:anywhere}
+#research-view .evidence-source{padding-top:3px}
+#research-view .research-card a{display:inline-block;font-size:13px;color:#003cdc;line-height:1.7;margin:0;text-decoration:none}
+#research-view .research-card a:hover{text-decoration:underline}
+#research-view .clinical-framework{display:grid;grid-template-columns:200px minmax(0,1fr);gap:28px;border-top:1px solid #dfe2e7;padding:32px 0}
+#research-view .clinical-index>span{display:block;font-size:13px;font-variant-numeric:tabular-nums;color:#6b7684;margin-bottom:10px}
+#research-view .clinical-index h3{font-size:17px;font-weight:650;line-height:1.5;word-break:keep-all}
+#research-view .clinical-content{min-width:0}
+#research-view .clinical-content h4{font-size:23px;font-weight:650;line-height:1.5;letter-spacing:-.5px;margin:0 0 21px;word-break:keep-all}
+#research-view .clinical-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px}
+#research-view .clinical-columns p{font-size:15px;line-height:1.8;color:#4e5968;margin-top:8px}
+#research-view .clinical-columns>div:last-child .evidence-label{color:#333d4b}
+#research-view .clinical-boundary{margin-top:21px;font-size:14px;line-height:1.75;color:#4e5968;background:#f5f6f8;padding:14px 17px;border-radius:10px}
+#research-view .clinical-sources{display:flex;flex-wrap:wrap;gap:9px 22px;margin-top:18px;font-size:13px;line-height:1.7}
+#research-view .research-expandable{border:1px solid #e5e8eb;border-radius:16px;margin-top:16px;overflow:hidden;background:#fff}
+#research-view .research-expandable>summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:24px 28px}
+#research-view .research-expandable>summary:hover{background:#f9fafb}
+#research-view .research-expandable>summary:focus-visible{outline-offset:-5px}
+#research-view .research-expandable .section-eyebrow{margin-bottom:6px}
+#research-view .research-expandable strong{display:block;font-size:19px;line-height:1.5;letter-spacing:-.3px;word-break:keep-all;font-weight:650}
+#research-view .research-expanded-body{padding:0 28px 28px;color:#4e5968;font-size:15px;line-height:1.8}
+#research-view .research-expanded-body>p+p{margin-top:15px}
+#research-view .research-expanded-body>a{display:inline-block;font-size:13px;margin-top:17px;line-height:1.75}
+#research-view #sensory-patterns{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:22px}
+#research-view .sensory-pattern{background:#f5f6f8;border-radius:10px;padding:18px}
+#research-view .sensory-pattern h4{margin:0 0 7px;font-size:16px;color:#333d4b;font-weight:650}
+#research-view .sensory-pattern p{font-size:14px;line-height:1.7}
+#research-view .framework-note{margin-top:22px;color:#4e5968;font-size:14px}
+#research-view #therapy-studies{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:26px}
+#research-view .therapy-study{min-width:0;border-top:1px solid #dfe2e7;padding-top:20px}
+#research-view .therapy-study h4{font-size:17px;margin:0;color:#333d4b;font-weight:650}
+#research-view .therapy-study .therapy-sample{font-size:13px;line-height:1.65;color:#6b7684;margin:8px 0 13px}
+#research-view .therapy-study p{font-size:14px;line-height:1.8}
+#research-view .therapy-study .therapy-boundary{margin-top:12px}
+#research-view .therapy-study a{display:inline-block;font-size:13px;line-height:1.75;margin-top:16px}
+#research-view .proposal-status{display:inline-block;flex:none;align-self:center;font-size:12px;font-weight:600;line-height:1.5;color:#4e5968;border:1px solid #d5d9df;border-radius:24px;padding:7px 12px}
+#research-view #design-proposals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+#research-view .design-proposal{display:flex;flex-direction:column;border-radius:16px;padding:26px;background:#f5f6f8;min-width:0}
+#research-view .proposal-number{font-size:13px;font-variant-numeric:tabular-nums;color:#6b7684}
+#research-view .design-proposal h3{font-size:22px;letter-spacing:-.5px;line-height:1.5;margin:14px 0 13px;font-weight:700;word-break:keep-all}
+#research-view .design-proposal>p{font-size:15px;color:#4e5968;line-height:1.8}
+#research-view .design-proposal blockquote{font-size:16px;color:#191f28;font-weight:600;line-height:1.7;margin:22px 0;padding:0 0 0 15px;border-left:2px solid #fa0030;word-break:keep-all}
+#research-view .proposal-basis{border-top:1px solid #dfe2e7;padding-top:19px;margin-top:auto}
+#research-view .proposal-basis p{font-size:13px;color:#4e5968;line-height:1.8;margin-top:6px}
+#research-view .proposal-basis a{display:inline-block;font-size:13px;line-height:1.7;margin-top:12px}
+#research-view .recommend-form{margin:0;padding:28px;background:#f5f6f8;border:0;border-radius:16px;max-width:none}
+#research-view .recommend-form fieldset{border:0;padding:0;margin:0 0 26px;min-width:0}
+#research-view .recommend-form legend{padding:0;font-size:17px;font-weight:650;color:#333d4b;margin-bottom:14px;line-height:1.65}
+#research-view .answer-options{display:flex;flex-wrap:wrap;gap:10px}
+#research-view .answer-options label{display:flex;align-items:center;gap:10px;min-height:48px;padding:11px 16px;border:1px solid #d5d9df;border-radius:10px;background:#fff;color:#4e5968;font-size:15px;cursor:pointer}
+#research-view .answer-options label:has(input:checked){border-color:#003cdc;box-shadow:inset 0 0 0 1px #003cdc;color:#003cdc;background:#fff}
+#research-view .answer-options input{position:static;opacity:1;accent-color:#003cdc;width:17px;height:17px;margin:0;flex:none}
+#research-view .answer-options span{padding:0;border:0;border-radius:0;background:transparent;color:inherit;font-size:inherit}
+#research-view .answer-options input:checked+span{border:0;background:transparent;color:inherit}
+#research-view .answer-options input:focus-visible+span{outline:0}
+#research-view .recommend-explainer{font-size:13px;line-height:1.75;color:#6b7684;margin-top:18px;max-width:650px}
+#research-view .recommend-result{max-width:none;margin:20px 0 0;padding:28px;border-radius:16px;border:1px solid #dfe2e7;background:#fff}
+#research-view .research-scope{margin-top:38px}
+#research-view .research-return{display:flex;align-items:center;justify-content:space-between;gap:22px;margin-top:50px;border-top:1px solid #e5e8eb;padding-top:32px}
+#research-view .research-return>p{font-size:16px;line-height:1.7;color:#4e5968}
+#research-view .research-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:900px){
+  #research-view .clinical-framework{grid-template-columns:160px minmax(0,1fr);gap:22px}
+  #research-view .clinical-columns{grid-template-columns:1fr;gap:18px}
+  #research-view .research-card{padding:24px}
+  #research-view .research-card h3{font-size:22px}
+  #research-view #design-proposals{grid-template-columns:1fr}
+  #research-view .design-proposal{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 28px}
+  #research-view .proposal-number,#research-view .design-proposal h3,#research-view .design-proposal>p{grid-column:1}
+  #research-view .design-proposal blockquote{grid-column:2;grid-row:1/4;align-self:center;margin:0}
+  #research-view .proposal-basis{grid-column:1/-1;margin-top:22px}
+  #research-view #therapy-studies{grid-template-columns:1fr;gap:22px}
+}
+@media(max-width:640px){
+  #research-view .research-hero{padding:34px 0 30px}
+  #research-view .research-hero h1{font-size:32px;letter-spacing:-.8px;line-height:1.45}
+  #research-view .research-hero>p{font-size:16px;margin-top:19px;line-height:1.8}
+  #research-view .research-hero>p br{display:none}
+  #research-view .research-updated{font-size:12px;margin-top:14px}
+  #research-view .research-jump-nav{gap:8px;margin-top:24px}
+  #research-view .research-jump-nav button{font-size:13px;gap:10px;padding:9px 12px;min-height:44px}
+  #research-view .evidence-reading-guide{grid-template-columns:1fr;gap:18px;padding:22px}
+  #research-view .evidence-reading-guide>div{display:grid;grid-template-columns:95px minmax(0,1fr);gap:14px}
+  #research-view .evidence-reading-guide>div+div{padding-left:0;border-left:0}
+  #research-view .evidence-reading-guide .evidence-label{font-size:13px;padding-top:2px}
+  #research-view .evidence-reading-guide p{font-size:14px;margin:0}
+  #research-view .evidence-reading-guide br{display:none}
+  #research-view .research-section{margin-top:58px}
+  #research-view .research-section-heading{display:block;margin-bottom:23px}
+  #research-view .research-section-heading h2{font-size:27px;letter-spacing:-.6px;line-height:1.5}
+  #research-view .research-section-heading p{font-size:15px;margin-top:12px}
+  #research-view .research-section-heading p br{display:none}
+  #research-view .evidence-toolbar{display:block;margin-bottom:18px}
+  #research-view .evidence-filters{gap:7px}
+  #research-view .evidence-filters button{font-size:13px;padding:9px 13px;gap:7px}
+  #research-view #research-count{margin-top:12px;font-size:12px}
+  #research-view .research-grid{grid-template-columns:1fr;gap:16px}
+  #research-view .research-card{padding:22px}
+  #research-view .research-card h3{font-size:22px}
+  #research-view .evidence-finding{margin-top:21px}
+  #research-view .evidence-design{padding:16px}
+  #research-view .clinical-framework{grid-template-columns:1fr;gap:15px;padding:26px 0}
+  #research-view .clinical-index{display:flex;align-items:center;gap:12px}
+  #research-view .clinical-index>span{margin:0}
+  #research-view .clinical-index h3{font-size:15px}
+  #research-view .clinical-content h4{font-size:22px;margin-bottom:19px}
+  #research-view .clinical-sources{display:flex;flex-direction:column;align-items:flex-start;font-size:13px;gap:12px}
+  #research-view .research-expandable>summary{padding:21px}
+  #research-view .research-expandable strong{font-size:18px}
+  #research-view .research-expanded-body{padding:0 21px 24px}
+  #research-view #sensory-patterns{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  #research-view .sensory-pattern{padding:15px}
+  #research-view .proposal-status{margin-top:17px}
+  #research-view .design-proposal{display:flex;padding:24px}
+  #research-view .design-proposal blockquote{align-self:stretch;margin:22px 0}
+  #research-view .proposal-basis{margin-top:0}
+  #research-view .recommend-form{padding:22px}
+  #research-view .recommend-form legend{font-size:16px}
+  #research-view .answer-options{gap:8px}
+  #research-view .answer-options label{font-size:14px;padding:10px 13px;min-height:46px}
+  #research-view .recommend-form .primary{width:100%;font-size:15px;gap:12px;padding:14px 16px}
+  #research-view .recommend-result{padding:22px}
+  #research-view .research-return{flex-direction:column;align-items:flex-start;margin-top:34px;padding-top:27px;gap:17px}
+  #research-view .research-return .primary{font-size:15px}
+}

@@ -11,3 +11,58 @@
 /* Hero kicker: larger so it reads as part of the headline (user request) */
 .approved-hero .kicker{font-size:22px;line-height:1.4;margin-bottom:14px}
 @media(max-width:700px){.approved-hero .kicker{font-size:18px;margin-bottom:10px}}
+
+/* Fit dialog: scroll inside the rounded card so the scrollbar never sits outside the corner */
+#fit-dialog{overflow:hidden}
+#fit-dialog .fit-modal{max-height:calc(100dvh - 38px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#c9cbd1 transparent}
+#fit-dialog .fit-modal::-webkit-scrollbar{width:8px}
+#fit-dialog .fit-modal::-webkit-scrollbar-track{background:transparent;margin:16px 0}
+#fit-dialog .fit-modal::-webkit-scrollbar-thumb{background:#c9cbd1;border-radius:8px;border:2px solid #fff}
+@media(max-width:700px){#fit-dialog .fit-modal{max-height:calc(100dvh - 26px)}}
+
+/* First screen = exactly one viewport below the header (Toss / KakaoBank pattern):
+   the next section starts at the fold instead of peeking in half-cut, and a scroll cue sits at the bottom */
+.approved-hero{min-height:max(620px,calc(100svh - 136px));margin-bottom:0}
+.hero-falcon{top:calc(50% - 220px)}
+@media(max-width:1150px) and (min-width:761px){.hero-falcon{top:calc(50% - 215px)}}
+@media(max-width:760px){.approved-hero{min-height:calc(100svh - 136px);justify-content:center}.hero-falcon{top:auto}}
+.approved-hero::after{content:"";position:absolute;left:50%;bottom:28px;width:14px;height:14px;margin-left:-7px;border-right:2px solid #b0b3ba;border-bottom:2px solid #b0b3ba;transform:rotate(45deg);animation:pv-scroll-cue 1.8s ease-in-out infinite}
+@keyframes pv-scroll-cue{0%,100%{translate:0 0;opacity:.55}50%{translate:0 6px;opacity:1}}
+@media(prefers-reduced-motion:reduce){.approved-hero::after{animation:none}}
+body.reduce-motion .approved-hero::after{animation:none}
+
+/* Studio stage = one viewport from its heading (desktop): on tall/fullscreen screens the next section
+   no longer peeks in half-cut below the dock; content stays top-aligned inside the stage */
+@media(min-width:1151px){.studio-grid{min-height:calc(100svh - 122px - 80px);align-content:start}}
+@media(min-width:761px) and (max-width:1150px){.studio-grid{min-height:calc(100svh - 109px - 80px);align-content:start}}
+@media(max-width:760px){.studio-grid{min-height:calc(100svh - 148px - 80px);align-content:start}}
+
+/* Studio: heading + player + dock + collapsed "감각 지도" row fit one viewport on laptop heights (1280×720 ~ 1536×864) */
+@media(min-width:761px){.stage-card,.preferences{max-width:min(1080px,calc((100dvh - 446px)*var(--scene-ratio,2.397)))}}
+
+/* Hero curtain: as the first screen scrolls away, a soft brand-red tint closes in from both window edges
+   (scroll-driven, no JS). Off when motion is reduced or the browser lacks scroll timelines */
+@supports (animation-timeline: scroll()) {
+  .approved-hero{isolation:isolate}
+  .approved-hero::before{content:"";position:absolute;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;z-index:-1;pointer-events:none;
+    background:
+      linear-gradient(90deg,color-mix(in srgb,var(--brand,#fa0030) 20%,transparent),color-mix(in srgb,var(--brand,#fa0030) 9%,transparent) 82%,transparent) left top/0% 100% no-repeat,
+      linear-gradient(270deg,color-mix(in srgb,var(--brand,#fa0030) 20%,transparent),color-mix(in srgb,var(--brand,#fa0030) 9%,transparent) 82%,transparent) right top/0% 100% no-repeat;
+    -webkit-mask-image:linear-gradient(to bottom,#000 72%,transparent);mask-image:linear-gradient(to bottom,#000 72%,transparent);
+    animation:pv-curtain linear both;animation-timeline:scroll();animation-range:0 50svh}
+  @keyframes pv-curtain{to{background-size:56% 100%,56% 100%}}
+  body{overflow-x:clip}
+}
+@media(prefers-reduced-motion:reduce){.approved-hero::before{animation:none;display:none}}
+body.reduce-motion .approved-hero::before{animation:none;display:none}
+
+/* Studio heading accent: "편안하게 보는 방법" gets a soft brand marker that sweeps in as the heading scrolls into view.
+   Final state is static when motion is reduced or scroll timelines are unsupported */
+.studio-title-pair h2 span{width:fit-content;padding:0 .12em;margin:0 -.12em;color:var(--brand,#fa0030);
+  background:linear-gradient(transparent 58%,color-mix(in srgb,var(--brand,#fa0030) 16%,transparent) 58%,color-mix(in srgb,var(--brand,#fa0030) 16%,transparent) 92%,transparent 92%) left/100% 100% no-repeat}
+@supports (animation-timeline: view()) {
+  .studio-title-pair h2 span{animation:pv-marker linear both;animation-timeline:view();animation-range:entry 60% cover 42%}
+  @keyframes pv-marker{from{background-size:0% 100%;color:var(--ink,#0d0e11)}60%{color:var(--brand,#fa0030)}to{background-size:100% 100%;color:var(--brand,#fa0030)}}
+}
+@media(prefers-reduced-motion:reduce){.studio-title-pair h2 span{animation:none}}
+body.reduce-motion .studio-title-pair h2 span{animation:none}

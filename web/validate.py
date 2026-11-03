@@ -11,7 +11,9 @@ with sync_playwright() as p:
  page.on('pageerror',lambda e:errors.append(str(e)))
  page.on('response',lambda r:bad.append({'url':r.url,'status':r.status}) if r.status>=400 else None)
  page.goto(BASE_URL,wait_until='networkidle');page.wait_for_function('window.__pariview && window.__wordmark3D && window.__pariviewMascots.length === 2')
- assert page.locator('#film').get_attribute('src')=='assets/movie-hologram.mp4'
+ assert page.locator('#film').get_attribute('src')=='assets/scenes/tears-lab.mp4'
+ assert page.evaluate('window.__pariview.video.duration')==45
+ assert page.evaluate('window.__pariview.scenes.length')==3
  assert page.locator('.approved-hero').count()==1 and page.locator('#journey').count()==0
  results['logo']=page.evaluate('window.__wordmark3D.engine')
  results['mascots']=page.evaluate('window.__pariviewMascots.map(m=>({wizard:m.wizard,engine:m.engine}))')
@@ -29,6 +31,26 @@ with sync_playwright() as p:
  page.locator('#open-recap').click();assert page.locator('#recap-dialog').is_visible();assert '맞추고' in page.locator('#recap-body').inner_text();assert page.locator('#caption-seek').count()==1;page.locator('#close-recap').click()
  page.locator('#seek').fill('8');page.wait_for_timeout(200);results['seek_time']=page.evaluate('window.__pariview.video.currentTime');assert abs(results['seek_time']-8)<.2
  page.locator('#tab-visual').click();page.locator('#notices').click();assert page.locator('#view-event-notice').is_hidden()
+ # Every licensed scene is 45 seconds and keeps the chosen settings and its own map.
+ unchanged=page.evaluate('window.__pariview.settings')
+ results['scenes']=[]
+ for scene in ['sintel','bunny','tears-lab']:
+  page.locator('#choose-scene').click();page.locator(f'[data-scene="{scene}"]').click()
+  page.wait_for_function('window.__pariview.video.readyState>=2 && window.__pariview.events.length>0')
+  assert page.evaluate('window.__pariview.scene.id')==scene
+  assert page.evaluate('window.__pariview.settings')==unchanged
+  assert page.evaluate('window.__pariview.video.duration')==45
+  page.locator('#seek').fill('30');page.wait_for_timeout(150)
+  assert abs(page.evaluate('window.__pariview.video.currentTime')-30)<.1
+  if scene=='sintel':
+   page.locator('#seek').fill('10');page.wait_for_timeout(150);assert '혼자' in page.locator('#film-caption').inner_text()
+  if scene=='bunny':assert page.locator('#film-caption').is_hidden()
+  results['scenes'].append(page.evaluate('({id:window.__pariview.scene.id,duration:window.__pariview.video.duration,events:window.__pariview.events.length})'))
+ # End card changes the clip; it does not reset the user's settings.
+ page.locator('#seek').fill('44.8');page.locator('#play-button').click();page.wait_for_selector('#scene-ended:not([hidden])')
+ page.locator('#next-scene').click();page.wait_for_function('window.__pariview.scene.id === "sintel" && !window.__pariview.video.paused')
+ assert page.evaluate('window.__pariview.settings')==unchanged
+ page.locator('#play-button').click();page.locator('#choose-scene').click();page.locator('[data-scene="tears-lab"]').click();page.wait_for_function('window.__pariview.video.readyState>=2')
  # Five distinct profiles survive applying all skipped comparisons.
  profile_results={}
  for i,profile in enumerate(['gentle','focus','clarity','soft','everyday']):
@@ -44,11 +66,18 @@ with sync_playwright() as p:
  results['five_profiles']=profile_results
  # Explicit preferences, uncertainty, back navigation, live audio, then cognitive choice.
  page.evaluate('window.__pariview.openFit()');page.locator('[data-mode="0"]').click();page.locator('#start-comparison').click()
+ page.locator('#play-comparison').click();page.wait_for_function('window.__pariview.comparisonPlaying');page.wait_for_timeout(1000)
+ previews=page.locator('.fit-preview').evaluate_all('vs=>vs.map(v=>({paused:v.paused,rate:v.playbackRate,time:v.currentTime}))')
+ assert all(not v['paused'] and v['rate']==.75 for v in previews)
+ assert abs(previews[0]['time']-previews[1]['time'])<.08
+ results['simultaneous_comparison']=previews
+ page.locator('#play-comparison').click();assert page.locator('.fit-preview').evaluate_all('vs=>vs.every(v=>v.paused)')
  page.locator('[data-choose="a"]').click();page.locator('#fit-next').click();page.locator('#choose-equal').click();page.locator('#fit-next').click()
- page.locator('[data-listen="a"]').click();page.wait_for_function('!window.__pariview.video.paused',timeout=3500)
+ page.locator('[data-listen="a"]').click();page.wait_for_function('!window.__pariview.video.paused',timeout=10000)
+ assert page.evaluate('window.__pariview.video.playbackRate')==.75
  page.locator('[data-choose="a"]').click();page.locator('#fit-next').click();page.locator('[data-choose="b"]').click();page.locator('#fit-next').click();page.locator('[data-choose="b"]').click();page.locator('#fit-next').click();page.locator('#result-back').click();page.locator('#fit-next').click();page.locator('#apply-fit').click()
  fit=page.evaluate('window.__pariview.settings');assert fit['brightness']==65 and fit['contrast']==80 and fit['volume']==22 and not fit['compression'] and fit['easyCaptions']
- assert page.evaluate('window.__pariview.video.paused && window.__pariview.video.muted')
+ assert page.evaluate('window.__pariview.video.paused && window.__pariview.video.muted && window.__pariview.video.playbackRate===1')
  page.reload(wait_until='networkidle');assert page.evaluate('window.__pariview.settings')==fit
  results['fitting_and_persistence']=fit
  page.evaluate('window.__pariview.openFit()');page.keyboard.press('Escape');assert not page.locator('#fit-dialog').evaluate('e=>e.open')

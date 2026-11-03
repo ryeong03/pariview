@@ -1,7 +1,7 @@
 **
 !Dockerfile
-!deploy/
-!deploy/default.conf.template
+!ai/
+!ai/*.py
 !web/
 !web/dist/
 !web/dist/**

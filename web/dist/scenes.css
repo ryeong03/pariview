@@ -1,0 +1,73 @@
+/* Scene selection stays inside the existing player header */
+.scene-picker-trigger{display:flex;align-items:center;gap:9px;background:none;color:#191f28;font-family:inherit;font-size:14px;font-weight:600;padding:8px 0;cursor:pointer;border:0;white-space:nowrap}
+.scene-picker-trigger small{font-size:11px;font-weight:500;color:#8b95a1}
+.scene-picker-trigger:focus-visible{outline:2px solid #003cdc;outline-offset:4px;border-radius:4px}
+.movie-badge b{font-weight:500}
+.actual-player #film{aspect-ratio:var(--scene-ratio,2.397)}
+.scene-ended{position:absolute;inset:0;z-index:8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;background:#0d0e11b8;color:#fff;text-align:center}
+.scene-ended p{font-size:22px;font-weight:600}
+.scene-ended>div{display:flex;align-items:center;gap:20px}
+.scene-ended .primary{font-size:13px;min-height:40px;padding:10px 18px}
+.scene-replay{color:white;font-size:13px;font-family:inherit;border:0;border-bottom:1px solid #ffffff88;padding:7px 0;background:none;cursor:pointer}
+#scene-dialog{width:min(900px,calc(100vw - 32px));max-width:900px;max-height:88dvh;border:1px solid #e7e8eb;border-radius:16px;background:#fff;padding:0;color:#191f28}
+#scene-dialog::backdrop{background:#0d0e1170}
+.scene-dialog-content{padding:32px}
+.scene-dialog-content>header{display:flex;align-items:start;justify-content:space-between;gap:16px;margin-bottom:26px}
+.scene-dialog-content h2{font-size:28px;line-height:1.35;letter-spacing:-.7px}
+.scene-dialog-content header p{font-size:14px;color:#6b7684;line-height:1.6;margin-top:10px}
+.scene-dialog-content .icon-button{flex:none;color:#6b7684}
+.scene-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.scene-option{display:flex;flex-direction:column;align-items:start;overflow:hidden;border:1px solid #e7e8eb;border-radius:12px;background:white;padding:0;text-align:left;font-family:inherit;cursor:pointer;color:#191f28}
+.scene-option[aria-pressed=true]{border:2px solid #fa0030}
+.scene-option:focus-visible{outline:3px solid #003cdc;outline-offset:3px}
+.scene-option img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.scene-option .scene-option-copy{display:flex;flex-direction:column;gap:8px;padding:16px;flex:1}
+.scene-option .scene-meta{font-size:11px;color:#8b95a1}
+.scene-option strong{font-size:18px;font-weight:700;line-height:1.4;letter-spacing:-.4px}
+.scene-option .scene-description{font-size:13px;color:#6b7684;line-height:1.6;flex:1}
+.scene-option .scene-choice{font-size:12px;font-weight:600;color:#003cdc;margin-top:8px}
+.scene-option[aria-pressed=true] .scene-choice{color:#d80028}
+.scene-dialog-note{font-size:13px;line-height:1.6;color:#6b7684;margin-top:22px}
+.scene-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.film-credit #scene-credit{float:none;flex:1}
+.film-credit{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between}
+.fit-subtitle .comparison-context{display:block;font-size:12px;color:#8b95a1;margin-top:6px}
+.comparison-transport{display:flex;justify-content:center;align-items:center;gap:16px;margin:18px 0 4px}
+.comparison-transport button{font-family:inherit;font-size:14px;font-weight:600;color:#003cdc;border:1px solid #d4deef;background:#f5f8ff;border-radius:8px;padding:11px 18px;cursor:pointer}
+.comparison-transport button[aria-pressed=true]{background:#eaf1ff}
+.comparison-transport span{font-size:12px;color:#6b7684}
+.option-bottom>.choose:only-child{width:100%}
+.hero-actions .manual-entry{border:1px solid #d5d7db;border-radius:50px;padding:15px 24px;min-height:54px;background:white;color:#333d4b;font-size:15px;font-weight:700}
+.hero-actions .ai-entry{font-size:15px;min-height:54px;padding:15px 24px}
+.research-link p{font-size:14px;line-height:1.7;color:#6b7684;margin:12px 0}
+.research-entry-actions{display:flex;flex-wrap:wrap;gap:8px 20px}
+.research-entry-actions button{font-size:13px}
+@media(min-width:761px){.stage-card,.preferences{max-width:min(1080px,calc((100dvh - 400px)*var(--scene-ratio,2.397)))}}
+@media(max-width:760px){
+ .scene-picker-trigger{font-size:12px;gap:6px}
+ .scene-picker-trigger small{font-size:10px}
+ .stage-header .segmented button{font-size:11px;padding:7px 9px}
+ .scene-dialog-content{padding:22px}
+ .scene-dialog-content>header{margin-bottom:20px}
+ .scene-dialog-content h2{font-size:23px}
+ .scene-dialog-content header p{font-size:13px}
+ .scene-options{grid-template-columns:1fr;gap:12px}
+ .scene-option{display:grid;grid-template-columns:100px 1fr;align-items:stretch}
+ .scene-option img{height:100%;min-height:130px;object-fit:cover}
+ .scene-option .scene-option-copy{padding:12px;gap:5px}
+ .scene-option strong{font-size:16px}
+ .scene-option .scene-description{font-size:12px}
+ .scene-option .scene-meta{font-size:10px}
+ .scene-option .scene-choice{margin-top:3px;font-size:11px}
+ .scene-dialog-note{font-size:12px;margin-top:16px}
+ .scene-ended{gap:12px}
+ .scene-ended p{font-size:16px}
+ .scene-ended .primary{font-size:11px;min-height:34px;padding:7px 12px}
+ .scene-ended>div{gap:15px}
+ .scene-replay{font-size:11px}
+ .comparison-transport{flex-direction:column;gap:8px;margin-top:14px}
+ .comparison-transport button{font-size:13px;width:100%}
+ .comparison-transport span{font-size:11px}
+ .hero-actions .manual-entry,.hero-actions .ai-entry{font-size:14px;min-height:50px;justify-content:center}
+ .hero-actions .ai-entry{padding:14px 18px}
+}
