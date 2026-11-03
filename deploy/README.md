@@ -3,6 +3,9 @@
 The repository-root Dockerfile runs `python3 ai/server.py` as a non-root user
 The Python standard-library server serves static files only from `web/dist` and handles the recommendation API on the same origin
 It listens on `0.0.0.0:$PORT` with an 8080 default, supports video byte ranges, and serves `/healthz` for readiness
+Static text responses support gzip with a bounded memory cache and `Vary: Accept-Encoding`
+Static responses keep `no-cache` and add `no-transform` so intermediaries preserve the server's encoding choice
+Video, ZIP, font and image files are not recompressed; byte-range requests use the original bytes
 
 In Railway, connect `ryeong03/pariview` on `main` with the repository root as the root directory
 The Dockerfile is detected automatically; no build or start command override is needed
