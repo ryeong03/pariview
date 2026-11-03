@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ko"><meta charset="utf-8"><title>PariView 세부 설계 및 계산 근거</title>
+<style>
+@font-face{font-family:Pretendard;src:url('../../web/dist/assets/Pretendard-Regular.woff2');font-weight:400}
+@font-face{font-family:Pretendard;src:url('../../web/dist/assets/Pretendard-Bold.woff2');font-weight:700}
+@page{size:A4;margin:0}*{box-sizing:border-box}body{margin:0;font-family:Pretendard,sans-serif;color:#19212e;background:#e7eaf0;font-size:10pt;line-height:1.43;word-break:keep-all}article{width:210mm;height:297mm;padding:13mm 14mm 11mm;background:white;position:relative}header{border-bottom:1.2mm solid #284abd;padding-bottom:3mm;margin-bottom:4mm}.eyebrow{color:#284abd;font-size:9pt;font-weight:700;letter-spacing:.3px}h1{font-size:21pt;line-height:1.2;margin:1.5mm 0}header p{margin:0;color:#526072;font-size:9.5pt}h2{font-size:11.5pt;line-height:1.3;margin:2.1mm 0 1.2mm;color:#253d79}p{margin:.7mm 0}table{width:100%;border-collapse:collapse}td,th{padding:1.2mm 2mm;border-bottom:.25mm solid #dce1e9;vertical-align:top;text-align:left}th{background:#f0f3fa;font-size:9.5pt}td:first-child{width:21%;font-weight:700}.formula{background:#f2f5fb;border-left:.9mm solid #284abd;padding:2mm 3mm;line-height:1.45}.small{font-size:8.7pt;color:#4b596a}.note{background:#faf4e9;padding:2mm 3mm;margin:2mm 0}.flow{border:.3mm solid #dce1e9;padding:2mm 3mm;font-size:9pt}code{font-family:ui-monospace,monospace;font-size:.95em}a{color:#284abd;text-decoration:none}.refs{font-size:8pt;line-height:1.42;display:grid;grid-template-columns:1fr 1fr;gap:1mm 4mm;margin-top:2mm}footer{position:absolute;bottom:10mm;left:14mm;right:14mm;border-top:.25mm solid #dce1e9;padding-top:2mm;font-size:8pt;color:#617086;display:flex;justify-content:space-between}.counts td{padding:1mm 2mm}.counts td:first-child{width:40%}main{display:flow-root}@media print{body{background:white}}
+</style>
+<article><header><div class="eyebrow">PARIVIEW · 기술성 및 완성도 · 보고서 부록</div><h1>세부 설계 및 계산의 적합성</h1><p>표준에 따른 신호 측정 → 팀 기준으로 변화 선별 → 사용자가 고른 처리 적용</p></header><main>
+<h2>1 측정값과 감각 지도</h2>
+<table><tr><th>입력</th><th>측정 및 판정</th></tr>
+<tr><td>소리</td><td><code>ebur128</code> 순간 라우드니스 M: 400ms 창, 100ms 간격<br>M &gt; −70LUFS이고, 직전 1.5초 중앙값보다 6LU 이상 상승 또는 M ≥ −16LUFS</td></tr>
+<tr><td>빛</td><td><code>signalstats.YAVG</code> 프레임 평균 루마 Y: 현재 8bit 영상의 0–255 코드값<br>약 0.25초 전 프레임과의 |ΔY| ≥ 18인 구간 · 화면 표시를 위해 뒤로 0.8초 유지</td></tr></table>
+<p class="small">소리 기준 중앙값은 직전 15개 표본 중 −70LUFS 초과값으로 계산 · 공백 0.4초 이하 구간 병합 · 소리 구간 최소 0.2초 · LUFS는 신호 수준, LU는 그 차이 [1,4]</p>
+<h2>2 사전 예고의 선별 규칙</h2>
+<div class="formula"><b>소리</b> (R ≥ 18LU AND P − C ≥ 4LU) OR (P − C ≥ 12LU)<br><b>빛</b> J ≥ 45 AND J ≥ 0.30 × (Y<sub>max</sub> − Y<sub>min</sub>)</div>
+<p class="small">R: 변화 구간의 최대 상승량 · P: 구간의 최대 M · C: 클립의 M &gt; −70LUFS 중앙값 · J: 구간 내 최대 |ΔY|<br>R과 P는 각각 구간 최댓값으로, 발생 시점이 다를 수 있음 · 첫 1초 및 무음에서 시작한 소리 후보 제외</p>
+<p>2초 내 빛·소리 후보를 병합하고, 5초 내 후보는 규칙상 강도가 큰 하나를 유지<br><b>계산 예</b> Sintel 9.0초: P − C = −26.6 − (−42.1) = <b>15.5LU</b> → 12LU 조건 충족</p>
+<div class="note"><b>18LU의 위치</b> 지도보다 큰 변화를 골라 예고 빈도를 제한하기 위한 팀 설정값<br>EBU LRA는 3초 라우드니스 분포의 10–95백분위 차이이며, 순간 상승량과 구분됨<br><span class="small">EBU는 1분 미만 영상의 LRA 사용을 권장하지 않음 · 본 45초 클립에는 순간 측정 M과 자체 선별 규칙 적용 [2,3]</span></div>
+<h2>3 실제 소리 처리와 파라미터</h2>
+<p><b>고음 필터 → 말소리 EQ → 선택적 다이내믹 압축 → 전체 음량</b></p>
+<table><tr><td>말소리 EQ</td><td>peaking 3kHz · Q=1 · +4dB → 중심 주파수 진폭 배율 10<sup>4/20</sup> ≈ <b>1.58</b><br><span class="small">2–4kHz의 명료도 관련 음향 자료를 참고한 대역 선택 · +4dB와 Q는 팀 설정 [5,6]</span></td></tr>
+<tr><td>압축</td><td>threshold −25dB · knee 22dB · ratio 5:1 · attack 8ms · release 250ms<br><span class="small">Web Audio의 디지털 신호 처리 파라미터 · 사용자의 출력 음량·장치에 따라 청취 수준은 달라짐 [5]</span></td></tr></table>
+<h2>4 재현 가능한 출력과 확인 범위</h2>
+<table class="counts"><tr><th>약 45초 평가 클립</th><th>전체 변화 구간</th><th>선별된 예고</th></tr><tr><td>Tears of Steel</td><td>13</td><td>3</td></tr><tr><td>Sintel</td><td>19</td><td>5</td></tr><tr><td>Big Buck Bunny</td><td>20</td><td>3</td></tr></table>
+<p class="small"><code>analysis/notice_report.py</code> 확인: 예고 간격 ≥5초 · 클립 내부 시각 · 원래 변화 구간 시작점 대응<br>확인한 대상은 데이터와 선별 규칙의 동작 · 임계값 보정에는 이용자의 예고 필요 여부와 놓친 구간 판단을 활용</p>
+<div class="flow"><code>*.mp4 → analysis/sensory_map.py → *-map.json</code><br><code>events</code> 전체 지도 / <code>noticeEvents</code> 예고 / <code>curves</code> 측정곡선 / <code>noticeMethod</code> 기준<br><code>web/dist/app.js</code>가 지도·예고를 표시하고 사용자가 선택한 소리 처리를 적용</div>
+<div class="refs"><div>[1] <a href="https://tech.ebu.ch/docs/tech/tech3341.pdf">EBU Tech 3341 (2023), §§2.2·2.5, pp5–6</a><br>[2] <a href="https://tech.ebu.ch/docs/tech/tech3342.pdf">EBU Tech 3342 (2023), §§2–3.1, pp4–5</a><br>[3] <a href="https://tech.ebu.ch/docs/r/r128.pdf">EBU R128 (2023), p4 각주2</a></div><div>[4] <a href="https://ffmpeg.org/ffmpeg-filters.html#ebur128-1">FFmpeg Filters: ebur128 · signalstats</a><br>[5] <a href="https://www.w3.org/TR/webaudio-1.0/">W3C Web Audio (2021), §§1.13·1.19</a><br>[6] <a href="https://www.dpamicrophones.com/mic-university/background-knowledge/facts-about-speech-intelligibility/">DPA, Facts about speech intelligibility</a></div></div>
+</main><footer><span>코드·생성 JSON 대조 · 별도 출처 원장 및 실행 기록 제공</span><span>2026-11-04 · 1 / 1</span></footer></article></html>

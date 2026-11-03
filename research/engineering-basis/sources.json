@@ -1,0 +1,85 @@
+{
+  "verified_on": "2026-11-04",
+  "scope": "공학 측정·구현과 사업화 표현, 기존 감각 연구 17건 집계와 별도",
+  "sources": [
+    {
+      "id": "E1",
+      "title": "EBU Tech 3341, v4 (2023)",
+      "url": "https://tech.ebu.ch/docs/tech/tech3341.pdf",
+      "location": "PDF pp5–6, §§2.2·2.5",
+      "supports": "순간 400ms 및 LU/LUFS 단위; +18 scale은 계기 표시 범위"
+    },
+    {
+      "id": "E2",
+      "title": "EBU Tech 3342, v4 (2023)",
+      "url": "https://tech.ebu.ch/docs/tech/tech3342.pdf",
+      "location": "PDF pp4–5, §§2–3.1",
+      "supports": "3초 라우드니스 분포의 10–95백분위 LRA; 순간 상승 18LU 권고를 제공하지 않음"
+    },
+    {
+      "id": "E3",
+      "title": "EBU R128, v5 (2023)",
+      "url": "https://tech.ebu.ch/docs/r/r128.pdf",
+      "location": "PDF p4, footnote2",
+      "supports": "1분 미만 LRA 사용 권장하지 않음"
+    },
+    {
+      "id": "E4",
+      "title": "FFmpeg Filters Documentation",
+      "url": "https://ffmpeg.org/ffmpeg-filters.html",
+      "location": "ebur128 / signalstats",
+      "supports": "100ms 메타데이터 프레임 및 YAVG"
+    },
+    {
+      "id": "E5",
+      "title": "W3C Web Audio API (2021)",
+      "url": "https://www.w3.org/TR/webaudio-1.0/",
+      "location": "§§1.13·1.19",
+      "supports": "peaking EQ와 DynamicsCompressor 파라미터의 의미"
+    },
+    {
+      "id": "E6",
+      "title": "DPA, Facts about speech intelligibility",
+      "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/facts-about-speech-intelligibility/",
+      "location": "Speech spectrum / microphone placement",
+      "supports": "2–4kHz 명료도 관련 음향 해설; Q1/+4dB의 보편적 최적성 근거와 구분"
+    },
+    {
+      "id": "B1",
+      "title": "방송통신위원회 2024년 방송매체 이용행태 조사",
+      "url": "https://www.kmcc.go.kr/download.do?fileSeq=60258",
+      "location": "PDF pp5,24",
+      "supports": "만13세이상8316명, OTT79.2%, 유튜브 포함"
+    },
+    {
+      "id": "B2",
+      "title": "EU Council, Accessibility to products and services",
+      "url": "https://www.consilium.europa.eu/en/policies/accessibility-goods-services/",
+      "location": "Accessibility of products and services / Making the rules work",
+      "supports": "2025-06-28 적용; 시청각 미디어 접근 서비스; 예외 있음"
+    },
+    {
+      "id": "B3",
+      "title": "장애인차별금지법 제20조",
+      "url": "https://www.law.go.kr/LSW/lsSideInfoP.do?docCls=jo&joBrNo=00&joNo=0020&lsiSeq=279699&urlMode=lsScJoRltInfoR",
+      "location": "시행2025-11-11",
+      "supports": "정보접근에서의 차별금지"
+    },
+    {
+      "id": "B4",
+      "title": "장애인차별금지법 제21조",
+      "url": "https://www.law.go.kr/LSW/lsSideInfoP.do?docCls=jo&joBrNo=00&joNo=0021&lsiSeq=279699&urlMode=lsScJoRltInfoR",
+      "location": "시행2025-11-11",
+      "supports": "정보통신·의사소통 등 정당한 편의제공"
+    },
+    {
+      "id": "B5",
+      "title": "OSI, MIT License",
+      "url": "https://opensource.org/license/mit",
+      "location": "License text / repository LICENSE",
+      "supports": "판매·재배포 허용; SDK·기관 서비스는 사업화 계획"
+    }
+  ],
+  "source_boundary": "문헌의 측정 정의·법적 범위와 팀 파라미터·사업화 계획을 구분",
+  "parameter_provenance": "analysis/sensory_map.py 및 web/dist/app.js 코드 확인, 수치의 최적성 실험 자료는 별도 필요"
+}

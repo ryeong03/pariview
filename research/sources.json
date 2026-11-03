@@ -390,6 +390,21 @@
     "raw_data_reviewed": false,
     "relayed_by_agent": "0785a459-bc74-4646-915a-d84a20c2db32",
     "relay_message_id": "4a286598-7a29-451b-93de-8812edbae18c",
-    "separation": "76명 온라인 설문·10종 시뮬레이션·자동 기능검사와 별도 기록 · field-kit은 제공용 서식이며 이미 수행된 절차로 연결하지 않음"
+    "separation": "76명 온라인 설문·10종 시뮬레이션·자동 기능검사와 별도 기록 · field-kit은 제공용 서식이며 이미 수행된 절차로 연결하지 않음",
+    "comparison_records_available": false,
+    "reference_preferences_available": false,
+    "numeric_results_available": false,
+    "followup_history": [
+      {
+        "date": "2026-11-04",
+        "question_topic": "당사자 검증에서 비교마다 제시한 값·선택·별도 선호값 기록 여부",
+        "user_reply": "검증은 했지만 그 수치는 기록하지 않았어",
+        "source_type": "user_statement_relayed_by_agent",
+        "relayed_by_agent": "0785a459-bc74-4646-915a-d84a20c2db32",
+        "relay_message_id": "4f01851b-f880-426f-af59-5053f7158cc9",
+        "interpretation": "참여 검증 완료 확인은 유지하며 비교별 오차·수렴 곡선 생성에 필요한 수치 기록은 없음",
+        "effect": "당사자 오차 그래프 생성하지 않음 · 적응형 알고리즘용 빈 기록·분석 서식과 합성 데이터 시뮬레이션은 별도"
+      }
+    ]
   }
 }

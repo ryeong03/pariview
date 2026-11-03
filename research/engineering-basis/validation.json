@@ -1,0 +1,63 @@
+{
+  "checked_at": "2026-11-04T06:08:44.049308+09:00",
+  "git_head": "b18fcb7057b13e709403206a0f017ee57d0ee69d",
+  "files_sha256": {
+    "analysis/sensory_map.py": "1272782f361325cf5954c5de99fc856fb6927100dab11ec78e12e726d45f11b4",
+    "analysis/notice_report.py": "4af2a2200360dd7cb61a166e6139e4bf2e0d2375d31e3eb913f9befe283ee914",
+    "web/dist/app.js": "f5380d035d15a7009810e4606ebcae698694f89e15d4be7944883ed8e9f845fa",
+    "LICENSE": "6b37e3570674989e2eb9a49444a81e4623a35a6a2b44fa240a6ea7424ed305b2"
+  },
+  "constants": {
+    "SOUND_RISE_LU": 6.0,
+    "SOUND_LOUD_LUFS": -16.0,
+    "LIGHT_JUMP_Y": 18.0,
+    "MERGE_GAP_S": 0.4,
+    "MIN_LEN_S": 0.2,
+    "LIGHT_HOLD_S": 0.8,
+    "SILENCE_LUFS": -70.0,
+    "NOTICE_SOUND_RISE_LU": 18.0,
+    "NOTICE_SOUND_ABOVE_MED_LU": 4.0,
+    "NOTICE_SOUND_LOUD_OVER_MED": 12.0,
+    "NOTICE_LIGHT_JUMP_Y": 45.0,
+    "NOTICE_LIGHT_RANGE_RATIO": 0.3,
+    "NOTICE_COOLDOWN_S": 5.0,
+    "NOTICE_MERGE_S": 2.0,
+    "NOTICE_SKIP_START_S": 1.0
+  },
+  "clips": [
+    {
+      "clip": "tears-lab",
+      "duration": 44.96,
+      "events": 13,
+      "notices": 3,
+      "sha256": "6bb8e42a33d7a8a6df538350b12de59e8dd4cf0602644b60ccc982c92267dc8e"
+    },
+    {
+      "clip": "sintel",
+      "duration": 44.96,
+      "events": 19,
+      "notices": 5,
+      "sha256": "6499dd08a23122c9827e2a331bc9c3c24adb04f291a992bdd1463e23e0bb033e"
+    },
+    {
+      "clip": "bunny",
+      "duration": 44.96,
+      "events": 20,
+      "notices": 3,
+      "sha256": "30a859ae862b261b47080cae342bd2545e79bc61c4c520a271b97a5665891bd2"
+    }
+  ],
+  "notice_check_exit": 0,
+  "layout": {
+    "footerGap": 7.34375,
+    "overflow": [],
+    "fonts": [
+      "loaded",
+      "loaded"
+    ]
+  },
+  "pdf_pages": 1,
+  "pdf_size": "A4",
+  "pdf_links": 6,
+  "pass": true
+}
