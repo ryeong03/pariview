@@ -9,6 +9,7 @@ import {renderResearchPage} from './research-page.js';
 import {defaults,ranges,toggles,modes,normalize,modeSettings} from './settings.js';
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const KEY='pariview-fit-v1',mediaQuery=matchMedia('(prefers-reduced-motion: reduce)');
+let noticeEvents=[],noticeShown=null;
 let reduced=mediaQuery.matches,original=false,muted=true,settings={...defaults},saved=false,recommendation=null;
 try{const data=JSON.parse(localStorage.getItem(KEY));if(data?.settings){settings=normalize(data.settings);saved=true;}}catch{}
 const video=$('#film');
@@ -49,7 +50,8 @@ function reflect(){
  $('#profile-state').textContent=saved?'내 설정이 저장되어 있어요':'아직 피팅 전이에요';
  $('#fit-status').textContent=original?'원본 비교':saved?'저장한 설정':'조절 중';
  if(!settings.autoBrightness)sceneLift=1;applyLook();routeAudio();renderCaptions();renderChart();
- if(!settings.notices){$('#event-notice').hidden=true;$('#view-event-notice').hidden=true;}
+ if(!settings.notices||original){$('#event-notice').hidden=true;$('#view-event-notice').hidden=true;noticeShown=null;}
+ syncNoticeToggle();
 }
 for(const key of Object.keys(ranges))$('#'+key)?.addEventListener('input',e=>{settings[key]=Number(e.target.value);original=false;saved=false;reflect();});
 for(const key of toggles)$('#'+key)?.addEventListener('click',()=>{settings[key]=!settings[key];original=false;saved=false;reflect();});
@@ -86,10 +88,10 @@ function renderSensoryMap(map){
  const label=$('.sensory-track .track-title small');label.textContent='영상 신호로 측정한 구간';label.title=`${map.method.sound}\n${map.method.light}\n${map.method.note}`;
 }
 async function loadSensoryMap(){
- const epoch=++mapEpoch;events=[];
+ const epoch=++mapEpoch;events=[];noticeEvents=[];noticeShown=null;
  $$('.sensory-track .lane>div').forEach(el=>el.replaceChildren());
  const label=$('.sensory-track .track-title small');label.textContent='변화 구간 불러오는 중';label.title='';
- try{const response=await fetch(currentScene.map);if(!response.ok)throw Error('map');const map=await response.json();if(epoch!==mapEpoch)return;events=map.events;renderSensoryMap(map);updateTime();}
+ try{const response=await fetch(currentScene.map);if(!response.ok)throw Error('map');const map=await response.json();if(epoch!==mapEpoch)return;events=map.events;noticeEvents=prepareNotices(map);renderSensoryMap(map);updateTime();}
  catch{if(epoch===mapEpoch)label.textContent='변화 구간을 불러오지 못했어요';}
 }
 function renderSceneOptions(){
@@ -119,12 +121,44 @@ $('#close-scene').onclick=()=>$('#scene-dialog').close();
 $('#scene-options').onclick=e=>{const button=e.target.closest('[data-scene]');if(!button)return;$('#scene-dialog').close();if(button.dataset.scene!==currentScene.id)selectScene(button.dataset.scene);$('#choose-scene').focus({preventScroll:true});};
 $('#next-scene').onclick=()=>selectScene(scenes[(scenes.indexOf(currentScene)+1)%scenes.length].id,true);
 $('#replay-scene').onclick=()=>{video.currentTime=0;$('#scene-ended').hidden=true;play();};
+// Pre-change notices (alltology UX 4d17ea6): only map.noticeEvents (strong changes, 5 s apart), shown for the last 3 s before each change
+const NOTICE_LEAD=3;
+function prepareNotices(map){
+ const lights=(map.events||[]).filter(e=>e.type==='빛 변화');
+ return (Array.isArray(map.noticeEvents)?map.noticeEvents:[]).map(n=>{
+  const light=n.type==='소리 변화'?null:lights.find(e=>e.at>=n.at-.15&&e.at<=(n.end??n.at)+.15);
+  return {...n,direction:light?.direction||''};
+ });
+}
+function noticeCopy(n){
+ const dir=n.direction==='어두워짐'?'어두워져요':'밝아져요';
+ if(n.type==='소리 변화')return {title:'큰 소리 변화',sub:'소리가 갑자기 커져요',icons:['i-sound']};
+ if(n.type==='빛 변화')return {title:'큰 빛 변화',sub:`화면이 갑자기 ${dir}`,icons:[n.direction==='어두워짐'?'i-moon':'i-sun']};
+ return {title:'큰 빛·소리 변화',sub:`화면이 ${n.direction==='어두워짐'?'어두워지고':'밝아지고'} 소리도 커져요`,icons:[n.direction==='어두워짐'?'i-moon':'i-sun','i-sound']};
+}
+function renderNotice(t){
+ const el=$('#view-event-notice'),next=noticeEvents.find(n=>n.at>t&&n.at-t<=NOTICE_LEAD);
+ const show=!!next&&settings.notices&&!original&&!video.paused&&!$('#fit-dialog').open;
+ if(!show){el.hidden=true;if(!next)noticeShown=null;return;}
+ const sec=Math.max(1,Math.ceil(next.at-t));
+ if(noticeShown!==next){
+  noticeShown=next;const c=noticeCopy(next);
+  el.dataset.kind=next.type==='소리 변화'?'sound':next.type==='빛 변화'?'light':'both';
+  el.innerHTML=`<span class="notice-count" aria-hidden="true"><b>${sec}</b><small>초 뒤</small></span><span class="notice-icons" aria-hidden="true">${c.icons.map(i=>`<svg><use href="#${i}"/></svg>`).join('')}</span><span class="notice-text"><b>${c.title}</b><small>${c.sub}</small></span><span class="sr-only">곧 ${c.title} ${c.sub}</span>`;
+ } else el.querySelector('.notice-count b').textContent=sec;
+ el.hidden=false;
+}
+function syncNoticeToggle(){
+ const b=$('#notice-toggle');if(!b)return;
+ b.setAttribute('aria-pressed',String(!!settings.notices));b.classList.toggle('on',!!settings.notices);
+ b.querySelector('i').textContent=settings.notices?'ON':'OFF';
+}
+$('#notice-toggle')?.addEventListener('click',()=>{settings.notices=!settings.notices;saved=false;reflect();if(settings.notices)renderNotice(video.currentTime||0);});
 function updateTime(){
  const t=video.currentTime||0,d=Number.isFinite(video.duration)?video.duration:currentScene.duration;
  if(!$('#fit-dialog').open)furthestTime=Math.max(furthestTime,t);
  $('#current-time').textContent=formatTime(t);$('#seek').value=t;fillRange($('#seek'));$('.track-playhead').style.left=`calc(32px + (100% - 32px) * ${t/d})`;
- const next=events.find(e=>e.at>=t&&e.at-t<=3),notice=$('#view-event-notice');notice.hidden=!(next&&settings.notices&&!video.paused&&!$('#fit-dialog').open);
- if(next)notice.textContent=`${Math.max(1,Math.ceil(next.at-t))}초 뒤 ${next.type}`;
+ renderNotice(t);
  if(t<d-.1)$('#scene-ended').hidden=true;
  renderCaptions();
 }
@@ -247,7 +281,7 @@ async function startComparison(audioKey=null){
 }
 function renderModes(){
  stopPreview();gsap.set('#fit-progress-fill',{width:'10%'});const selected=modes[modeIndex];
- $('#fit-body').innerHTML=phaseNav(1)+`<div class="fit-step-count">나의 출발점 고르기 <span>1 / 3 단계</span></div><h2 class="fit-heading">오늘은 어떻게 보고 싶나요?</h2><p class="fit-subtitle">다섯 가지 프로필 중 가까운 모드를 골라주세요 다음 화면에서 하나씩 비교해요</p><div class="mode-options">${modes.map((m,i)=>`<button class="mode-option ${i===modeIndex?'selected':''}" data-mode="${i}" aria-pressed="${i===modeIndex}">${recommendation?.id===m.id?'<span class="recommend-badge">추천</span>':''}<svg><use href="#i-${m.icon}"/></svg><span class="mode-en">${m.en}</span><b>${m.title}</b><p>${m.desc}</p><span class="mode-check">${i===modeIndex?'✓ 선택했어요':'이 모드로 시작'}</span></button>`).join('')}</div><div class="mode-detail"><b>${selected.en}</b>${selected.features.join(' · ')}${selected.values.backgroundReduction||selected.values.transitionSoftening?'<p class="mock-label">배경음 분리와 장면 전환 완화는 설정 화면을 체험하는 기능 목업이에요</p>':''}</div><div class="fit-actions"><button class="back" id="mode-current">기존 설정에서 비교</button><button class="primary" id="start-comparison">장면 비교하기 <svg><use href="#i-arrow"/></svg></button></div><p class="fit-footnote">필요에 맞게 직접 고르고 언제든 바꿀 수 있어요</p>`;
+ $('#fit-body').innerHTML=phaseNav(1)+`<div class="fit-step-count">나의 출발점 고르기 <span>1 / 3 단계</span></div><h2 class="fit-heading">오늘은 어떻게 보고 싶나요?</h2><p class="fit-subtitle">다섯 가지 프로필 중 가까운 모드를 골라주세요 다음 화면에서 하나씩 비교해요</p><div class="mode-options">${modes.map((m,i)=>`<button class="mode-option ${i===modeIndex?'selected':''}" data-mode="${i}" aria-pressed="${i===modeIndex}">${recommendation?.id===m.id?'<span class="recommend-badge">추천</span>':''}<svg><use href="#i-${m.icon}"/></svg><span class="mode-en">${m.en}</span><b>${m.title}</b><p>${m.desc}</p><span class="mode-check">${i===modeIndex?'✓ 선택했어요':'이 모드로 시작'}</span></button>`).join('')}</div><div class="mode-detail"><b>${selected.en}</b>${selected.features.join(' · ')}</div><div class="fit-actions"><button class="back" id="mode-current">기존 설정에서 비교</button><button class="primary" id="start-comparison">장면 비교하기 <svg><use href="#i-arrow"/></svg></button></div><p class="fit-footnote">필요에 맞게 직접 고르고 언제든 바꿀 수 있어요</p>`;
  $$('[data-mode]').forEach(b=>b.onclick=()=>{modeIndex=Number(b.dataset.mode);renderModes();});
  $('#start-comparison').onclick=()=>{fitBase=modeSettings(modes[modeIndex].id,recommendation?.notices??settings.notices);fitStep=0;renderFit();};
  $('#mode-current').onclick=()=>{fitBase={...settings};if(recommendation)fitBase.notices=recommendation.notices;fitStep=0;renderFit();};
