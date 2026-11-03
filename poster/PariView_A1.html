@@ -14,7 +14,7 @@
     --text: #f3f2f8; --muted: #aaa7bd; --red: #ff2e63; --blue: #3ef2ff; --gold: #c6ff4a;
   }
   html, body { margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: "Pretendard", "Apple SD Gothic Neo", sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { word-break: keep-all; overflow-wrap: anywhere; background: var(--bg); color: var(--text); font-family: "Pretendard", "Apple SD Gothic Neo", sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   h1, h2, h3, p, ul { margin: 0; padding: 0; }
   li { list-style: none; }
   svg { display: block; }
@@ -34,9 +34,9 @@
 
   /* header */
   header { height: 97mm; display: grid; grid-template-columns: 1fr 150mm; gap: 8mm; position: relative; }
-  .brand { display: flex; align-items: center; gap: 4mm; height: 11mm; }
-  .brand .symbol { height: 10mm; }
-  .brand .wordmark { height: 9mm; }
+  .brand { display: flex; align-items: center; gap: 3mm; height: 13mm; }
+  .brand .symbol { height: 12mm; }
+  .brand .wordmark { height: 12.5mm; }
   .brand .affil { margin-left: 5mm; font-size: 15pt; color: var(--muted); }
   h1 { margin-top: 6mm; font-size: 58pt; font-weight: 800; letter-spacing: -2.2pt; line-height: 1.1; }
   h1 em { font-style: normal; color: var(--red); }
@@ -82,6 +82,12 @@
   .step h3 { display: inline; font-size: 20pt; margin-left: 2mm; }
   .step img { display: block; width: 100%; height: 75mm; object-fit: cover; object-position: top center; border-radius: 3mm; margin: 3mm 0; background: #fff; }
   .step img.fit { object-fit: contain; object-position: center; }
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; height: 75mm; margin: 3mm 0; }
+  .compare figure { margin: 0; display: flex; flex-direction: column; gap: 1.5mm; min-height: 0; }
+  .compare img { width: 100%; height: auto; flex: 1; min-height: 0; object-fit: cover; border-radius: 1mm; border: .3mm solid var(--line); margin: 0; }
+  .compare figcaption { font-size: 11pt; color: var(--muted); line-height: 1.3; height: 5.5mm; white-space: nowrap; overflow: hidden; }
+  .compare figcaption b { display: inline-block; padding: .4mm 1.8mm; margin-right: 1.5mm; border: .3mm solid var(--muted); border-radius: 1mm; color: var(--text); font-size: 10.5pt; }
+  .compare figcaption b.on { border-color: var(--lime); color: var(--lime); }
   .step p { font-size: 14pt; line-height: 1.4; color: var(--muted); }
   .profiles-title { display: flex; align-items: baseline; gap: 4mm; margin: 4mm 0 2.5mm; }
   .profiles-title h3 { font-size: 19pt; }
@@ -175,7 +181,7 @@
 
 <header class="block">
   <div>
-    <div class="brand"><img class="symbol" src="assets/pariview-symbol.svg" alt=""><img class="wordmark" src="assets/pariview-wordmark.svg" alt="PariView"><span class="affil">이화여자대학교 · 2026 공과대학 캡스톤디자인 · 사회기여형</span></div>
+    <div class="brand"><img class="symbol" src="assets/logo-symbol-3d.png" alt=""><img class="wordmark" src="assets/logo-wordmark-3d.png" alt="PariView"><span class="affil">이화여자대학교 · 2026 공과대학 캡스톤디자인 · 사회기여형</span></div>
     <h1>화면과 소리,<br><em>내가 정하면 안 되나요?</em></h1>
     <p class="formal">감각 과부하 감소와 미디어 접근성 향상을 위한<br>적응형 시청 시스템</p>
   </div>
@@ -226,9 +232,9 @@
 <section id="s2" class="block sec">
   <div class="sec-head"><span class="no">2</span><h2>PariView의 핵심 솔루션</h2><img class="wizard-head" src="assets/wizard-render.png" alt=""><span class="tag">HOW · 실제 화면</span></div>
   <div class="steps">
-    <div class="step"><span class="label">STEP 01</span><h3>감각 프로필 선택</h3><img class="fit" src="assets/step1.png" alt=""><p>다섯 가지 출발점 중 오늘과 가까운 모드를 골라요 질문 두 개로 추천도 받아요</p></div>
-    <div class="step"><span class="label">STEP 02</span><h3>같은 장면 반응 비교</h3><img class="fit" src="assets/step2.png" alt=""><p>밝기·대비·소리 크기·음량 변화 완화·쉬운 자막을 A/B로 다섯 번 비교해요</p></div>
-    <div class="step"><span class="label">STEP 03</span><h3>맞춤형 시청 환경</h3><img src="assets/step3.png" alt=""><p>고른 설정으로 보고 영상 아래에서 바로 다시 조절해요 원본 비교와 기본값 복귀도 한 번에</p></div>
+    <div class="step"><span class="label">STEP 01</span><h3>감각 프로필 선택</h3><img class="fit" src="assets/step1.png" alt=""><p>다섯 가지 출발점 중 오늘과 가까운 모드를 골라요<br>질문 두 개로 추천도 받아요</p></div>
+    <div class="step"><span class="label">STEP 02</span><h3>같은 장면 반응 비교</h3><img class="fit" src="assets/step2.png" alt=""><p>밝기·대비·소리 크기·음량 변화 완화·쉬운 자막을<br>A/B로 다섯 번 비교해요</p></div>
+    <div class="step"><span class="label">STEP 03</span><h3>맞춤형 시청 환경</h3><div class="compare"><figure><figcaption><b>원본</b>밝기 100 · 대비 100 · 기본 자막</figcaption><img src="assets/compare-original.png" alt=""></figure><figure><figcaption><b class="on">맞춤</b>밝기 55 · 대비 110 · 채도 45 · 쉬운 자막 크게</figcaption><img src="assets/compare-custom.png" alt=""></figure></div><p>같은 장면을 원본과 맞춤 설정으로 바로 비교해요<br>영상 아래에서 다시 조절하고 기본값으로 돌아갈 수 있어요</p></div>
   </div>
   <div class="profiles-title"><h3>5가지 감각 프로필</h3><span>진단이 아닌 시작점이에요 고른 뒤 비교하며 언제든 바꿀 수 있어요</span></div>
   <div class="profiles" id="profiles"></div>
@@ -273,7 +279,7 @@
           <rect x="354" y="170" width="104" height="30" rx="4" fill="none" stroke="#ff2e63" stroke-width="2"/><text x="406" y="190" text-anchor="middle" font-size="14">compressor</text>
           <path d="M458 185h14" stroke="#aaa7bd" stroke-width="2" marker-end="url(#ar)"/>
           <rect x="476" y="170" width="56" height="30" rx="4" fill="none" stroke="#ff2e63" stroke-width="2"/><text x="504" y="190" text-anchor="middle" font-size="14">gain</text>
-          <path d="M416 149h30v36h-30" stroke="#ff2e63" stroke-width="2" fill="none"/>
+          <path d="M416 149h146" stroke="#ff2e63" stroke-width="2.5" marker-end="url(#ar)" fill="none"/>
           <path d="M532 185h30" stroke="#ff2e63" stroke-width="2.5" marker-end="url(#ar)"/>
           <rect x="566" y="134" width="120" height="66" rx="5" fill="#ff2e63"/><text x="626" y="162" text-anchor="middle" font-weight="800">영상 출력</text><text x="626" y="184" text-anchor="middle" font-size="13">video 요소</text>
           <path d="M686 167h20" stroke="#aaa7bd" stroke-width="2" marker-end="url(#ar)"/>
@@ -291,8 +297,8 @@
           <path d="M698 267h24" stroke="#4df3ff" stroke-width="2.5" marker-end="url(#arC)"/>
           <rect x="726" y="246" width="150" height="42" rx="5" fill="none" stroke="#ff2e63" stroke-width="2.5"/><text x="801" y="266" text-anchor="middle" font-weight="700">02 렌더링 재적용</text><text x="801" y="282" text-anchor="middle" font-size="12" fill="#aaa7bd">유튜브 등 video</text>
           <rect x="890" y="246" width="96" height="42" rx="5" fill="none" stroke="#4df3ff" stroke-width="2.5"/><text x="938" y="266" text-anchor="middle" font-weight="700">popup</text><text x="938" y="282" text-anchor="middle" font-size="12" fill="#aaa7bd">켜기 · 끄기</text>
-          <path d="M417 74v16" stroke="#cdff5f" stroke-width="2.5" marker-end="url(#arL)"/><text x="428" y="92" font-size="11" fill="#cdff5f">적용</text>
-          <path d="M84 200v40" stroke="#4df3ff" stroke-width="2.5" marker-end="url(#arC)"/><text x="94" y="226" font-size="11" fill="#4df3ff">저장</text>
+
+          <path d="M350 74v18h-305v150" stroke="#cdff5f" stroke-width="2.5" fill="none" marker-end="url(#arL)"/><text x="52" y="121" font-size="11" fill="#cdff5f">설정 저장</text>
         </g>
       </svg>
       <div class="map-box">
@@ -305,7 +311,7 @@
       <li><i>②</i><div><b>HTML · CSS · JavaScript</b><p>빌드 없는 정적 웹으로 다섯 프로필, A/B 비교, 세부 설정 UI 구현 · Three.js · Anime.js 3D 로고와 마스코트</p></div></li>
       <li><i>③</i><div><b>Web Audio API · CSS filter</b><p>고음 완화 → 2–4kHz 말소리 강조 → 음량 변화 압축 → 음량 · 밝기·대비·채도·색온도</p></div></li>
       <li><i>④</i><div><b>Content Script</b><p>웹페이지의 video 요소에 접근해 사용자 설정에 따라 화면과 소리를 조정 · DRM 영상은 화면만 조정</p></div></li>
-      <li><i>⑤</i><div><b>localStorage · chrome.storage.local</b><p>로컬 기반 설정 저장 · 서버에 개인 정보를 보내지 않아요 · Docker · Nginx · Railway로 데모 배포</p></div></li>
+      <li><i>⑤</i><div><b>localStorage · chrome.storage.local</b><p>확정한 설정은 브라우저에 저장해요 · 추천은 고른 필요와 현재 설정만 보내요 · Docker · Python 서버 · Railway 배포</p></div></li>
     </ul>
   </div>
 </section>
@@ -328,15 +334,15 @@
       <div class="effect"><b>감각 부담 줄이기</b><p>과도한 시청각 자극을 사용자가 직접 낮출 수 있도록 지원</p></div>
       <div class="effect"><b>미디어 접근성 향상</b><p>신경다양성 이용자의 콘텐츠 접근 장벽 완화</p></div>
       <div class="effect"><b>개인 맞춤형 시청 환경</b><p>프로필과 비교 결과를 반영한 시청 설정</p></div>
-      <div class="effect"><b>디지털 포용 확대</b><p>다양한 감각 특성을 고려한 문화 향유 기회</p></div>
+      <div class="effect"><b>디지털 포용 확대</b><p>오픈소스로 공개해 다양한 플랫폼이 함께 쓰는 접근성</p></div>
     </div>
     <div class="poc">
-      <span class="t">검증 · AI 페르소나 10명 시뮬레이션 · 화면 자동 검증</span>
+      <span class="t">검증 · 사용자 시나리오 10종 시뮬레이션 · 화면 자동 검증</span>
       <div><b>−59%</b><span>목표값과의 평균 오차<br>0.189 → 0.077</span></div>
-      <div><b>10/10</b><span>피팅 후 오차가<br>줄어든 페르소나</span></div>
+      <div><b>10/10</b><span>피팅 후 오차가<br>줄어든 시나리오</span></div>
       <div><b>6/6</b><span>확장 프로그램<br>실측 항목 통과</span></div>
     </div>
-    <p class="next"><b>향후</b> 고른 값 근처에서 한 번 더 비교하는 2단계 비교 · 실제 사용자 사용성 평가(SUS) · 영상 클립과 OTT 연동 확대</p>
+    <p class="next"><b>향후</b> 오픈소스(MIT) 공개를 통한 OTT 지원 확대 · 고른 값 근처에서 한 번 더 비교하는 2단계 비교 · 실제 사용자 사용성 평가(SUS)</p>
   </section>
 </div>
 

@@ -22,6 +22,8 @@
 | ![첫 화면](docs/images/hero-desktop.png) | ![영상 아래 조절 dock](docs/images/studio-desktop.png) |
 | **시작 프로필 고르기** | **같은 장면 A/B 비교** |
 | ![다섯 가지 시작 프로필](docs/images/fit-profiles.png) | ![밝기 A/B 비교](docs/images/fit-compare.png) |
+| **연구 기반 추천** | **다른 장면 고르기** |
+| ![이유와 출처를 확인하고 수정하는 추천](docs/images/recommendation.png) | ![세 작품 중 비교 장면 고르기](docs/images/scene-picker.png) |
 | **크롬에서 쓰기** | **모바일** |
 | ![크롬 확장 프로그램 연결](docs/images/chrome-tab.png) | <img src="docs/images/hero-mobile.png" alt="모바일 첫 화면" width="260"> |
 
@@ -47,7 +49,9 @@
 
 시작 프로필은 고쳐 쓸 수 있는 출발점이에요 실제 값은 [`web/dist/settings.js`](web/dist/settings.js)에 있어요
 
-**영상은 세 작품에서 45초씩, 총 2분 15초**를 제공해요 ‘장면 고르기’에서 Tears of Steel의 연구실, Sintel의 대화와 도시, Big Buck Bunny의 밝은 초원을 바꿔 볼 수 있어요 선택한 화면·소리 설정은 영상이 바뀌어도 유지돼요
+**영상은 세 작품에서 45초씩, 총 2분 15초**를 제공해요 ‘장면 고르기’에서 Tears of Steel의 연구실, Sintel의 대화와 도시, Big Buck Bunny의 밝은 초원을 바꿔 볼 수 있어요
+
+장면을 바꾸면 측정된 밝기·소리 특징에 따라 현재 값을 조금 조절해요 ‘장면 맞춤’에서 이유를 확인하고 원래대로 되돌리거나 자동 조절을 끌 수 있어요 이전 보정은 쌓이지 않고 직접 바꾼 값은 남으며, 저장 버튼을 누르기 전에는 브라우저에 저장한 설정이나 확장 프로그램에 전달하지 않아요 이 장면별 조절은 측정값에 따른 규칙으로 동작해요
 
 Claude는 검토된 후보 중 시작 설정과 다음 비교 항목을 고르고, 설명과 출처는 검증한 카탈로그에서 가져와요 AI 연결이 없거나 응답을 검증하지 못하면 ‘연구 기반 기본 제안’으로 이어져요 실제 모델 응답이 검증된 결과에만 ‘AI 추천’을 표시하며 사용자가 확정할 때만 저장해요
 
