@@ -136,7 +136,15 @@ flowchart LR
 | `research/` | 문헌 정리와 출처 |
 | `Dockerfile`, `deploy/` | Railway Python 서버 배포 설정과 운영 안내 |
 
+## 오픈소스로 넓혀가는 시청 접근성
+
+PariView가 작성한 소스 코드는 [MIT License](LICENSE)로 공개해요 화면·소리 조절과 확장 프로그램 코드를 누구나 검토하고 개선할 수 있어요
+현재 검증한 유튜브 연동을 출발점으로, 커뮤니티와 함께 OTT별 플레이어 지원과 접근성 기능을 넓혀가요 각 서비스는 실제 검증을 거친 뒤 지원 목록에 추가해요
+[기여 방법과 실행·검증 안내](CONTRIBUTING.md)에서 함께할 수 있는 작업을 확인할 수 있어요
+
 ## 출처와 라이선스
+
+프로젝트의 MIT 라이선스는 PariView 자체 코드에 적용하며, 아래 제삼자 소재와 라이브러리의 라이선스를 대체하지 않아요
 
 - 영화: Tears of Steel (00:47~01:32), Sintel (02:20~03:05), Big Buck Bunny (00:50~01:35) · Blender Foundation / 해당 작품 크레디트 · [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) · [클립별 출처와 변경 내역](web/dist/assets/FILM-LICENSE.txt)
 - 글꼴: Pretendard, SIL Open Font License ([`OFL.txt`](web/dist/assets/OFL.txt))

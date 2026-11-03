@@ -1,6 +1,6 @@
 {
  "summary": {
-  "label": "AI 페르소나 10명 시뮬레이션",
+  "label": "사용자 시나리오 10종 시뮬레이션",
   "personas": 10,
   "meanErrorDefault": 0.1893,
   "meanErrorFitted": 0.0773,
