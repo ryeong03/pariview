@@ -66,8 +66,18 @@ function ensureUi() {
   pop.className = 'scene-adapt-pop'; pop.id = 'scene-adapt-pop'; pop.setAttribute('popover', 'auto'); pop.setAttribute('role', 'dialog'); pop.setAttribute('aria-label', '장면 맞춤 보정');
   pop.innerHTML = '<b>이 장면에 맞춰 바꿨어요</b><ul></ul><div class="scene-adapt-actions"><button type="button" data-adapt="off">장면마다 바꾸지 않기</button><button type="button" data-adapt="undo">원래대로</button></div>';
   button.setAttribute('popovertarget', pop.id);
-  const place = () => { const r = button.getBoundingClientRect(), w = Math.min(340, innerWidth - 24); pop.style.width = w + 'px'; pop.style.left = Math.max(12, Math.min(r.left, innerWidth - w - 12)) + 'px'; pop.style.top = (r.bottom + 8) + 'px'; };
+  const place = () => {
+    const r = button.getBoundingClientRect(), w = Math.min(340, innerWidth - 24);
+    pop.style.width = w + 'px';
+    const h = pop.getBoundingClientRect().height;
+    const below = r.bottom + 8, above = r.top - h - 8;
+    const preferred = below + h <= innerHeight - 12 ? below : above;
+    pop.style.left = Math.max(12, Math.min(r.left, innerWidth - w - 12)) + 'px';
+    pop.style.top = Math.max(12, Math.min(preferred, innerHeight - h - 12)) + 'px';
+  };
   pop.addEventListener('beforetoggle', e => { if (e.newState === 'open') place(); button.setAttribute('aria-expanded', String(e.newState === 'open')); });
+  // The open popover has a measurable height; choose above/below using its actual contents.
+  pop.addEventListener('toggle', e => { if (e.newState === 'open') place(); });
   const follow = () => { if (pop.matches(':popover-open')) place(); };
   addEventListener('scroll', follow, {passive: true}); addEventListener('resize', follow);
   pop.addEventListener('click', e => {
@@ -127,7 +137,7 @@ const style = document.createElement('style');
 style.textContent = `.scene-adapt-trigger{display:inline-flex;align-items:center;gap:7px;font:inherit;font-size:13px;font-weight:600;line-height:1;padding:8px 12px;border-radius:50px;border:1px solid #ffc2cd;background:#fff5f7;color:#fa0030;cursor:pointer;white-space:nowrap}
 .scene-adapt-trigger[hidden]{display:none}.scene-adapt-trigger:hover{background:#ffecef}.scene-adapt-trigger:focus-visible{outline:3px solid #fa003066;outline-offset:2px}
 .scene-adapt-dot{width:7px;height:7px;border-radius:50%;background:#fa0030}
-.scene-adapt-pop{position:fixed;inset:auto;margin:0;padding:16px 18px;border:1px solid #e7e8eb;border-radius:14px;background:#fff;color:#0d0e11;box-shadow:0 16px 40px #0d0e1626;font:14px/1.55 Pretendard,system-ui,sans-serif}
+.scene-adapt-pop{position:fixed;inset:auto;margin:0;box-sizing:border-box;max-height:calc(100dvh - 24px);overflow:auto;padding:16px 18px;border:1px solid #e7e8eb;border-radius:14px;background:#fff;color:#0d0e11;box-shadow:0 16px 40px #0d0e1626;font:14px/1.55 Pretendard,system-ui,sans-serif}
 .scene-adapt-pop b{font-size:14px}.scene-adapt-pop ul{margin:8px 0 14px;padding-left:18px;color:#4e5968;font-size:13px}.scene-adapt-pop li+li{margin-top:4px}
 .scene-adapt-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}.scene-adapt-pop button{font:inherit;font-size:13px;padding:8px 14px;border-radius:50px;border:1px solid #d5d7dc;background:#fff;color:#0d0e11;cursor:pointer}
 .scene-adapt-pop button[data-adapt=undo]{border-color:#fa0030;background:#fa0030;color:#fff;font-weight:600}
