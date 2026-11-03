@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>PariView — 감각 과부하 감소와 미디어 접근성 향상을 위한 적응형 시청 시스템 · A1</title>
+<style>
+  @page { size: 594mm 841mm; margin: 0; }
+  @font-face { font-family: "Pretendard"; font-weight: 400; src: url("assets/Pretendard-Regular.woff2") format("woff2"); }
+  @font-face { font-family: "Pretendard"; font-weight: 600; src: url("assets/Pretendard-SemiBold.woff2") format("woff2"); }
+  @font-face { font-family: "Pretendard"; font-weight: 700 900; src: url("assets/Pretendard-Bold.woff2") format("woff2"); }
+  * { box-sizing: border-box; }
+  :root {
+    --bg: #15131f; --panel: #1e1b2c; --panel-2: #272339; --line: #36314c;
+    --text: #f3f2f8; --muted: #c6c3d6; --red: #ff2e63; --blue: #3ef2ff; --gold: #c6ff4a;
+  }
+  html, body { margin: 0; padding: 0; }
+  body { word-break: keep-all; overflow-wrap: anywhere; background: var(--bg); color: var(--text); font-family: "Pretendard", "Apple SD Gothic Neo", sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  h1, h2, h3, p, ul { margin: 0; padding: 0; }
+  li { list-style: none; }
+  svg { display: block; }
+  svg text { font-family: "Pretendard", "Apple SD Gothic Neo", sans-serif; }
+  .poster { width: 594mm; height: 841mm; padding: 18mm 20mm 16mm; display: flex; flex-direction: column; gap: 4.6mm; overflow: hidden; }
+  .block { flex: none; overflow: hidden; }
+
+  /* section frame */
+  .sec { background: var(--panel); border-radius: 6mm; padding: 6mm 7mm; }
+  .sec-head { display: flex; align-items: center; gap: 4mm; margin-bottom: 4mm; }
+  .sec-head .no { display: inline-flex; align-items: center; justify-content: center; width: 12mm; height: 12mm; border-radius: 3mm; background: var(--red); font-size: 19pt; font-weight: 800; }
+  .sec-head h2 { font-size: 28pt; font-weight: 800; letter-spacing: -.6pt; }
+  .wizard-head { height: 31mm; margin: -12mm 0 -11mm 1mm; }
+  .sec-head .tag { margin-left: auto; font-size: 12pt; letter-spacing: 1.6pt; color: var(--muted); }
+  .muted { color: var(--muted); }
+  .note { font-size: 11.5pt; line-height: 1.4; color: var(--muted); }
+
+  /* header */
+  header { height: 84.2mm; display: grid; grid-template-columns: 1fr 150mm; gap: 8mm; position: relative; }
+  .brand { display: flex; align-items: center; gap: 3mm; height: 13mm; }
+  .brand .symbol { height: 12mm; }
+  .brand .wordmark { height: 12.5mm; }
+  .brand .affil { margin-left: 5mm; font-size: 15pt; color: var(--muted); }
+  h1 { margin-top: 6mm; font-size: 58pt; font-weight: 800; letter-spacing: -2.2pt; line-height: 1.1; }
+  h1 em { font-style: normal; color: var(--red); }
+  .formal { margin-top: 5mm; font-size: 31pt; font-weight: 700; letter-spacing: -.6pt; line-height: 1.3; }
+  .formal span { color: var(--muted); font-weight: 400; }
+  .side { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; }
+  .side-bottom { display: flex; align-items: flex-end; gap: 4mm; }
+  .team { text-align: right; font-size: 20pt; line-height: 1.5; }
+  .team small { display: block; font-size: 13pt; color: var(--muted); }
+  .falcon { height: 56mm; display: block; }
+  .demo-qr { display: flex; flex-direction: column; align-items: center; gap: 2mm; background: var(--panel); padding: 3mm 3.5mm; border-radius: 4mm; }
+  .demo-qr img { width: 31mm; height: 31mm; background: #fff; padding: 1.5mm; border-radius: 2mm; }
+  .demo-qr b { display: block; font-size: 14pt; }
+  .demo-qr span { display: block; font-size: 11pt; color: var(--muted); margin-top: 1mm; line-height: 1.35; }
+
+  /* 1 */
+  #s1 { height: 159.9mm; }
+  .s1-top { display: grid; grid-template-columns: 182mm 1fr 196mm; gap: 6mm; height: 66mm; }
+  .box { background: var(--panel-2); border-radius: 4mm; padding: 3.2mm 4.5mm; }
+  .box h3 { font-size: 18pt; font-weight: 700; margin-bottom: 2mm; }
+  .problems { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; text-align: center; }
+  .problems svg { width: 15mm; height: 15mm; margin: 0 auto 1.5mm; }
+  .problems p { font-size: 14.5pt; line-height: 1.35; }
+  .survey { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; text-align: center; }
+  .survey b { display: block; font-size: 36pt; font-weight: 800; color: var(--red); letter-spacing: -1pt; line-height: 1.1; }
+  .survey span { display: block; font-size: 14pt; line-height: 1.35; margin-top: 1.5mm; }
+  .targets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; text-align: center; }
+  .targets svg { width: 12mm; height: 12mm; margin: 0 auto 1mm; }
+  .targets p { font-size: 14.5pt; font-weight: 600; line-height: 1.3; }
+  .targets small { display: block; font-size: 11.5pt; color: var(--muted); font-weight: 400; margin-top: 1mm; line-height: 1.35; }
+  .evidence { display: grid; grid-template-columns: 30mm repeat(3, 1fr); gap: 5mm; margin-top: 4mm; align-items: stretch; height: 41mm; }
+  .evidence .lab { font-size: 15pt; font-weight: 700; color: var(--red); line-height: 1.3; padding-top: 2mm; }
+  .ev { border-left: .6mm solid var(--red); padding: 1mm 0 0 4mm; }
+  .ev p { font-size: 13.5pt; line-height: 1.45; }
+  .ev .design { color: var(--muted); margin-top: 1.5mm; }
+  .ev .ref { font-size: 11pt; color: var(--blue); margin-top: 1.5mm; }
+
+  /* 2 */
+  #s2 { height: 243.1mm; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6mm; }
+  .step { background: var(--panel-2); border-radius: 4mm; padding: 4mm 4.5mm 4.5mm; }
+  .step .label { font-size: 14pt; font-weight: 800; color: var(--red); letter-spacing: 1pt; }
+  .step h3 { display: inline; font-size: 20pt; margin-left: 2mm; }
+  .step img { display: block; width: 100%; height: 75mm; object-fit: cover; object-position: top center; border-radius: 3mm; margin: 3mm 0; background: #fff; }
+  .step img.fit { object-fit: contain; object-position: center; }
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; height: 75mm; margin: 3mm 0; }
+  .compare figure { margin: 0; display: flex; flex-direction: column; gap: 1.5mm; min-height: 0; }
+  .compare img { width: 100%; height: auto; flex: 1; min-height: 0; object-fit: cover; border-radius: 1mm; border: .3mm solid var(--line); margin: 0; }
+  .compare figcaption { font-size: 11pt; color: var(--muted); line-height: 1.3; height: 5.5mm; white-space: nowrap; overflow: hidden; }
+  .compare figcaption b { display: inline-block; padding: .4mm 1.8mm; margin-right: 1.5mm; border: .3mm solid var(--muted); border-radius: 1mm; color: var(--text); font-size: 10.5pt; }
+  .compare figcaption b.on { border-color: var(--lime); color: var(--lime); }
+  .step p { font-size: 14pt; line-height: 1.4; color: var(--muted); }
+  .profiles-title { display: flex; align-items: baseline; gap: 4mm; margin: 4mm 0 2.5mm; }
+  .profiles-title h3 { font-size: 19pt; }
+  .profiles-title span { font-size: 13pt; color: var(--muted); }
+  .profiles { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4mm; }
+  .profile { background: var(--panel-2); border-radius: 4mm; border-top: 1.6mm solid var(--c); padding: 3.2mm 4mm; height: 67mm; }
+  .profile .en { font-size: 15pt; font-weight: 800; }
+  .profile .ko { font-size: 13pt; color: var(--c); font-weight: 700; margin-top: .5mm; }
+  .profile .who { font-size: 11.5pt; color: var(--muted); line-height: 1.35; margin-top: 2mm; height: 10mm; }
+  .profile ul { margin-top: 2.5mm; border-top: .3mm solid var(--line); padding-top: 2.5mm; }
+  .profile li { font-size: 12.5pt; line-height: 1.5; }
+  .profile li::before { content: ""; display: inline-block; width: 1.6mm; height: 1.6mm; border-radius: 50%; background: var(--c); margin-right: 2mm; vertical-align: middle; }
+  .profile .vals { font-size: 11pt; color: var(--muted); margin-top: 2mm; }
+  .profile-basis { margin-top: 3mm; font-size: 13.5pt; color: var(--muted); }
+  .profile-basis b { color: var(--cyan); margin-right: 3mm; }
+
+  /* 3 */
+  #s3 { height: 131.1mm; }
+  .s3 { display: grid; grid-template-columns: 300mm 1fr; gap: 7mm; }
+  .arch { width: 100%; height: 84mm; }
+  .map-box { margin-top: 3mm; }
+  .map-box h3 { font-size: 15pt; }
+  .map-box h3 small { font-size: 11.5pt; color: var(--muted); font-weight: 400; margin-left: 2mm; }
+  .map-box svg { width: 100%; height: 22mm; margin-top: 1.5mm; }
+  .tech li { display: grid; grid-template-columns: 9mm 1fr; gap: 2mm; padding: 2mm 0; border-bottom: .3mm solid var(--line); }
+  .tech li:last-child { border-bottom: 0; }
+  .tech i { font-style: normal; font-size: 15pt; font-weight: 800; color: var(--red); }
+  .tech b { font-size: 15.5pt; }
+  .tech p { font-size: 12.5pt; color: var(--muted); line-height: 1.4; margin-top: .8mm; }
+
+  /* 4 + 5 */
+  .bottom { height: 130.6mm; display: grid; grid-template-columns: 262mm 1fr; gap: 6mm; }
+  table { width: 100%; border-collapse: separate; border-spacing: 0 1.5mm; font-size: 13.5pt; }
+  th { font-size: 14pt; padding: 3mm; text-align: center; background: var(--panel-2); }
+  th.pv { background: var(--red); border-radius: 3mm 3mm 0 0; }
+  td { padding: 2mm 3mm; text-align: center; line-height: 1.4; background: var(--panel-2); }
+  td:first-child { font-weight: 700; width: 36mm; }
+  td.pv { color: var(--text); font-weight: 700; background: #3a1d2c; }
+  .compare-note { margin-top: 2mm; }
+  .effects { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5mm; }
+  .effect { background: var(--panel-2); border-radius: 4mm; padding: 3.5mm 4.5mm; }
+  .effect b { font-size: 16pt; }
+  .effect p { font-size: 12.5pt; color: var(--muted); line-height: 1.4; margin-top: 1mm; }
+  .poc { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; margin-top: 4mm; padding: 3.5mm 4.5mm; border: .4mm solid var(--line); border-radius: 4mm; }
+  .poc .t { grid-column: 1 / -1; font-size: 13pt; font-weight: 700; color: var(--blue); }
+  .poc b { display: block; font-size: 34pt; font-weight: 800; color: var(--red); letter-spacing: -.6pt; }
+  .poc span { display: block; font-size: 11.5pt; line-height: 1.35; }
+  .next { margin-top: 3.5mm; font-size: 13pt; line-height: 1.5; }
+  .next b { color: var(--gold); }
+
+  footer { height: 20mm; display: flex; align-items: center; gap: 6mm; border-top: .4mm solid var(--line); padding-top: 3mm; }
+  footer .credits { flex: 1; font-size: 11pt; color: var(--muted); line-height: 1.45; }
+  footer .gh { display: flex; align-items: center; gap: 3mm; font-size: 12pt; }
+  footer .gh img { width: 16mm; height: 16mm; background: #fff; padding: 1mm; border-radius: 1.5mm; }
+
+  /* ===== Fluorescent layer: dark violet base, vivid solid accents, no glow ===== */
+  :root { --red: #ff2e63; --blue: #4df3ff; --cyan: #4df3ff; --lime: #cdff5f; --gold: #ffe03d; --panel: #1b1829; --panel-2: #231f35; --line: #3a3456; }
+  .sec { border-radius: 2mm; border: .35mm solid var(--line); }
+  .sec-head .no { background: var(--lime); color: #15131f; border-radius: 1mm; }
+  .sec-head .tag { color: var(--cyan); }
+  .box, .step, .effect { border-radius: 1.5mm; border: .3mm solid var(--line); }
+  .step .label, .tech i { color: var(--lime); }
+  .step img { border-radius: 1mm; border: .3mm solid var(--line); }
+  .profile { border-top: 0; border-radius: 1.5mm; border: .4mm solid var(--c); }
+  .profile .en { color: var(--c); }
+  .profile .ko { color: var(--text); }
+  .profile ul { border-top: .3mm solid var(--line); }
+  .profile li::before { border-radius: 0; width: 1.6mm; height: 1.6mm; }
+  .ev { border-left: .7mm solid var(--lime); }
+  .ev .ref, .card .ref { color: var(--cyan); }
+  .checks b, .poc .t { color: var(--lime); }
+  .evidence .lab { display: flex; flex-direction: column; gap: 1mm; color: var(--text); padding-top: 0; }
+  .evidence .lab b { font-size: 40pt; line-height: 1; color: var(--lime); font-weight: 800; }
+  .evidence .lab span { font-size: 13pt; line-height: 1.35; color: var(--muted); font-weight: 600; }
+  .survey b, .kpi b, .poc b { color: var(--lime); }
+  th.pv { border-radius: 0; background: var(--red); }
+  td.pv { background: #2a1830; border-left: .5mm solid var(--red); }
+  .poc { border-radius: 1.5mm; border: .4mm solid var(--cyan); }
+  .next b { color: var(--gold); }
+  .demo-qr { border-radius: 1.5mm; border: .4mm solid var(--cyan); }
+  .demo-qr b { color: var(--cyan); }
+  .profile-basis b { color: var(--lime); }
+  footer { border-top: .35mm solid var(--line); }
+  /* Section 2 mascot: large, may cross the section edge but never the text */
+  #s2 { position: relative; overflow: visible; }
+  header.hero4 { overflow: visible; }
+  .wizard-head { position: absolute; right: 2mm; left: auto; top: -38mm; height: 61mm; margin: 0; z-index: 3; }
+  .sec-head .tag-left { margin-left: 4mm; }
+
+  /* ===== Readability pass: fewer words, bigger shapes, details behind the QR ===== */
+  .evidence2 { display: grid; grid-template-columns: 30mm repeat(3, 1fr); gap: 6mm; margin-top: 3mm; align-items: start; }
+  .evidence2 .lab { display: flex; flex-direction: column; gap: 1mm; }
+  .evidence2 .lab b { font-size: 40pt; line-height: 1; color: var(--lime); font-weight: 800; }
+  .evidence2 .lab span { font-size: 13pt; color: var(--muted); font-weight: 600; line-height: 1.35; }
+  .kw { border-left: .8mm solid var(--lime); padding-left: 4.5mm; }
+  .kw b { display: block; font-size: 24pt; font-weight: 800; }
+  .kw p { font-size: 14pt; line-height: 1.4; margin-top: 1.5mm; }
+  .kw small { display: block; font-size: 11.5pt; color: var(--cyan); margin-top: 1.5mm; }
+  .evidence2 .kw:last-child { padding-right: 58mm; }
+  .s3-grid { display: grid; grid-template-columns: 1fr 112mm; gap: 8mm; }
+  .flow { display: grid; grid-template-columns: 50mm 9mm 58mm 9mm 1fr 9mm 56mm; align-items: center; }
+  .node { border-radius: 2mm; padding: 2.2mm 3mm; text-align: center; font-size: 17pt; font-weight: 700; line-height: 1.2; }
+  .node small { display: block; font-size: 11.5pt; color: var(--muted); font-weight: 400; margin-top: 1.2mm; }
+  .node.in, .node.out { border: .5mm solid var(--line); background: var(--panel-2); }
+  .node.set { background: var(--lime); color: #15131f; }
+  .node.set small { color: #15131f; opacity: .75; }
+  .arrow { text-align: center; font-size: 22pt; color: var(--muted); }
+  .branches { display: grid; gap: 3mm; }
+  .node.br { text-align: left; border: .55mm solid var(--red); padding: 2.2mm 4mm; }
+  .node.br.sound { border-color: var(--cyan); }
+  .node.br b { display: block; font-size: 16pt; }
+  .node.br span { display: block; font-size: 12.5pt; color: var(--muted); font-weight: 400; margin-top: 1mm; }
+  .sub-flows { margin-top: 3mm; font-size: 13pt; line-height: 1.45; color: var(--text); }
+  .sub-flows b { color: var(--text); margin-right: 2mm; }
+  .techline { color: var(--muted); font-size: 11.5pt; }
+  .map-box { margin-top: 3mm; padding-top: 3mm; border-top: .35mm solid var(--line); }
+  .map-box svg { width: 100%; height: auto; margin-top: 1.5mm; }
+  .pills { display: flex; flex-wrap: wrap; gap: 2mm; }
+  .pills span { border: .35mm solid var(--line); border-radius: 1.5mm; padding: 1.3mm 2.6mm; font-size: 11.5pt; }
+  .qr-card { display: flex; align-items: center; gap: 4mm; margin-top: 6mm; padding: 3.5mm; border: .4mm solid var(--cyan); border-radius: 1.5mm; }
+  .qr-card img { width: 26mm; height: 26mm; background: #fff; padding: 1.5mm; border-radius: 1.5mm; flex: none; }
+  .qr-card b { display: block; font-size: 14pt; color: var(--cyan); }
+  .qr-card span { display: block; font-size: 11.5pt; color: var(--muted); line-height: 1.4; margin-top: 1mm; }
+  .footnote { font-size: 11pt; color: var(--muted); line-height: 1.45; margin-top: 2.5mm; }
+  .poc { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; margin-top: 4mm; padding: 3.5mm 4.5mm; border: .4mm solid var(--cyan); border-radius: 1.5mm; }
+  .poc .t { display: block; font-size: 14pt; font-weight: 700; color: var(--lime); }
+  .kpis2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; margin-top: 2mm; }
+  .poc-note { font-size: 11pt; color: var(--muted); margin-top: 1.5mm; line-height: 1.35; }
+
+  /* ===== v4: hero product shot, 4-step storyboard, shipped facts, bigger type ===== */
+  header.hero4 { display: grid; grid-template-columns: 1fr 232mm; gap: 10mm; }
+  .hero-left { display: flex; flex-direction: column; }
+  .hero4 .brand { height: 13mm; }
+  .hero4 h1 { margin-top: 2mm; font-size: 46pt; letter-spacing: -1.8pt; }
+  .hero4 .formal { margin-top: 2mm; font-size: 22pt; }
+  .hero4 .affil { margin-top: 2.5mm; font-size: 13pt; }
+  .qr-row { display: flex; align-items: stretch; gap: 4mm; margin-top: auto; }
+  .qr-row .demo-qr { padding: 2.5mm 3mm; }
+  .qr-row .demo-qr img { width: 20mm; height: 20mm; }
+  .qr-row .demo-qr b { font-size: 12.5pt; }
+  .live { display: flex; flex-direction: column; justify-content: center; padding: 3mm 5mm; border-left: .7mm solid var(--lime); }
+  .live b { font-size: 16pt; color: var(--lime); }
+  .live span { font-size: 12pt; color: var(--muted); line-height: 1.4; margin-top: 1mm; }
+  .hero-right { position: relative; }
+  .hero-shot { width: 100%; height: 106mm; object-fit: cover; object-position: top; border-radius: 3mm; border: .4mm solid var(--line); display: block; }
+  .hero4 .falcon { position: absolute; left: -34mm; bottom: 2mm; height: 78mm; z-index: 3; }
+  .hero-cap { margin-top: 2.5mm; font-size: 12pt; color: var(--muted); text-align: right; }
+  .sec-head h2 { font-size: 32pt; }
+  .sec-head .no { width: 13mm; height: 13mm; font-size: 20pt; }
+  .steps4 { display: grid; grid-template-columns: 1fr 1fr 1.55fr 0.85fr; gap: 5mm; }
+  .steps4 .step img.fit { height: 58mm; }
+  .steps4 .step img.popup { object-fit: contain; background: transparent; border: 0; }
+  .steps4 .compare { height: 58mm; margin: 3mm 0; }
+  .steps4 .step p { font-size: 15pt; line-height: 1.45; color: var(--text); }
+  .steps4 .step h3 { font-size: 21pt; }
+  .pstrip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3mm; }
+  .prow { border: .4mm solid var(--c); border-radius: 1.5mm; padding: 2mm 3mm; background: var(--panel-2); display: flex; flex-direction: column; gap: .8mm; }
+  .prow .en { font-size: 15pt; font-weight: 800; color: var(--c); }
+  .prow .ko { font-size: 13.5pt; font-weight: 700; }
+  .prow .who { font-size: 11.5pt; color: var(--muted); }
+  .prow .feat { font-size: 11.5pt; line-height: 1.3; margin-top: .4mm; }
+  .prow .vals { font-size: 10.5pt; color: var(--muted); }
+  .profiles-title { margin: 4mm 0 2.5mm; }
+  .scenes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; margin-bottom: 4mm; }
+  .scenes-title { grid-column: 1 / -1; font-size: 13.5pt; font-weight: 700; }
+  .scenes figure { margin: 0; }
+  .scenes img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 1.5mm; border: .3mm solid var(--line); display: block; }
+  .scenes figcaption { font-size: 11pt; font-weight: 700; margin-top: 1.2mm; }
+  .scenes figcaption small { display: block; font-size: 10pt; color: var(--muted); font-weight: 400; line-height: 1.3; }
+  .qr-card { margin-top: 4mm; }
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3.5mm; }
+  .facts div { background: var(--panel-2); border-radius: 1.5mm; border: .3mm solid var(--line); padding: 2.4mm 3.5mm; }
+  .facts b { display: block; font-size: 28pt; font-weight: 800; color: var(--lime); letter-spacing: -.6pt; line-height: 1.1; }
+  .facts span { display: block; font-size: 11.5pt; line-height: 1.35; margin-top: 1.2mm; }
+  .card h3 { font-size: 20pt; }
+  .problems p, .targets p { font-size: 13.5pt; }
+  .survey b { font-size: 34pt; }
+
+  /* ===== v5: award-poster patterns (top team bar, keyword marks, ✕△○ matrix, logo row, effect icons) ===== */
+  .topbar { height: 10.5mm; display: flex; align-items: center; justify-content: space-between; font-size: 14pt; color: var(--muted); border-bottom: .35mm solid var(--line); }
+  .topbar .team { color: var(--text); font-weight: 700; }
+  .topbar .team::before { content: ""; display: inline-block; width: 3mm; height: 3mm; background: var(--lime); margin-right: 3mm; vertical-align: middle; }
+  mark { background: var(--lime); color: #15131f; padding: 0 1.8mm; border-radius: 1mm; }
+  .hero4 .affil { color: var(--text); font-size: 13pt; }
+  .matrix { display: grid; grid-template-columns: 1fr 42mm 42mm 42mm; gap: 1.5mm; align-items: stretch; }
+  .matrix > div { background: var(--panel-2); border-radius: 1.5mm; display: flex; align-items: center; justify-content: center; text-align: center; }
+  .matrix .mh { font-size: 13.5pt; font-weight: 700; padding: 2.5mm 2mm; flex-direction: column; min-height: 14mm; }
+  .matrix .mh small { font-size: 10.5pt; color: var(--muted); font-weight: 400; margin-top: .8mm; }
+  .matrix .mh.pv { background: var(--red); color: #fff; }
+  .matrix .mr { justify-content: flex-start; text-align: left; flex-direction: column; align-items: flex-start; padding: 2.5mm 3.5mm; font-size: 14pt; font-weight: 700; }
+  .matrix .mr small { font-size: 10.5pt; color: var(--muted); font-weight: 400; margin-top: .8mm; }
+  .matrix .x, .matrix .t, .matrix .o { font-size: 26pt; font-weight: 800; min-height: 13mm; }
+  .matrix .x { color: #7a7690; } .matrix .t { color: var(--gold); } .matrix .o { color: var(--lime); background: #26302a; }
+  .techicons { display: flex; flex-wrap: wrap; gap: 2.5mm; margin-top: 3mm; }
+  .techicons span { display: inline-flex; align-items: center; gap: 1.5mm; border: .35mm solid var(--line); border-radius: 1.5mm; padding: 1mm 2.2mm; font-size: 10.5pt; }
+  .techicons img { height: 4.6mm; width: auto; }
+  .techicons .txt { color: var(--muted); }
+  .effects3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3.5mm; }
+  .effects3 div { background: var(--panel-2); border-radius: 1.5mm; border: .3mm solid var(--line); padding: 3mm 3.5mm; }
+  .effects3 svg { width: 11mm; height: 11mm; margin-bottom: 1.5mm; }
+  .effects3 b { display: block; font-size: 15pt; line-height: 1.25; }
+  .effects3 span { display: block; font-size: 12pt; color: var(--muted); line-height: 1.35; margin-top: 1.2mm; }
+  .facts { margin-top: 3.5mm; }
+  .facts b { font-size: 21pt; }
+
+  /* ===== v6: Trio-Lingo row (compare → difference → value) + Singchronize 3 big shots ===== */
+  .bg-strip { display: grid; grid-template-columns: 182mm 1fr 196mm; gap: 6mm; }
+  .row3 { display: grid; grid-template-columns: 1fr 9mm 1fr 9mm 1fr; gap: 0; align-items: stretch; margin-top: 4.5mm; }
+  .legend { font-size: 10pt; color: var(--muted); margin-top: 2mm; }
+  .arr { display: flex; align-items: center; justify-content: center; font-size: 24pt; color: var(--lime); }
+  .r3 { background: var(--panel-2); border-radius: 2mm; border: .35mm solid var(--line); padding: 2.8mm 3.5mm; }
+  .r3t { font-size: 15pt; font-weight: 800; color: var(--lime); margin-bottom: 2mm; }
+  .matrix.small { grid-template-columns: 1fr 24mm 24mm 24mm; gap: 1.2mm; }
+  .matrix.small .mh { font-size: 10.5pt; min-height: 9mm; padding: 1.2mm 1mm; }
+  .matrix.small .mh small { font-size: 9pt; }
+  .matrix.small .mr { font-size: 11.5pt; padding: 1.4mm 2.5mm; }
+  .matrix.small .x, .matrix.small .t, .matrix.small .o { font-size: 17pt; min-height: 8mm; }
+  .difs { list-style: none; counter-reset: d; display: grid; gap: 2mm; padding: 0; margin: 0; }
+  .difs li { display: grid; grid-template-columns: 9mm 1fr; gap: 2mm; align-items: start; }
+  .difs li::before { counter-increment: d; content: counter(d); display: inline-flex; align-items: center; justify-content: center; width: 8mm; height: 8mm; border-radius: 50%; background: var(--lime); color: #15131f; font-weight: 800; font-size: 13pt; }
+  .difs li::before { grid-row: 1 / 3; }
+  .difs b { grid-column: 2; display: block; font-size: 13.5pt; line-height: 1.25; }
+  .difs span { grid-column: 2; display: block; font-size: 11.5pt; color: var(--muted); line-height: 1.35; margin-top: .8mm; }
+  .effects3.col { grid-template-columns: 1fr; gap: 2.5mm; }
+  .effects3.col div { display: grid; grid-template-columns: 9mm 1fr; gap: 2.5mm; align-items: center; padding: 1.8mm 3mm; }
+  .effects3.col div > div { display: block; padding: 0; border: 0; background: none; }
+  .effects3.col svg { width: 9mm; height: 9mm; margin: 0; }
+  .effects3.col b { font-size: 13.5pt; } .effects3.col span { font-size: 11.5pt; margin-top: .6mm; }
+  .shots3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5mm; }
+  .shot { background: var(--panel-2); border-radius: 2mm; border: .35mm solid var(--line); padding: 3.5mm 4mm; }
+  .shot-t { font-size: 20pt; font-weight: 800; margin-bottom: 2.5mm; }
+  .shot-t i { font-style: normal; color: var(--lime); margin-right: 3mm; font-size: 17pt; }
+  .shot > img { width: 100%; height: 62mm; object-fit: contain; object-position: top; border-radius: 1.5mm; border: .3mm solid var(--line); background: #fff; display: block; }
+  .shot .compare { height: 62mm; margin: 0; }
+  .shot p { font-size: 13.5pt; line-height: 1.4; margin-top: 2.5mm; }
+  .shot p b { color: var(--lime); }
+  .s3v6 { display: grid; grid-template-columns: 182mm 1fr; gap: 8mm; }
+  .research { display: flex; flex-direction: column; gap: 2mm; }
+  .research .lab { display: flex; align-items: baseline; gap: 3mm; }
+  .research .lab b { font-size: 34pt; line-height: 1; color: var(--lime); font-weight: 800; }
+  .research .lab span { font-size: 13pt; color: var(--muted); font-weight: 600; line-height: 1.3; }
+  .rlink { border-left: .8mm solid var(--lime); padding-left: 4mm; }
+  .rlink b { display: block; font-size: 16pt; font-weight: 800; }
+  .rlink p { font-size: 12pt; line-height: 1.3; margin-top: .5mm; }
+  .rlink em { display: block; font-style: normal; color: var(--lime); font-size: 12pt; font-weight: 700; margin-top: .6mm; }
+  .rlink small { display: block; font-size: 10.5pt; color: var(--cyan); margin-top: .8mm; }
+  .research .profile-basis { margin-top: .5mm; font-size: 11.5pt; }
+  .tech .flow { grid-template-columns: 42mm 8mm 50mm 8mm 1fr 8mm 48mm; }
+  .arch6 { display: grid; grid-template-columns: 1fr 24mm 1fr 10mm 1fr; gap: 2.5mm; align-items: stretch; }
+  .abox { background: var(--panel-2); border-radius: 1.5mm; border: .4mm solid var(--line); padding: 2.2mm 3mm; }
+  .abox b { display: block; font-size: 14pt; }
+  .abox span { display: block; font-size: 11pt; color: var(--muted); line-height: 1.35; margin-top: .8mm; }
+  .abox.web { border-color: var(--lime); } .abox.ext { border-color: var(--cyan); } .abox.site { border-color: var(--red); } .abox.srv, .abox.ana { border-color: var(--line); }
+  .abox.srv { grid-column: 1 / 2; } .abox.ana { grid-column: 3 / 6; }
+  .aarr { display: flex; align-items: center; justify-content: center; font-size: 11pt; color: var(--muted); text-align: center; }
+  .bottom .scenes { margin-top: 4mm; margin-bottom: 3mm; }
+  .bottom .scenes img { aspect-ratio: auto; height: 22mm; }
+  .adopt { margin-top: 3.5mm; padding: 3mm 4mm; border-left: .8mm solid var(--lime); background: var(--panel-2); border-radius: 1.5mm; }
+  .adopt b { display: block; font-size: 14pt; color: var(--lime); }
+  .adopt span { display: block; font-size: 13pt; line-height: 1.4; margin-top: 1mm; }
+  .bottom .qr-card { margin-top: 3mm; }
+  .bottom .qr-card img { width: 27mm; height: 27mm; }
+
+  .exist { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.8mm; }
+  .exist li { border-left: .6mm solid var(--muted); padding-left: 3mm; }
+  .exist b { display: block; font-size: 13.5pt; }
+  .exist span { display: block; font-size: 11pt; color: var(--muted); line-height: 1.3; margin-top: .4mm; }
+  .exist-sum { margin-top: 2.5mm; font-size: 12pt; color: var(--text); line-height: 1.35; }
+  .adopt.soft { border-left-color: var(--cyan); margin-top: 3mm; }
+  .adopt.soft b { color: var(--cyan); }
+
+  .arch8 { width: 100%; height: auto; display: block; }
+  .lab-line { font-size: 12pt; color: var(--muted); }
+
+  .rlink b { font-size: 15.5pt; }
+  .rlink em { margin-top: .4mm; }
+  .research { gap: 2mm; }
+
+  /* ===== v7: no hero art, bigger solution shots, fewer words ===== */
+  header.hero5 { display: grid; grid-template-columns: 1fr 176mm; gap: 10mm; align-items: center; }
+  .hero5 .brand { height: 13mm; }
+  .hero5 h1 { margin-top: 4mm; font-size: 54pt; letter-spacing: -2.1pt; line-height: 1.08; }
+  .hero5 .formal { margin-top: 4mm; font-size: 23pt; font-weight: 700; line-height: 1.45; }
+  .hero5 .affil { margin-top: 3mm; font-size: 15pt; color: var(--text); }
+  .hero5 .qr-row { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .hero5 .qr-row .demo-qr img { width: 34mm; height: 34mm; }
+  .hero5 .qr-row .demo-qr b { font-size: 14pt; }
+  .hero5 .live { grid-column: 1 / -1; border-left: 0; border-top: .5mm solid var(--lime); padding: 2.5mm 0 0; }
+  .hero5 .live b { font-size: 15pt; } .hero5 .live span { font-size: 12.5pt; }
+  .shots3 { gap: 6mm; }
+  .shot > img { height: 158mm; }
+  .shot .compare { height: 158mm; }
+  .shot-t { font-size: 22pt; }
+  .shot p { font-size: 16pt; margin-top: 3.5mm; }
+  .compare figcaption { font-size: 12.5pt; height: 6.5mm; }
+  .r3t { font-size: 16pt; }
+  .exist b, .difs b, .effects3.col b { font-size: 15pt; }
+  .exist span, .difs span, .effects3.col span { font-size: 12.5pt; }
+  .exist-sum { font-size: 13pt; }
+  .adopt b { font-size: 16pt; } .adopt span { font-size: 14pt; }
+  .next { font-size: 14pt; margin-top: 3mm; }
+  .rlink b { font-size: 17pt; } .rlink em { font-size: 13pt; } .rlink small { font-size: 11.5pt; }
+  .sub-flows { font-size: 14pt; }
+
+  .shot .stack { display: flex; flex-direction: column; justify-content: space-between; gap: 4mm; height: 176mm; }
+  .shot .stack > img, .shot .stack figure { flex: 0 1 auto; min-height: 0; }
+  .shot .stack > img, .shot .stack figure img { width: 100%; height: auto; max-height: 100%; object-fit: contain; object-position: top; display: block; border-radius: 1.5mm; }
+  .shot .stack figure { margin: 0; display: flex; flex-direction: column; }
+  .shot .stack figure img { flex: 0 1 auto; min-height: 0; }
+  .shot .stack figcaption { font-size: 12.5pt; color: var(--muted); margin-bottom: 1.2mm; white-space: nowrap; overflow: hidden; height: 6.5mm; }
+  .shot .stack figcaption b { display: inline-block; padding: .4mm 1.8mm; margin-right: 1.5mm; border: .3mm solid var(--muted); border-radius: 1mm; color: var(--text); font-size: 11pt; }
+  .shot .stack figcaption b.on { border-color: var(--lime); color: var(--lime); }
+  .shot p { font-size: 17pt; font-weight: 600; }
+
+  .rlink.ai { border-left-color: var(--cyan); }
+  .rlink.ai em { color: var(--cyan); }
+</style>
+</head>
+<body>
+<div class="poster" id="poster">
+
+<div class="block topbar"><span>이화여자대학교 공과대학 · 2026 캡스톤디자인 · 사회기여형</span><span class="team">팀 Lucent · 정아윤 · 박세령 · 정서윤</span></div>
+<header class="block hero5">
+  <div class="hero-left">
+    <div class="brand"><img class="symbol" src="assets/logo-symbol-3d.png" alt=""><img class="wordmark" src="assets/logo-wordmark-3d.png" alt="PariView"></div>
+    <h1>화면과 소리,<br><em>내가 정하면 안 되나요?</em></h1>
+    <p class="formal"><mark>감각 과부하 감소</mark>와 <mark>미디어 접근성 향상</mark>을 위한 <mark>적응형 시청 시스템</mark></p>
+    <p class="affil">소리·빛에 민감한 이용자가 같은 장면을 비교해 고른 설정으로 보고, 크롬에서도 이어서 쓰는 시청 시스템</p>
+  </div>
+  <div class="qr-row"><div class="demo-qr"><img src="assets/qr-demo.svg" alt=""><b>웹에서 체험하기</b></div><div class="demo-qr"><img src="assets/qr-youtube.svg" alt=""><b>유튜브에서 익스텐션 써보기</b></div><div class="live"><b>공개 배포 중</b><span>pariview-production.up.railway.app<br>영상 3편 × 45초 · 크롬 익스텐션 포함</span></div></div>
+</header>
+
+<section id="s1" class="block sec">
+  <div class="sec-head"><span class="no">1</span><h2>배경과 차별점</h2><span class="tag">WHY · 기존 비교 → 차별점 → 이용자 가치</span></div>
+  <div class="bg-strip">
+    <div class="box"><h3>같은 영상, 모두에게 같은 경험일까요?</h3>
+      <div class="problems">
+        <div><svg viewBox="0 0 64 64" fill="none" stroke="#ff2e63" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 26h10l12-10v32L18 38H8z"/><path d="M40 22q6 10 0 20M47 15q12 17 0 34"/></svg><p>갑작스러운<br>음량 변화와 효과음</p></div>
+        <div><svg viewBox="0 0 64 64" fill="none" stroke="#ff2e63" stroke-width="3" stroke-linecap="round"><path d="M6 32q26-24 52 0q-26 24-52 0z"/><circle cx="32" cy="32" r="8"/><path d="M32 4v6M32 54v6M10 12l4 4M54 12l-4 4"/></svg><p>강한 명도·대비와<br>빠른 화면 전환</p></div>
+        <div><svg viewBox="0 0 64 64" fill="none" stroke="#ff2e63" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 44h12l6-12M34 20l6-8h18"/><path d="M27 26l6-4"/><circle cx="14" cy="18" r="5"/><path d="M44 40h14M44 48h10"/></svg><p>집중 흐름 단절과<br>정보 처리 부담</p></div>
+      </div></div>
+    <div class="box"><h3>사용자 설문조사</h3>
+      <div class="survey"><div><b>11.8%</b><span>기존 OTT 관련<br>기능 만족도</span></div><div><b>60.5%</b><span>기존 OTT 관련<br>세부 조절 기능 부족</span></div><div><b>83%</b><span>맞춤형 시청각 자극<br>최적화 기술 사용 의향</span></div></div>
+      <p class="note" style="margin-top:2.5mm;text-align:center">구글 폼 온라인 설문 · 76명 응답 · 신경다양성 당사자 20%</p></div>
+    <div class="box"><h3>타깃 사용자</h3>
+      <div class="targets">
+        <div><svg viewBox="0 0 64 64" fill="none" stroke="#f3f2f8" stroke-width="3"><circle cx="22" cy="20" r="8"/><circle cx="44" cy="22" r="7"/><path d="M6 54q0-18 16-18t16 18M34 52q2-14 12-14t12 14"/></svg><p>신경다양성 이용자<small>자폐 스펙트럼·ADHD 등<br>ADHD 진료 26만 명(2024)</small></p></div>
+        <div><svg viewBox="0 0 64 64" fill="none" stroke="#f3f2f8" stroke-width="3" stroke-linecap="round"><path d="M24 58V30q0-5 5-5t5 5v8M34 34q0-5 5-5t5 5v6M44 38q0-4 4-4t4 4v8q0 12-12 12H30q-8 0-12-8l-6-10q-2-5 3-6t8 4"/><path d="M14 10l4 6M30 4v7M46 10l-4 6"/></svg><p>감각 민감 이용자<small>빛·소리에 민감한 분</small></p></div>
+        <div><svg viewBox="0 0 64 64" fill="none" stroke="#f3f2f8" stroke-width="3" stroke-linecap="round"><circle cx="24" cy="14" r="7"/><path d="M14 58V36q0-10 10-10t10 10v22M44 30v28"/><circle cx="46" cy="18" r="6"/><path d="M40 58V36q0-8 6-8t6 8v22"/></svg><p>고령층 및 일반 이용자<small>65세 이상 20.3%(2025)<br>OTT 이용률 79.2%(2024)</small></p></div>
+      </div></div>
+  </div>
+  <div class="row3">
+    <div class="r3 cmp"><div class="r3t">기존 기능 비교</div>
+      <ul class="exist">
+        <li><b>대사 강조</b><span>Prime Video Dialogue Boost</span></li>
+        <li><b>섬광 완화 · 구간 표시</b><span>Apple Dim Flashing Lights</span></li>
+        <li><b>밝기 · 음량 직접 조절</b><span>기기 · 플레이어 설정</span></li>
+      </ul>
+      <p class="exist-sum">플랫폼마다 흩어져 있고, 같은 장면으로 비교해 저장하는 흐름은 없어요</p></div>
+    <div class="arr">→</div>
+    <div class="r3 dif"><div class="r3t">PariView의 차별점</div>
+      <ol class="difs"><li><b>진단이 아니라 비교로</b><span>AI 추천 시작점 → 같은 장면 A/B → 저장 → 재조절</span></li><li><b>화면·소리·자막을 한 흐름에서</b><span>5단계 비교</span></li><li><b>저장한 설정을 어디서나</b><span>크롬 익스텐션 · 유튜브 등</span></li></ol></div>
+    <div class="arr">→</div>
+    <div class="r3 val"><div class="r3t">이용자 가치 · 기대효과</div>
+      <div class="effects3 col">
+        <div><svg viewBox="0 0 64 64" fill="none" stroke="#cdff5f" stroke-width="3" stroke-linecap="round"><path d="M8 26h10l12-10v32L18 38H8z"/><path d="M40 22q6 10 0 20"/></svg><div><b>감각 부담을 내 설정으로</b><span>언제든 되돌리기</span></div></div>
+        <div><svg viewBox="0 0 64 64" fill="none" stroke="#4df3ff" stroke-width="3" stroke-linecap="round"><rect x="6" y="12" width="52" height="34" rx="4"/><path d="M22 54h20M26 30l6 6 10-12"/></svg><div><b>기존 영상 그대로, 플랫폼 밖에서도</b><span>크롬 익스텐션</span></div></div>
+        <div><svg viewBox="0 0 64 64" fill="none" stroke="#ff2e63" stroke-width="3" stroke-linecap="round"><path d="M8 56V26l24-16 24 16v30"/><path d="M24 56V38h16v18"/></svg><div><b>특수교육 · 복지기관 도입 제안</b><span>OTT 접근성 옵션</span></div></div>
+      </div></div>
+  </div>
+</section>
+
+<section id="s2" class="block sec">
+  <div class="sec-head"><span class="no">2</span><h2>핵심 솔루션 · 실제 화면</h2><img class="wizard-head" src="assets/wizard-render.png" alt=""></div>
+  <div class="shots3">
+    <div class="shot"><div class="shot-t"><i>01</i>비교</div>
+      <div class="stack"><img src="assets/step1.png" alt=""><img src="assets/step2.png" alt=""></div>
+      <p>같은 장면을 A/B로 보고 지금 편한 쪽을 골라요</p></div>
+    <div class="shot"><div class="shot-t"><i>02</i>적용</div>
+      <div class="stack"><figure><figcaption><b>원본</b>밝기 100 · 대비 100 · 기본 자막</figcaption><img src="assets/compare-original.png" alt=""></figure><figure><figcaption><b class="on">맞춤</b>밝기 55 · 대비 110 · 채도 45 · 노란 쉬운 자막</figcaption><img src="assets/compare-custom.png" alt=""></figure></div>
+      <p>고른 빛·소리·자막 설정을 영상에 바로 적용해요</p></div>
+    <div class="shot"><div class="shot-t"><i>03</i>재조절 · 크롬에서 이어서</div>
+      <div class="stack"><img src="assets/studio-popup.png" alt=""><img src="assets/chrome-view-top.png" alt=""></div>
+      <p>보면서 다시 조절하고 원본과 바로 비교해요</p></div>
+  </div>
+</section>
+
+<section id="s3" class="block sec">
+  <div class="sec-head"><span class="no">3</span><h2>연구 근거와 핵심 기술</h2><span class="tag">WHY THIS DESIGN · 의학·감각 연구 → 비교·재조절 설계</span></div>
+  <div class="s3v6">
+    <div class="research">
+            <div class="rlink"><b>🧩 개인차</b><em>→ 같은 장면 비교 · 재피팅</em><small>📄 MacLennan et al. 2022 · 자폐 성인 49명</small></div>
+      <div class="rlink"><b>🎚️ 환경 조절</b><em>→ 화면·소리 항목을 나눠 조절</em><small>📄 NICE CG142 · 성인 자폐 진단·관리 지침</small></div>
+      <div class="rlink"><b>🕹️ 사용자 통제</b><em>→ 선택 · 건너뛰기 · 원본 복귀</em><small>📄 Unwin et al. 2022 · 아동 41명</small></div>
+      <div class="rlink"><b>🎬 시청각 반응</b><em>→ 소리·빛 변화를 함께 표시 · 사전 예고</em><small>📄 Matsuzaki et al. 2022 · 영화 시청 MEG</small></div>
+      <p class="lab-line">📚 논문 11 · 전문자료 6 · 출처는 QR</p>
+    </div>
+    <div class="tech">
+      <div class="flow">
+        <div class="node in">같은 영상<small>HTML video</small></div>
+        <div class="arrow">→</div>
+        <div class="node set">사용자 설정값<small>프로필 · A/B 비교 · 저장</small></div>
+        <div class="arrow">→</div>
+        <div class="branches">
+          <div class="node br screen"><b>화면 · CSS filter</b><span>밝기 → 대비 → 채도 → 색온도</span></div>
+          <div class="node br sound"><b>소리 · Web Audio</b><span>고음 완화 → 말소리 EQ → 음량 압축 → 음량</span></div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="node out">나에게 맞는 출력<small>원본 비교 · 기본값 복귀</small></div>
+      </div>
+      <div class="sub-flows"><p><b>🤖 AI 추천 · Claude</b> 선택한 필요·현재 설정 → 검토된 후보에서 시작 설정 선택 · 미리보기·수정·취소 · 연결 없으면 규칙 기반</p><p><b>장면 데이터</b> scenes.js → 자막 · 놓친 내용 &nbsp;&nbsp; <b>영상 측정</b> ffmpeg → map.json → 감각 지도 · 사전 예고</p></div>
+      <div class="map-box">
+        <h3>영상 신호로 측정한 감각 지도<small>Tears of Steel 45초 · 음영 = 변화 구간 · ▲ = 사전 예고</small></h3>
+        <svg id="map-chart" viewBox="0 0 1000 58" role="img" aria-label="소리 크기와 화면 밝기 측정 곡선과 사전 예고 시점"></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="block bottom">
+  <section class="sec">
+    <div class="sec-head"><span class="no">4</span><h2>시스템 구조도</h2></div>
+    <svg class="arch8" viewBox="0 0 1000 308" role="img" aria-label="시스템 구조도">
+      <defs><marker id="ah" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,1 L12,6 L0,11 z" fill="#aaa7bd"/></marker></defs>
+      <g font-family="Pretendard, 'Apple SD Gothic Neo', sans-serif">
+      <text x="55" y="22" text-anchor="middle" font-size="11" letter-spacing="2" fill="#aaa7bd">USER</text><text x="255" y="22" text-anchor="middle" font-size="11" letter-spacing="2" fill="#aaa7bd">CLIENT</text><text x="485" y="22" text-anchor="middle" font-size="11" letter-spacing="2" fill="#aaa7bd">STORAGE</text><text x="695" y="22" text-anchor="middle" font-size="11" letter-spacing="2" fill="#aaa7bd">EXTENSION</text><text x="910" y="22" text-anchor="middle" font-size="11" letter-spacing="2" fill="#aaa7bd">EXTERNAL</text>
+      <rect x="0" y="34" width="110" height="86" rx="8" fill="#231f35" stroke="#3a3456" stroke-width="2.2"/><circle cx="55" cy="60" r="10" fill="none" stroke="#f3f2f8" stroke-width="2.4"/><path d="M36 92q0-16 19-16t19 16" fill="none" stroke="#f3f2f8" stroke-width="2.4" stroke-linecap="round"/><text x="55" y="110" text-anchor="middle" font-size="13" font-weight="700" fill="#f3f2f8">사용자</text>
+      <rect x="150" y="34" width="210" height="86" rx="8" fill="#231f35" stroke="#cdff5f" stroke-width="2.2"/><image href="assets/icons/html5.svg" x="214" y="46" width="22" height="22"/><image href="assets/icons/css.svg" x="244" y="46" width="22" height="22"/><image href="assets/icons/javascript.svg" x="274" y="46" width="22" height="22"/><text x="255" y="88" text-anchor="middle" font-size="15" font-weight="800" fill="#f3f2f8">PariView 웹</text><text x="255" y="106" text-anchor="middle" font-size="10.5" fill="#aaa7bd">피팅 UI · CSS filter · Web Audio</text>
+      <rect x="400" y="34" width="170" height="86" rx="8" fill="#231f35" stroke="#4df3ff" stroke-width="2.2"/><text x="485" y="74" text-anchor="middle" font-size="15" font-weight="800" fill="#f3f2f8">설정 저장</text><text x="485" y="92" text-anchor="middle" font-size="10.5" fill="#aaa7bd">localStorage · chrome.storage</text>
+      <rect x="610" y="34" width="170" height="86" rx="8" fill="#231f35" stroke="#6aa8ff" stroke-width="2.2"/><image href="assets/icons/googlechrome.svg" x="684" y="46" width="22" height="22"/><text x="695" y="88" text-anchor="middle" font-size="15" font-weight="800" fill="#f3f2f8">크롬 익스텐션</text><text x="695" y="106" text-anchor="middle" font-size="10.5" fill="#aaa7bd">content script · 팝업</text>
+      <rect x="820" y="34" width="180" height="86" rx="8" fill="#231f35" stroke="#ff7a5c" stroke-width="2.2"/><image href="assets/icons/youtube.svg" x="899" y="46" width="22" height="22"/><text x="910" y="88" text-anchor="middle" font-size="15" font-weight="800" fill="#f3f2f8">다른 사이트 영상</text><text x="910" y="106" text-anchor="middle" font-size="10.5" fill="#aaa7bd">유튜브 등 지원 영상</text>
+      <text x="255" y="300" text-anchor="middle" font-size="11" letter-spacing="2" fill="#aaa7bd">SERVER</text><text x="485" y="300" text-anchor="middle" font-size="11" letter-spacing="2" fill="#aaa7bd">ANALYSIS</text><text x="695" y="300" text-anchor="middle" font-size="11" letter-spacing="2" fill="#aaa7bd">DATA</text>
+      <rect x="150" y="208" width="210" height="76" rx="8" fill="#231f35" stroke="#c38bff" stroke-width="2.2"/><image href="assets/icons/python.svg" x="203" y="220" width="22" height="22"/><image href="assets/icons/claude.svg" x="233" y="220" width="22" height="22"/><image href="assets/icons/docker.svg" x="263" y="220" width="22" height="22"/><image href="assets/icons/railway.svg" x="293" y="220" width="22" height="22"/><text x="255" y="262" text-anchor="middle" font-size="15" font-weight="800" fill="#f3f2f8">Python 서버 · AI 추천 API</text><text x="255" y="280" text-anchor="middle" font-size="10.5" fill="#aaa7bd">Claude 구조화 출력 · 미연결 시 규칙 기반</text>
+      <rect x="400" y="208" width="170" height="76" rx="8" fill="#231f35" stroke="#ffe03d" stroke-width="2.2"/><image href="assets/icons/ffmpeg.svg" x="474" y="220" width="22" height="22"/><text x="485" y="262" text-anchor="middle" font-size="15" font-weight="800" fill="#f3f2f8">ffmpeg 신호 분석</text><text x="485" y="280" text-anchor="middle" font-size="10.5" fill="#aaa7bd">라우드니스 · 밝기 측정</text>
+      <rect x="610" y="208" width="170" height="76" rx="8" fill="#231f35" stroke="#ffe03d" stroke-width="2.2"/><text x="695" y="248" text-anchor="middle" font-size="15" font-weight="800" fill="#f3f2f8">장면별 map.json</text><text x="695" y="266" text-anchor="middle" font-size="10.5" fill="#aaa7bd">감각 지도 · 사전 예고</text>
+      <path d="M110 77 H146" stroke="#aaa7bd" stroke-width="2.4" fill="none" marker-end="url(#ah)"/><text x="128" y="70" text-anchor="middle" font-size="10.5" fill="#aaa7bd">사용</text><path d="M360 77 H396" stroke="#aaa7bd" stroke-width="2.4" fill="none" marker-end="url(#ah)"/><text x="378" y="70" text-anchor="middle" font-size="10.5" fill="#aaa7bd">저장</text><path d="M570 77 H606" stroke="#aaa7bd" stroke-width="2.4" fill="none" marker-end="url(#ah)"/><text x="588" y="70" text-anchor="middle" font-size="10.5" fill="#aaa7bd">동기화</text><path d="M780 77 H816" stroke="#aaa7bd" stroke-width="2.4" fill="none" marker-end="url(#ah)"/><text x="798" y="70" text-anchor="middle" font-size="10.5" fill="#aaa7bd">적용</text>
+      <path d="M255 208 V124" stroke="#aaa7bd" stroke-width="2.4" fill="none" marker-end="url(#ah)"/><text x="240" y="150" text-anchor="end" font-size="10.5" fill="#aaa7bd">AI 추천</text><path d="M570 246 H606" stroke="#aaa7bd" stroke-width="2.4" fill="none" marker-end="url(#ah)"/><path d="M695 208 V166" stroke="#aaa7bd" stroke-width="2.4" fill="none"/><path d="M695 166 H300" stroke="#aaa7bd" stroke-width="2.4" fill="none"/><path d="M300 166 V124" stroke="#aaa7bd" stroke-width="2.4" fill="none" marker-end="url(#ah)"/>
+      <text x="500" y="158" text-anchor="middle" font-size="10.5" fill="#aaa7bd">측정 데이터</text>
+      </g>
+    </svg>
+  </section>
+  <section class="sec">
+    <div class="sec-head"><span class="no">5</span><h2>기대효과 및 향후 발전 방향</h2></div>
+    <div class="adopt"><b>특수교육 · 복지기관 도입 제안</b><span>기관 시청 환경에 설치형으로, OTT·플레이어에는 접근성 옵션으로</span></div>
+    <div class="adopt soft"><b>지금 되는 것</b><span>영상 3편 × 45초 · 프로필 5 · 5단계 비교 · 되돌리기 · 크롬 익스텐션 · 자동 테스트 32항목 · 당사자 사용 확인</span></div>
+    <div class="scenes"><div class="scenes-title">실제 영화 3편 × 45초 · CC BY</div>
+      <figure><img src="assets/tears-lab.jpg" alt=""><figcaption>Tears of Steel<small>빛·소리 급변</small></figcaption></figure>
+      <figure><img src="assets/sintel.jpg" alt=""><figcaption>Sintel<small>조용한 실내 대화</small></figcaption></figure>
+      <figure><img src="assets/bunny.jpg" alt=""><figcaption>Big Buck Bunny<small>밝은 풀밭 · 잦은 컷</small></figcaption></figure>
+    </div>
+    <p class="next"><b>향후</b> 2단계 비교 · 사용성 평가(SUS) · 지원 영상 확대</p>
+
+  </section>
+</div>
+
+<footer class="block">
+  <p class="credits">영화 Tears of Steel · Sintel · Big Buck Bunny © Blender Foundation CC BY · Pretendard OFL · 통계 통계청 2025 · 국민건강보험공단 2024 · 방송통신위원회 2024</p>
+</footer>
+
+</div>
+<script type="module">
+const errors = [];
+const NS = 'http://www.w3.org/2000/svg';
+const el = (name, attrs, parent, text) => { const e = document.createElementNS(NS, name); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); if (text !== undefined) e.textContent = text; parent.appendChild(e); return e; };
+const who = {
+  gentle: '자폐 스펙트럼, 감각 과민,<br>소리·빛에 민감한 분',
+  focus: 'ADHD, 집중 유지가<br>어려운 분',
+  clarity: '고령층, 청력·시력<br>저하가 있는 분',
+  soft: '아동, 발달 초기<br>사용자',
+  everyday: '일반 사용자,<br>디지털 피로가 걱정되는 분',
+};
+// Only features that are actually implemented in web/dist (mockup settings excluded)
+const features = {
+  gentle: ['급격한 음량 변화 완화', '고음 완화', '채도·대비·밝기 낮춤'],
+  focus: ['말소리 대역 강조', '음량 변화 완화', '장면\u00a0기록·놓친\u00a0내용\u00a0보기'],
+  clarity: ['2–4kHz 말소리 강조', '대비 강화', '어두운 장면 밝기 보정', '크고 굵은 자막'],
+  soft: ['부드러운 색감', '쉬운 자막', '작은 음량·고음 완화'],
+  everyday: ['따뜻한 색온도', '급격한 소리 변화 완화', '20분\u00a0시청\u00a0휴식\u00a0안내'],
+};
+
+try {
+  const map = await (await fetch('../web/dist/assets/scenes/tears-lab-map.json')).json();
+  const svg = document.getElementById('map-chart');
+  const d = map.duration, x0 = 78, x = t => x0 + (992 - x0) * t / d;
+  const laneS = [3, 22], laneL = [27, 46];
+  const yS = v => laneS[1] - (Math.min(-5, Math.max(-45, v)) + 45) / 40 * (laneS[1] - laneS[0]);
+  const yL = v => laneL[1] - (Math.min(160, Math.max(20, v)) - 20) / 140 * (laneL[1] - laneL[0]);
+  for (const e of map.events) { const lane = e.type === '빛 변화' ? laneL : laneS; el('rect', { x: x(e.at), y: lane[0], width: Math.max(5, x(e.end) - x(e.at)), height: lane[1] - lane[0], fill: e.type === '빛 변화' ? '#4df3ff' : '#ff2e63', opacity: .28 }, svg); }
+  for (const lane of [laneS, laneL]) el('line', { x1: x0, x2: 992, y1: lane[1], y2: lane[1], stroke: '#3a3456', 'stroke-width': 1.5 }, svg);
+  const path = (pts, fy) => pts.filter(p => p[1] > -69).map((p, i) => `${i ? 'L' : 'M'}${x(p[0]).toFixed(1)},${fy(p[1]).toFixed(1)}`).join(' ');
+  el('path', { d: path(map.curves.loudness, yS), stroke: '#ff2e63', 'stroke-width': 2.4, fill: 'none' }, svg);
+  el('path', { d: path(map.curves.luma, yL), stroke: '#4df3ff', 'stroke-width': 2.4, fill: 'none' }, svg);
+  el('text', { x: 0, y: 14, 'font-size': 12, fill: '#f3f2f8', 'font-weight': 700 }, svg, '소리');
+  el('text', { x: 0, y: 23, 'font-size': 9, fill: '#aaa7bd' }, svg, '−45 ~ −5 LUFS');
+  el('text', { x: 0, y: 36, 'font-size': 12, fill: '#f3f2f8', 'font-weight': 700 }, svg, '밝기');
+  el('text', { x: 0, y: 45, 'font-size': 9, fill: '#aaa7bd' }, svg, '평균, 0–255');
+  for (const t of [0, 15, 30, 45]) { const tx = Math.min(t, d); el('line', { x1: x(tx), x2: x(tx), y1: laneL[1], y2: laneL[1] + 4, stroke: '#aaa7bd', 'stroke-width': 1.5 }, svg); el('text', { x: x(tx), y: 56, 'font-size': 10, fill: '#aaa7bd', 'text-anchor': t === 0 ? 'start' : t === 45 ? 'end' : 'middle' }, svg, `${t}초`); }
+  for (const e of (map.noticeEvents || [])) el('path', { d: `M${x(e.at) - 5},54 L${x(e.at) + 5},54 L${x(e.at)},48 Z`, fill: '#cdff5f' }, svg);
+  const mapTitle = document.querySelector('.map-box h3 small'); if (mapTitle) mapTitle.textContent += ` · 예고 ${(map.noticeEvents || []).length}회`;
+} catch (e) { errors.push('map:' + e.message); }
+await document.fonts.ready;
+await Promise.all([...document.images].map(img => img.complete ? null : new Promise(r => { img.onload = img.onerror = r; })));
+for (const img of document.images) if (!img.naturalWidth) errors.push('image:' + img.getAttribute('src'));
+for (const box of document.querySelectorAll('.block, .sec, .box, .step, .profile, .effect, .poc, .ev')) {
+  if (box.scrollHeight > box.clientHeight + 1 || box.scrollWidth > box.clientWidth + 1) errors.push('overflow:' + (box.id || box.className) + ':' + (box.scrollHeight - box.clientHeight));
+}
+const poster = document.getElementById('poster');
+if (poster.scrollHeight > poster.clientHeight + 1) errors.push('poster-overflow:' + (poster.scrollHeight - poster.clientHeight));
+document.body.dataset.layoutErrors = JSON.stringify(errors);
+</script>
+</body>
+</html>
