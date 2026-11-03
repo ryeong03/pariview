@@ -1,0 +1,17 @@
+.DS_Store
+__pycache__/
+.venv/
+web/.openai/
+assets/
+research/*.png
+research/*.jpg
+research/reference-*.txt
+research/source-pdfs/
+web/fit-flow.txt
+web/check_*.py
+web/capture_ui.py
+web/validation.json
+layout-debug.png
+PariView_A1_300dpi.png
+PariView_UI_detail.png
+validation.json

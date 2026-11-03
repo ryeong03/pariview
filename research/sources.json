@@ -1,0 +1,252 @@
+{
+  "project": "PariView",
+  "verified_on": "2026-11-04",
+  "scope": "핵심 실증연구 4편 + 국내 보조 실증연구 1편 + 배경 종설 1편; 국내 추가 후보 1편 별도 선별",
+  "sources": [
+    {
+      "id": "R1",
+      "role": "core_empirical",
+      "authors": [
+        "MacLennan, K.",
+        "O’Brien, S.",
+        "Tavassoli, T."
+      ],
+      "year": 2022,
+      "online_year": 2021,
+      "title": "In Our Own Words: The Complex Sensory Experiences of Autistic Adults",
+      "journal": "Journal of Autism and Developmental Disorders",
+      "volume": "52",
+      "issue": "7",
+      "pages": "3061–3075",
+      "doi": "10.1007/s10803-021-05186-3",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9213348/",
+      "verification": "원문: 초록·방법·결과(Control; Moderated by Mood)·한계 확인; Europe PMC XML 교차 확인.",
+      "evidence_type": "혼합방법 온라인 설문; 제품 효과 검증 아님"
+    },
+    {
+      "id": "R2",
+      "role": "core_empirical",
+      "authors": [
+        "Unwin, Katy L.",
+        "Powell, Georgina",
+        "Jones, Catherine R. G."
+      ],
+      "year": 2022,
+      "online_year": 2021,
+      "title": "The use of Multi-Sensory Environments with autistic children: Exploring the effect of having control of sensory changes",
+      "journal": "Autism",
+      "volume": "26",
+      "issue": "6",
+      "pages": "1379–1394",
+      "doi": "10.1177/13623613211050176",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9340127/",
+      "verified_alternative_urls": [
+        "https://journals.sagepub.com/doi/10.1177/13623613211050176",
+        "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9340127/fullTextXML"
+      ],
+      "verification": "원문: 초록·참가자·조건 교차배치·표2·결과·Limitations 확인.",
+      "evidence_type": "동일 아동 내 통제/비통제 조건 비교; 조작에 부수적 차이 존재"
+    },
+    {
+      "id": "R3",
+      "role": "core_empirical",
+      "authors": [
+        "Matsuzaki, Junko",
+        "Kagitani-Shimono, Kuriko",
+        "Aoki, Sho",
+        "Hanaie, Ryuzo",
+        "Kato, Yoko",
+        "Nakanishi, Mariko",
+        "Tatsumi, Aika",
+        "Tominaga, Koji",
+        "Yamamoto, Tomoka",
+        "Nagai, Yukie",
+        "Mohri, Ikuko",
+        "Taniike, Masako"
+      ],
+      "year": 2022,
+      "online_year": 2021,
+      "title": "Abnormal cortical responses elicited by audiovisual movies in patients with autism spectrum disorder with atypical sensory behavior: A magnetoencephalographic study",
+      "journal": "Brain and Development",
+      "volume": "44",
+      "issue": "2",
+      "pages": "81–94",
+      "doi": "10.1016/j.braindev.2021.08.007",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34563417/",
+      "verification": "PubMed의 저자 제공 초록·서지 확인. ScienceDirect 원문 직접 열기는 403; 원문 전체 검토했다고 표기하지 않음.",
+      "evidence_type": "시각/시청각 영화 시청 MEG 비교; 완화 개입 연구 아님"
+    },
+    {
+      "id": "R4",
+      "role": "core_empirical",
+      "authors": [
+        "Yosef, Bar",
+        "Burgess, Valerie",
+        "Banchik, Megan",
+        "Ceballos, Joshua",
+        "Dapretto, Mirella",
+        "Green, Shulamite"
+      ],
+      "year": 2026,
+      "online_date": "2026-05-30",
+      "title": "Atypical Predictive Processing Is Associated With Sensory Over-Responsivity in Autism",
+      "journal": "Autism Research",
+      "volume": "19",
+      "issue": "7",
+      "article_number": "e70283",
+      "doi": "10.1002/aur.70283",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13377290/",
+      "verified_alternative_urls": [
+        "https://onlinelibrary.wiley.com/doi/10.1002/aur.70283",
+        "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC13377290/fullTextXML"
+      ],
+      "verification": "원문 초록·참가자·Discussion·한계 및 출판사 서지 확인.",
+      "evidence_type": "시각 예고 단서 + 청각/촉각 자극 fMRI; 영상 UI 실험 아님"
+    },
+    {
+      "id": "R5",
+      "role": "domestic_supplement_empirical",
+      "authors": [
+        "김경민"
+      ],
+      "authors_english": [
+        "Kyoung-Min Kim"
+      ],
+      "year": 2010,
+      "title": "백색소음이 ADHD 아동의 주의집중과 과제수행에 미치는 영향",
+      "title_english": "The Effect of White Noise on Attention and Task Performance for Children with ADHD",
+      "journal": "정서·행동장애연구",
+      "volume": "26",
+      "issue": "3",
+      "pages": "113–126",
+      "doi": null,
+      "doi_status": "KCI 서지 및 RIS의 DOI 필드가 비어 있음; DOI 미확인. DOI가 없다고 단정하지 않음.",
+      "uci": "G704-000501.2010.26.3.009",
+      "kci_article_id": "ART001481865",
+      "url": "https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART001481865",
+      "verification": "KCI 저자 초록·서지 및 공식 다운로드 원문 PDF pp.115–123 확인. 표2-1, 연구방법, 표3-1·3-2, 논의 대조.",
+      "evidence_type": "5명 ABAB 단일대상 계열 연구; 자극 감소 보편론을 경계하는 보조 자료",
+      "local_full_text": "source-pdfs/kim-2010-white-noise.pdf",
+      "full_text_conditions": "10–12세, 남4/여1, ADHD 진단, 약물치료 경험 없음. 특수학급 개별 컴퓨터 암산 덧셈, 30분/회, ABAB 총30회기(5/10/5/10). 자연음 파일을 약60dB 스피커로 제공.",
+      "audit_note": "PDF p.120 표3-1 시각 대조: B1 개별값 평균1009.2 vs 기재1008초; B2 1018.8 vs1020초. 숫자 효과크기 인용 보류, 보조 논거로만 사용."
+    },
+    {
+      "id": "R6",
+      "role": "background_review_not_primary_experiment",
+      "authors": [
+        "Robertson, Caroline E.",
+        "Baron-Cohen, Simon"
+      ],
+      "year": 2017,
+      "title": "Sensory perception in autism",
+      "journal": "Nature Reviews Neuroscience",
+      "volume": "18",
+      "issue": "11",
+      "pages": "671–684",
+      "doi": "10.1038/nrn.2017.112",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28951611/",
+      "verified_alternative_urls": [
+        "https://www.nature.com/articles/nrn.2017.112",
+        "https://docs.autismresearchcentre.com/papers/2017_Robertson_Sensory-perception-in-autism.pdf"
+      ],
+      "verification": "출판사 서지·핵심 요점 및 저자 소속기관 공개본 초록 확인.",
+      "evidence_type": "동료심사 종설; 새 참여자 실험 아님"
+    }
+  ],
+  "screened_out": [
+    {
+      "id": "S1",
+      "role": "screened_not_recommended_for_poster",
+      "authors": [
+        "이경호",
+        "박종섭"
+      ],
+      "year": 2010,
+      "title": "시각·청각 자극 반응훈련프로그램(Q-TRAINER)이 ADHD성향아동의 주의집중력 및 과잉행동에 미치는 영향",
+      "journal": "정서·행동장애연구",
+      "volume": "26",
+      "issue": "3",
+      "pages": "1–15",
+      "doi": null,
+      "doi_status": "KCI DOI 미기재; 미확인",
+      "uci": "G704-000501.2010.26.3.014",
+      "url": "https://www.kci.go.kr/kciportal/landing/article.kci?arti_id=ART001481938",
+      "verification": "KCI 국·영문 저자 초록·서지 확인. 전문 미확인.",
+      "reason": "능동 반응훈련·ADHD성향 초등학생 연구이므로 수동 영상시청 완화와 직접 연결하기 어려움."
+    }
+  ],
+  "poster_claims": [
+    {
+      "id": "C1",
+      "text": "감각 경험은 개인과 상황에 따라 달랐다. 이를 바탕으로 소리·빛의 조절 기준을 사용자가 선택하도록 제안한다.",
+      "sources": [
+        "R1"
+      ],
+      "status": "첫 문장=연구 요약; 둘째 문장=설계 추론"
+    },
+    {
+      "id": "C2",
+      "text": "감각 환경을 직접 조절한 조건에서 자폐 아동의 주의집중 증가가 관찰됐다. 이를 바탕으로 조절·해제·원본 복귀의 결정권을 사용자에게 둔다.",
+      "sources": [
+        "R2"
+      ],
+      "status": "첫 문장=실험 결과; 둘째 문장=영상 UX로의 외삽. 불안 감소는 입증되지 않음"
+    },
+    {
+      "id": "C3",
+      "text": "예고 단서에 대한 신경반응은 감각 과반응 정도에 따라 달랐다. 따라서 사전 안내는 사용자가 선택하는 기능으로 제안한다.",
+      "sources": [
+        "R4"
+      ],
+      "status": "첫 문장=신경영상 결과; 둘째 문장=설계 추론. 원 연구는 청각·촉각 과제"
+    }
+  ],
+  "global_limits": [
+    "제품 효과·임상 효과·위험 탐지 성능을 검증한 문헌은 없음.",
+    "자폐 표본을 신경다양성 전체 또는 ADHD 전체에 일반화하지 않음.",
+    "본 자료의 연구 n=49와 PariView 자체 온라인 설문 n=49는 별개 표본.",
+    "2026-05-30 공개된 R4를 2026-02 설계·설문 당시 근거로 소급하지 않음."
+  ],
+  "user_supplied_issue_url": "https://www.kci.go.kr/kciportal/po/search/poSereArtiList.kci?sereId=000501&volIsseId=VOL000021261",
+  "resolved_issue_url": "https://www.kci.go.kr/kciportal/landing/journalArticleList.kci?sere_id=000501&vol_isse_id=VOL000021261",
+  "user_materials": [
+    {
+      "type": "project_proposal_not_peer_reviewed",
+      "path": "/Users/ryeong/.paseo/uploads/upload_ae0a1bf9-9c0f-4e58-9d3d-0b2968e0dc8b/PariView_Capstone_%EC%B6%9C%ED%92%88%EA%B3%84%ED%9A%8D%EC%84%9C_%EC%82%AC%ED%9A%8C%EA%B8%B0%EC%97%AC%ED%98%95.pdf",
+      "verification": "제공 PDF의 1-1 프로젝트 기획 배경 텍스트 확인. 자체 온라인 설문 49명, 2026.02.22~26, 급격한 명도 변화 불편 98%, 감각 피로로 인한 시청 중단 경험 57.1%, 비대표성 주석 일치. 문항·응답 원자료는 미확인."
+    }
+  ],
+  "research_to_design_boundary": {
+    "supported_problem_statements": [
+      "개인·상황별 감각 경험의 차이",
+      "감각환경 직접 조절 조건에서 관찰된 행동 차이",
+      "예고 단서에 대한 신경반응의 개인차"
+    ],
+    "design_inferences_requiring_testing": [
+      "개인 기준 조절 UI의 사용성",
+      "장면별 소리·빛 타임라인의 유용성",
+      "선택형 사전 안내의 효용",
+      "대사·시간축 보존 및 원본 복귀 UX"
+    ],
+    "unsupported_product_effects": [
+      "불안 감소",
+      "감각 과부하 예방",
+      "시청 중단 감소",
+      "완주율 향상",
+      "의학적 안전 보장"
+    ]
+  },
+  "preference_fitting_design": {
+    "supported_basis": [
+      "R1",
+      "R2"
+    ],
+    "recommended_copy": "몇 번의 비교로, 지금 나에게 편안한 시청 설정을 찾아갑니다.",
+    "qualification": "A/B는 진단·역치 측정이 아닌 선호 탐색. 네 단계는 설계 선택이며 논문으로 검증된 최적 횟수가 아님. 재조절·재탐색 허용.",
+    "not_supported": [
+      "불변의 감각 지문",
+      "4회만으로 정확한 역치 도출",
+      "임상 효과 또는 시청 지속 효과 보장"
+    ]
+  }
+}
