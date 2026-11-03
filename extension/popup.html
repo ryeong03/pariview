@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>PariView 시청 설정</title>
+<style>
+  :root{--ink:#0d0e11;--muted:#858893;--line:#e7e8eb;--surface:#f9f9fa;--brand:#fa0030}
+  *{box-sizing:border-box;margin:0}
+  body{width:300px;padding:20px;font:14px/1.5 -apple-system,"Apple SD Gothic Neo","Pretendard",sans-serif;color:var(--ink);background:#fff}
+  header{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+  header img{width:22px;height:22px}
+  header b{font-size:15px}
+  h1{font-size:18px;letter-spacing:-.4px;margin-bottom:6px}
+  p{color:var(--muted);font-size:13px}
+  .values{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0}
+  .values div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+  .values small{display:block;color:var(--muted);font-size:11px}
+  .values strong{font-size:16px}
+  .toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .toggle b{display:block;font-size:14px}
+  .toggle small{color:var(--muted);font-size:12px}
+  .switch{flex:none;width:40px;height:24px;border-radius:12px;border:0;background:#c9cbd1;padding:3px;cursor:pointer}
+  .switch span{display:block;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .15s}
+  .switch[aria-checked="true"]{background:var(--brand)}
+  .switch[aria-checked="true"] span{transform:translateX(16px)}
+  .actions{display:flex;flex-direction:column;align-items:flex-start;gap:4px;margin-top:14px}
+  .primary{display:block;width:100%;margin-top:16px;padding:12px;border:0;border-radius:24px;background:var(--brand);color:#fff;font-size:14px;font-weight:600;cursor:pointer}
+  .link{border:0;background:none;color:var(--ink);font-size:13px;font-weight:600;cursor:pointer;padding:0}
+  .updated,.note{color:var(--muted);font-size:11px}
+  .note{margin-top:12px}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header><img src="icons/icon32.png" alt=""><b>PariView 시청 설정</b></header>
+
+<section id="empty" hidden>
+  <h1>아직 가져온 설정이 없어요</h1>
+  <p>PariView에서 감각 피팅을 마치고 저장하면 설정이 자동으로 들어와요</p>
+  <button id="open-empty" class="primary">PariView 열기</button>
+</section>
+
+<section id="ready" hidden>
+  <h1>이 설정으로 영상을 보고 있어요</h1>
+  <p>유튜브처럼 크롬에서 재생하는 영상에 적용돼요</p>
+  <div class="values">
+    <div><small>화면 밝기</small><strong id="v-brightness"></strong></div>
+    <div><small>화면 대비</small><strong id="v-contrast"></strong></div>
+    <div><small>소리 크기</small><strong id="v-volume"></strong></div>
+    <div><small>음량 변화 완화</small><strong id="v-compression"></strong></div>
+  </div>
+  <div class="toggle">
+    <div><b>다른 영상에도 적용하기</b><small>끄면 원래 화면과 소리로 돌아가요</small></div>
+    <button id="enabled" class="switch" role="switch" aria-checked="true" aria-label="다른 영상에도 적용하기"><span></span></button>
+  </div>
+  <div class="actions">
+    <button id="open-ready" class="link">PariView에서 다시 맞추기 →</button>
+    <span id="updated" class="updated"></span>
+  </div>
+  <p class="note">소리는 페이지를 한 번 누른 뒤부터 맞춰져요 DRM이 걸린 영상은 화면만 맞춰져요</p>
+</section>
+
+<script src="popup.js"></script>
+</body>
+</html>
