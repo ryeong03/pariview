@@ -37,9 +37,31 @@ export function prepareRecommendation(payload, catalog) {
   return {settings,answers,candidates,comparisons,history:[...history].map(([axis,outcome])=>({axis,outcome}))};
 }
 
+// AI path with a written sentence: matchAny is waived; unlessAny and decided comparisons still use the real answers.
+// Mirrors ai/domain.py ai_plan(). The rules fallback always uses the original plan.
+export const EXPERIENCE_REASON = '적은 문장을 참고해 고른 준비된 설정이에요';
+export function planForAI(plan, catalog, experience='') {
+  const modeIds = ['keep'];
+  if (!String(experience).trim()) return {...plan, open:false, modeIds};
+  const signals = new Set(Object.entries(plan.answers).flatMap(([k,v]) => (Array.isArray(v) ? v : [v]).map(x => `${k}:${x}`)));
+  const decided = new Set(plan.history.filter(h => ['a','b','equal','skip'].includes(h.outcome)).map(h => h.axis));
+  const known = new Map(plan.candidates.map(c => [c.id,c]));
+  const candidates = catalog.actions.filter(a => a.id === 'keep' || (!a.unlessAny.some(x => signals.has(x)) && !decided.has(a.axis))).map(a => {
+    if (known.has(a.id)) return {...known.get(a.id), matched:true};
+    const changes = {};
+    for (const [key,op] of Object.entries(a.adjust)) {
+      const range = catalog.ranges[key];
+      changes[key] = Object.hasOwn(op,'set') ? op.set : Math.max(range[0], Math.min(range[1], plan.settings[key] + op.delta));
+    }
+    return {id:a.id,title:a.title,axis:a.axis,changes,sourceIds:a.sources,reason:EXPERIENCE_REASON,matched:false};
+  });
+  if (plan.answers.goal !== 'original') modeIds.push(...(catalog.startingModes || []).map(m => m.id));
+  return {...plan, candidates, open:true, modeIds};
+}
+
 export function defaultSelection(plan) {
   const actionIds = plan.candidates.filter(x=>x.id!=='keep').slice(0,3).map(x=>x.id);
-  return {actionIds:actionIds.length ? actionIds : ['keep'],nextComparisonId:plan.comparisons[0]?.id || 'done'};
+  return {actionIds:actionIds.length ? actionIds : ['keep'],nextComparisonId:plan.comparisons[0]?.id || 'done',startingModeId:'keep'};
 }
 
 export function composeRecommendation(plan, catalog, selection=defaultSelection(plan), source='rules') {
@@ -48,11 +70,28 @@ export function composeRecommendation(plan, catalog, selection=defaultSelection(
       (selection.actionIds.includes('keep') && selection.actionIds.length!==1)) throw new Error('Invalid selection');
   const actions=selection.actionIds.map(id=>plan.candidates.find(x=>x.id===id));
   if (actions.some(x=>!x)) throw new Error('Unknown candidate');
+  // Two chosen actions may not set the same key to different values (e.g. soft vs clear contrast)
+  const seen={};
+  for (const action of actions) for (const [key,value] of Object.entries(action.changes)) {
+    if (Object.hasOwn(seen,key) && seen[key]!==value) throw new Error('Conflicting candidates');
+    seen[key]=value;
+  }
+  // Older two-field selections mean "keep the current mode"; an open AI plan must name a mode explicitly
+  if (Object.keys(selection).some(k=>!['actionIds','nextComparisonId','startingModeId'].includes(k))) throw new Error('Unsupported selection field');
+  if (selection.startingModeId===null) throw new Error('Invalid starting mode');
+  // Only a verified AI response may choose a mode; rules always keep the current one
+  const modeIds=source==='ai' ? (plan.modeIds || ['keep']) : ['keep'];
+  if (selection.startingModeId===undefined && plan.open && source==='ai') throw new Error('Missing starting mode');
+  const startingModeId=selection.startingModeId ?? 'keep';
+  if (!modeIds.includes(startingModeId)) throw new Error('Unknown starting mode');
   const nextComparison=plan.comparisons.find(x=>x.id===selection.nextComparisonId) || null;
   if (!nextComparison && !(selection.nextComparisonId==='done' && plan.comparisons.length===0)) throw new Error('Unknown comparison');
   const settings={...plan.settings};
   for(const action of actions) Object.assign(settings,action.changes);
+  // Only the mode label changes; preset values are never applied wholesale
+  if (startingModeId!=='keep') settings.profileId=startingModeId;
+  const startingMode=startingModeId==='keep' ? null : (catalog.startingModes || []).find(m=>m.id===startingModeId) || null;
   const sourceIds=[...new Set([...actions.flatMap(x=>x.sourceIds),...(nextComparison?.sourceIds || [])])];
-  return {source:source==='ai'?'ai':'rules',evidenceVersion:catalog.version,selection,settings:normalize(settings),actions,nextComparison,
+  return {source:source==='ai'?'ai':'rules',evidenceVersion:catalog.version,selection:{...selection,startingModeId},settings:normalize(settings),actions,nextComparison,startingMode,
     sources:sourceIds.map(id=>catalog.sources[id]),boundary:catalog.boundary};
 }

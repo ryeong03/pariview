@@ -23,7 +23,7 @@
 | **시작 프로필 고르기** | **같은 장면 A/B 비교** |
 | ![다섯 가지 시작 프로필](docs/images/fit-profiles.png) | ![밝기 A/B 비교](docs/images/fit-compare.png) |
 | **연구 기반 추천** | **다른 장면 고르기** |
-| ![이유와 출처를 확인하고 수정하는 추천](docs/images/recommendation.png) | ![세 작품 중 비교 장면 고르기](docs/images/scene-picker.png) |
+| ![불편한 점을 한 문장으로 적는 연구 기반 추천](docs/images/recommendation.png) | ![세 작품 중 비교 장면 고르기](docs/images/scene-picker.png) |
 | **크롬에서 쓰기** | **모바일** |
 | ![크롬 확장 프로그램 연결](docs/images/chrome-tab.png) | <img src="docs/images/hero-mobile.png" alt="모바일 첫 화면" width="260"> |
 
@@ -35,7 +35,7 @@
 
 ## 이용 흐름
 
-1. **방법 고르기** ‘직접 설정하기’에서 다섯 가지 시작 프로필을 고르거나 ‘연구 기반 PariView-AI 추천받기’에서 오늘의 필요와 환경을 골라요 추천값은 이유와 출처를 확인하고 수정·미리보기할 수 있어요
+1. **방법 고르기** ‘직접 설정하기’에서 다섯 가지 시작 프로필을 고르거나 ‘연구 기반 PariView 추천받기’에서 불편한 점을 한 문장으로 적거나 오늘의 필요와 환경을 골라요 추천값은 이유와 출처를 확인하고 수정·미리보기할 수 있어요
 2. **같은 장면 비교하기** 밝기, 대비, 소리 크기, 음량 변화 완화, 쉬운 자막을 A/B로 비교해요 화면은 같은 순간을 함께 재생하고 소리는 한쪽씩 들어요 비교 재생 속도는 0.75배이며 ‘비슷해요’, ‘잘 모르겠어요’, ‘건너뛰기’를 따로 기록해요
 3. **맞춘 설정으로 보기** 고른 설정으로 영상을 보고 저장해요 크롬 확장 프로그램이 같은 설정을 다른 사이트 영상에도 적용해요 언제든 다시 맞추거나 원본과 비교하거나 기본값으로 돌아갈 수 있어요
 
@@ -53,14 +53,16 @@
 
 장면을 바꾸면 측정된 밝기·소리 특징에 따라 현재 값을 조금 조절해요 ‘장면 맞춤’에서 이유를 확인하고 원래대로 되돌리거나 자동 조절을 끌 수 있어요 이전 보정은 쌓이지 않고 직접 바꾼 값은 남으며, 저장 버튼을 누르기 전에는 브라우저에 저장한 설정이나 확장 프로그램에 전달하지 않아요 이 장면별 조절은 측정값에 따른 규칙으로 동작해요
 
-Claude는 검토된 후보 중 시작 설정과 다음 비교 항목을 고르고, 설명과 출처는 검증한 카탈로그에서 가져와요 AI 연결이 없거나 응답을 검증하지 못하면 ‘연구 기반 기본 제안’으로 이어져요 실제 모델 응답이 검증된 결과에만 ‘AI 추천’을 표시하며 사용자가 확정할 때만 저장해요
+“폭발 장면에서 깜짝 놀라요”처럼 불편한 점을 한 문장으로 적으면, 연결된 Claude가 검토된 시작 모드·설정 후보와 다음 비교 항목을 골라요 추천 시작 모드와 바뀐 초기값을 함께 보여주며 기존 프로필 값을 통째로 덮어쓰지 않아요 이유와 출처는 검증한 카탈로그에서 구성해요
+
+자유 입력은 최대 300자이며, 연결된 Claude에 추천을 요청할 때 전달돼요 문장 원문은 브라우저 저장 공간에 남기지 않아요 AI 연결이 없거나 응답을 검증하지 못하면 ‘연구 기반 기본 제안’으로 이어지고 문장이 반영되지 않았음을 알려줘요 실제 모델 응답이 검증된 결과에만 ‘AI 추천’을 표시하며, 설정은 사용자가 확정할 때만 저장해요
 
 ## 기술 구조
 
 ```mermaid
 flowchart LR
   subgraph Web["PariView 웹 (web/dist, 빌드 없는 정적 HTML·CSS·JS)"]
-    UI["피팅 UI<br>시작 프로필 · A/B 비교 · 추천 규칙"]
+    UI["피팅 UI<br>시작 프로필 · A/B 비교 · 한 문장 추천"]
     V["video 요소"]
     F["CSS filter<br>밝기 · 대비 · 채도 · 색온도"]
     A["Web Audio<br>lowpass → 말소리 EQ → compressor → gain"]
@@ -82,7 +84,7 @@ flowchart LR
   P --> CST
   AN["analysis/sensory_map.py<br>ffmpeg EBU R128 · 프레임 밝기"] --> M
   UI --> API["Python 추천 API<br>검토된 후보 · 연구 출처"]
-  API --> Claude["Claude<br>후보 ID · 다음 비교 선택"]
+  API --> Claude["Claude<br>입력 문장 → 시작 모드 · 후보 ID · 다음 비교"]
   API --> Default["연구 기반 기본 제안"]
   API --> UI
 ```
@@ -94,7 +96,7 @@ flowchart LR
 | 감각 지도 | ffmpeg EBU R128 순간 라우드니스와 signalstats 프레임 평균 밝기로 변화 구간 측정 |
 | 저장·연동 | localStorage, JSON 설정 내려받기, Chrome Extension Manifest V3 (content script, storage) |
 | 그래픽 | Three.js 마스코트·로고, Anime.js 스프링 반응, GSAP, 모션 줄이기 지원 |
-| 추천 | 검토된 설정·출처 카탈로그, Claude Messages API, 응답 검증, 규칙 기반 기본 제안 |
+| 추천 | 한 문장 자유 입력, 검토된 모드·설정·출처 카탈로그, Claude Messages API, 응답 검증, 규칙 기반 기본 제안 |
 | 배포 | Docker + Python 표준라이브러리 정적·추천 API 서버 (Railway), 영상 HTTP Range 지원 |
 
 ## 검증
@@ -102,9 +104,9 @@ flowchart LR
 | 항목 | 방법 | 결과 |
 |---|---|---|
 | 화면 동작 | `uv run --with playwright python web/validate.py` (1440·1280·768·390 폭, 5프로필, 비교, 저장, 초기화, 재생, 모바일, 모션 줄이기) | 오류 0건, 리소스 실패 0건 |
-| 추천 | `python3 -m unittest ai.test_recommendation -v`, `uv run --with playwright python web/validate_recommendation.py` | 14개 테스트, 정책 입력 61개 일치, 브라우저 10개 흐름 통과 · 실제 Claude 호출은 키 설정 후 확인 |
+| 추천 | `python3 -m unittest ai.test_recommendation ai.test_experience_http ai.test_static_gzip -v`, `uv run --with playwright python web/validate_recommendation.py --base-url http://127.0.0.1:4178` | 서버 전체 검사 39개 통과, 규칙 64개·AI 후보 17개 입력의 JS/Python 정합, 브라우저 14개 흐름 통과 · 공급자 응답은 모의 검증이며 실제 Claude 호출은 키 설정 후 확인 |
 | 영상 비교 | 3편 길이·장면 전환·12초 이후 탐색·동시 재생·0.75배속 확인 | 각 45초, 화면 동기화 및 설정 유지 통과 |
-| 확장 프로그램 v0.3.0 | 웹 연결 6개, 오디오·상태 16개, 공개 앱 → 실제 YouTube·SPA 이동 10개 ([검증 기록](extension/tests/VALIDATION.md)) | 32개 항목 통과, 최종 ZIP 설치로 오디오·상태 16개 재확인 · 소리는 디지털 출력 신호로 확인 |
+| 확장 프로그램 v0.3.1 | 웹 연결 6개, 오디오·상태 16개, 공개 앱 → 실제 YouTube·SPA 이동 10개 ([검증 기록](extension/tests/VALIDATION-0.3.1.md)) | 32개 항목 통과, 최종 ZIP 설치로 오디오·상태 16개 재확인 · 소리는 디지털 출력 신호로 확인 |
 | 당사자 참여 검증 | 신경다양성 당사자 참여 · 사용자 확인 | 완료 |
 | 피팅 수렴 검증 · 시뮬레이션 | [사용자 시나리오 10종](analysis/simulation/REPORT.md)이 실제 UI로 피팅을 끝까지 진행 | 팀이 정한 목표값과의 평균 오차 0.189 → 0.077, 10개 시나리오 모두 오차 감소 |
 

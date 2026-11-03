@@ -48,7 +48,7 @@ function reflect(){
  for(const key of toggles){$('#'+key)?.classList.toggle('on',settings[key]);$('#'+key)?.setAttribute('aria-checked',String(settings[key]));}
  $('#custom-mode').classList.toggle('active',!original);$('#original-mode').classList.toggle('active',original);
  $('#custom-mode').setAttribute('aria-pressed',String(!original));$('#original-mode').setAttribute('aria-pressed',String(original));
- $('#profile-state').textContent=saved?'내 설정이 저장되어 있어요':'아직 피팅 전이에요';
+ $('#profile-state').textContent=saved?'내 PariView 설정이 저장돼 있어요':'아직 피팅 전이에요';
  $('#fit-status').textContent=original?'원본 비교':saved?'저장한 설정':'조절 중';
  if(!settings.autoBrightness)sceneLift=1;applyLook();routeAudio();renderCaptions();renderChart();
  if(!settings.notices||original){$('#event-notice').hidden=true;$('#view-event-notice').hidden=true;noticeShown=null;}

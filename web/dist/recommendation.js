@@ -1,5 +1,5 @@
 import {normalize} from './settings.js';
-import {prepareRecommendation,composeRecommendation} from './recommendation-engine.js';
+import {prepareRecommendation,composeRecommendation,planForAI} from './recommendation-engine.js';
 
 const esc = value => String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fetchJSON = async (url, options={}, timeout=12000) => {
@@ -8,6 +8,16 @@ const fetchJSON = async (url, options={}, timeout=12000) => {
   finally {clearTimeout(timer);}
 };
 
+const EXPERIENCE_MAX=300;
+// Display reason for AI-picked candidates that no chip matched: rebuilt from catalog facts (what changes), never model prose
+function factualReason(action, catalog) {
+  const parts=Object.entries(action.changes).map(([key,value])=>{
+    const info=catalog.controls[key];if(!info)return '';
+    const label=info.label.split(' · ')[0];return typeof value==='boolean'?`${label} ${value?'켜기':'끄기'}`:`${label} ${value}${info.unit||''}`;
+  }).filter(Boolean);
+  return parts.length?`${parts.join(' · ')}로 시작해요`:'지금 설정에서 비교를 시작해요';
+}
+
 export function initRecommendation(hooks={}) {
   if(document.querySelector('#pariview-recommendation')) return;
   const style=document.createElement('link');style.rel='stylesheet';style.href=new URL('./recommendation.css',import.meta.url);document.head.append(style);
@@ -15,7 +25,7 @@ export function initRecommendation(hooks={}) {
   dialog.innerHTML='<header><span class="pv-rec-brand">PariView <small>연구 기반 추천</small></span><button type="button" class="pv-rec-close" aria-label="추천 닫기">×</button></header><div class="pv-rec-body"></div>';
   document.body.append(dialog);
   const body=dialog.querySelector('.pv-rec-body');
-  let catalog,base,draft,result,lastAnswers={},returnFocus,epoch=0,previewing=false,previewAudio,previewNodes,providerConfigured=false;
+  let catalog,base,draft,result,lastAnswers={},lastExperience='',returnFocus,epoch=0,previewing=false,previewAudio,previewNodes,providerConfigured=false;
   let pending=null;
   const catalogReady=fetchJSON(new URL('./recommendation-data.json',import.meta.url),{},5000).then(x=>(catalog=x)).catch(()=>null);
   const pausePreview=()=>{body.querySelector('video')?.pause();previewAudio?.suspend().catch(()=>{});};
@@ -41,17 +51,22 @@ export function initRecommendation(hooks={}) {
     restore();
     const choices=(key,type='radio')=>Object.entries(catalog.inputs[key]).map(([value,label])=>`<label class="pv-rec-choice"><input type="${type}" name="${key}" value="${value}" ${type==='checkbox'?(lastAnswers[key]?.includes(value)?'checked':''):(value===(lastAnswers[key]||Object.keys(catalog.inputs[key])[0])?'checked':'')}><span>${label}</span></label>`).join('');
     const select=(key,title)=>`<label class="pv-rec-select">${title}<select name="${key}">${Object.entries(catalog.inputs[key]).map(([value,label])=>`<option value="${value}" ${lastAnswers[key]===value?'selected':''}>${label}</option>`).join('')}</select></label>`;
-    body.innerHTML=`<div class="pv-rec-eyebrow">내 응답 + 연구를 참고한 설계</div><h2 id="pv-rec-title">오늘은 어떻게 보고 싶나요?</h2><p class="pv-rec-intro">신경 쓰이는 항목을 고르면 시작 설정과 다음 비교를 제안해요<br>마음에 드는 값만 골라 적용할 수 있어요</p>
-      <form class="pv-rec-form"><fieldset><legend>지금 신경 쓰이는 것은 무엇인가요? <small>여러 개 선택 · 선택하지 않아도 돼요</small></legend><div class="pv-rec-choices">${choices('concerns','checkbox')}</div></fieldset>
+    body.innerHTML=`<div class="pv-rec-eyebrow">내 응답 + 연구를 참고한 설계</div><h2 id="pv-rec-title">오늘은 어떻게 보고 싶나요?</h2><p class="pv-rec-intro">불편한 점을 적거나 항목을 고르면 시작 설정과 다음 비교를 제안해요<br>마음에 드는 값만 골라 적용할 수 있어요</p>
+      <form class="pv-rec-form"><fieldset class="pv-rec-experience"><legend><label for="pv-rec-experience">영화 볼 때 어떤 점이 불편한지 한 문장으로 써 주세요</label> <small>선택 사항 · 적지 않아도 아래 항목으로 제안해요</small></legend><textarea id="pv-rec-experience" name="experience" rows="2" maxlength="${EXPERIENCE_MAX}" placeholder="폭발 장면에서 깜짝 놀라요" aria-describedby="pv-rec-experience-help">${esc(lastExperience)}</textarea><div class="pv-rec-experience-meta"><p id="pv-rec-experience-help">적은 문장은 추천 서버와 연결된 Claude에게 전달돼요<br>이름이나 연락처, 계정은 적지 않아도 돼요</p><span data-count aria-live="off">0/${EXPERIENCE_MAX}</span></div></fieldset><fieldset><legend>지금 신경 쓰이는 것은 무엇인가요? <small>여러 개 선택 · 선택하지 않아도 돼요</small></legend><div class="pv-rec-choices">${choices('concerns','checkbox')}</div></fieldset>
       <fieldset><legend>어떤 방향으로 시작할까요?</legend><div class="pv-rec-choices">${choices('goal')}</div></fieldset>
       <details class="pv-rec-environment"><summary>지금의 환경과 자막 선호 <span>선택 사항</span></summary><div class="pv-rec-selects">${select('room','주변 밝기')}${select('device','소리를 듣는 기기')}${select('captionStyle','자막 표현')}</div></details>
-      <p class="pv-rec-note">선택한 항목과 설정값으로 추천해요 AI가 연결된 경우 이 정보가 AI 제공자에게 전달돼요 이름이나 진단 정보는 묻지 않아요</p>
-      <div class="pv-rec-actions"><button type="button" data-cancel>취소</button><button type="submit" class="pv-rec-primary">시작 설정 제안받기 <span aria-hidden="true">↗</span></button></div><p class="pv-rec-note">추천은 고쳐 쓸 수 있는 출발점이에요 진단·치료·최적값 판정이 아니에요</p><p class="pv-rec-wait" role="status" aria-live="polite"></p></form>`;
+      <p class="pv-rec-note">적은 문장과 선택한 항목, 지금 설정값으로 시작 설정을 골라요<br>이름이나 진단 정보는 묻지 않아요</p>
+      <div class="pv-rec-actions"><button type="button" data-cancel>취소</button><button type="submit" class="pv-rec-primary">시작 설정 제안받기 <span aria-hidden="true">↗</span></button></div><p class="pv-rec-note">추천은 고쳐 쓸 수 있는 출발점이에요<br>진단·치료·최적값 판정이 아니에요</p><p class="pv-rec-wait" role="status" aria-live="polite"></p></form>`;
     body.querySelector('[data-cancel]').onclick=close;
+    const experienceField=body.querySelector('#pv-rec-experience'),counter=body.querySelector('[data-count]');
+    const count=()=>{counter.textContent=`${Array.from(experienceField.value.trim()).length}/${EXPERIENCE_MAX}`;};
+    experienceField.addEventListener('input',()=>{lastExperience=experienceField.value;count();});count();
     body.querySelector('form').onsubmit=async e=>{
       e.preventDefault();const form=e.currentTarget,data=new FormData(form),thisEpoch=epoch;
       lastAnswers=Object.fromEntries(Object.keys(catalog.inputs).map(k=>[k,k==='concerns'?data.getAll(k):data.get(k)]));
-      const payload={currentSettings:base,answers:lastAnswers,comparisons:(hooks.getComparisons?.()||[]).slice(-20).map(x=>({axis:x.axis,outcome:x.outcome})),useAI:true};
+      lastExperience=String(data.get('experience')||'');
+      const experience=Array.from(lastExperience.trim()).slice(0,EXPERIENCE_MAX).join(''); // code points, same as the server's len()
+      const payload={currentSettings:base,answers:lastAnswers,comparisons:(hooks.getComparisons?.()||[]).slice(-20).map(x=>({axis:x.axis,outcome:x.outcome})),useAI:true,experience};
       const plan=prepareRecommendation(payload,catalog);
       const fallback=()=>composeRecommendation(plan,catalog);
       const submit=form.querySelector('[type="submit"]');submit.disabled=true;form.querySelector('.pv-rec-wait').textContent='선택한 응답으로 제안을 준비하고 있어요';
@@ -59,11 +74,12 @@ export function initRecommendation(hooks={}) {
       let next=fallback();
       if(providerConfigured) {
         try {const response=await fetchJSON('/api/recommendation',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-          if(response.evidenceVersion===catalog.version)next=composeRecommendation(plan,catalog,response.selection,response.source);
+          // Label as AI only when the server says so and the selection validates against the same candidate pool
+          if(response.source==='ai'&&response.evidenceVersion===catalog.version)next=composeRecommendation(planForAI(plan,catalog,experience),catalog,response.selection,'ai');
         } catch { /* Continue with the reviewed default proposal, without an error modal */ }
       }
       if(epoch!==thisEpoch||!dialog.open)return;
-      result=next;draft={...result.settings};renderResult();
+      result={...next,experience:next.source==='ai'?experience:'',experienceMissed:!!experience&&next.source!=='ai'};draft={...result.settings};renderResult();
     };
   }
   function renderResult() {
@@ -73,8 +89,8 @@ export function initRecommendation(hooks={}) {
       return range?`<label class="pv-rec-control">${info.label}<span><small>시작 ${base[key]}${info.unit}</small><output data-value="${key}">${draft[key]}${info.unit}</output></span><input type="range" data-setting="${key}" min="${range[0]}" max="${range[1]}" step="1" value="${draft[key]}" aria-label="${info.label}"></label>`:
         `<label class="pv-rec-control pv-rec-toggle"><span>${info.label}<small>시작 ${base[key]?'켜짐':'꺼짐'}</small></span><input type="checkbox" data-setting="${key}" ${draft[key]?'checked':''}></label>`;
     };
-    body.innerHTML=`<span class="pv-rec-method">${result.source==='ai'?'AI 추천':'연구 기반 기본 제안'}</span><h2 id="pv-rec-title">오늘의 시작 설정이에요</h2><p class="pv-rec-intro">아직 저장하지 않았어요 값을 바꾸거나 미리 본 뒤 선택하세요</p>
-      <div class="pv-rec-result-layout"><div><div class="pv-rec-reasons">${result.actions.map(a=>`<article><b>${esc(a.title)}</b><p>${esc(a.reason)}</p><small>설계 참고 ${a.sourceIds.join(' · ')}</small></article>`).join('')}</div>
+    body.innerHTML=`<span class="pv-rec-method">${result.source==='ai'?'AI 추천':'연구 기반 기본 제안'}</span><h2 id="pv-rec-title">오늘의 시작 설정이에요</h2>${result.experience?`<p class="pv-rec-quote"><span>적은 문장</span>${esc(result.experience)}</p>`:''}${result.experienceMissed?'<p class="pv-rec-quote is-missed">적은 문장은 이번 제안에 반영되지 않았어요<br>선택한 항목으로 골랐어요</p>':''}<p class="pv-rec-intro">아직 저장하지 않았어요<br>값을 바꾸거나 미리 본 뒤 선택하세요</p>
+      <div class="pv-rec-result-layout"><div>${result.startingMode?`<div class="pv-rec-mode"><small>추천 시작 모드</small><b>${esc(result.startingMode.title)}</b><span>${esc(result.startingMode.en)}</span><p>모드 이름만 정하고, 값은 아래 초기값으로 시작해요</p></div>`:''}<div class="pv-rec-reasons">${result.actions.map(a=>`<article><b>${esc(a.title)}</b><p>${esc(a.matched===false?factualReason(a,catalog):a.reason)}</p><small>설계 참고 ${a.sourceIds.join(' · ')}</small></article>`).join('')}</div>
       <div class="pv-rec-controls">${Object.entries(catalog.controls).map(([key,info])=>field(key,info)).join('')}</div><p class="pv-rec-edited" role="status" aria-live="polite"></p><button type="button" class="pv-rec-text" data-reset>제안받은 값으로 되돌리기</button></div>
       <aside class="pv-rec-preview"><div class="pv-rec-preview-title">적용 전 미리보기</div><video playsinline preload="metadata" muted aria-label="추천 설정 미리보기"></video><p class="pv-rec-caption" aria-live="off"></p><div class="pv-rec-preview-buttons"><button type="button" data-preview>화면 미리보기</button><button type="button" data-listen>소리도 듣기</button><button type="button" data-stop>멈추기</button></div><p class="pv-rec-note">지금 고른 장면으로 확인해요 자막 표현은 준비된 예시이며 배경음 분리·장면 전환 완화는 이 추천에서 바꾸지 않아요</p>
       ${result.nextComparison?`<article class="pv-rec-next"><small>다음에 비교해 볼 항목</small><h3>${esc(result.nextComparison.title)}</h3><p>${esc(result.nextComparison.reason)}</p><button type="button" data-compare>이 항목 비교하기 ↗</button></article>`:'<p class="pv-rec-note">확인한 항목은 다시 묻지 않아요 원하는 값을 직접 수정할 수 있어요</p>'}</aside></div>
