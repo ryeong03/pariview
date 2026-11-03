@@ -105,7 +105,7 @@
   .profile-basis b { color: var(--cyan); margin-right: 3mm; }
 
   /* 3 */
-  #s3 { height: 149mm; }
+  #s3 { height: 152mm; }
   .s3 { display: grid; grid-template-columns: 300mm 1fr; gap: 7mm; }
   .arch { width: 100%; height: 84mm; }
   .map-box { margin-top: 3mm; }
@@ -119,11 +119,11 @@
   .tech p { font-size: 12.5pt; color: var(--muted); line-height: 1.4; margin-top: .8mm; }
 
   /* 4 + 5 */
-  .bottom { height: 153mm; display: grid; grid-template-columns: 262mm 1fr; gap: 6mm; }
+  .bottom { height: 150mm; display: grid; grid-template-columns: 262mm 1fr; gap: 6mm; }
   table { width: 100%; border-collapse: separate; border-spacing: 0 1.5mm; font-size: 13.5pt; }
   th { font-size: 14pt; padding: 3mm; text-align: center; background: var(--panel-2); }
   th.pv { background: var(--red); border-radius: 3mm 3mm 0 0; }
-  td { padding: 2.3mm 3mm; text-align: center; line-height: 1.4; background: var(--panel-2); }
+  td { padding: 2mm 3mm; text-align: center; line-height: 1.4; background: var(--panel-2); }
   td:first-child { font-weight: 700; width: 36mm; }
   td.pv { color: var(--text); font-weight: 700; background: #3a1d2c; }
   .compare-note { margin-top: 2mm; }
@@ -197,7 +197,7 @@
   .node.br.sound { border-color: var(--cyan); }
   .node.br b { display: block; font-size: 16pt; }
   .node.br span { display: block; font-size: 12.5pt; color: var(--muted); font-weight: 400; margin-top: 1mm; }
-  .sub-flows { margin-top: 4mm; font-size: 13pt; line-height: 1.55; color: var(--muted); }
+  .sub-flows { margin-top: 3mm; font-size: 12.5pt; line-height: 1.45; color: var(--muted); }
   .sub-flows b { color: var(--text); margin-right: 2mm; }
   .map-box { margin-top: 4mm; padding-top: 4mm; border-top: .35mm solid var(--line); }
   .map-box svg { width: 100%; height: auto; margin-top: 1.5mm; }
@@ -248,7 +248,7 @@
         <div><b>60.5%</b><span>기존 OTT 관련<br>세부 조절 기능 부족</span></div>
         <div><b>83%</b><span>맞춤형 시청각 자극<br>최적화 기술 사용 의향</span></div>
       </div>
-      <p class="note" style="margin-top:3mm;text-align:center">신경다양성 이용자 76명 대상 조사</p>
+      <p class="note" style="margin-top:3mm;text-align:center">구글 폼 온라인 설문 · 76명 응답 · 신경다양성 당사자 20%</p>
     </div>
     <div class="box">
       <h3>타깃 사용자</h3>
@@ -297,11 +297,12 @@
       </div>
       <div class="sub-flows">
         <p><b>이어서 보기</b> 저장한 설정 → 크롬 확장(MV3) → 다른 사이트의 지원 영상에 같은 화면·소리 처리¹</p>
-        <p><b>장면 데이터</b> 자막·장면 구간(scenes.js) → 자막 표시 · 사전 예고 · 놓친 내용 탐색²</p>
+        <p><b>장면 데이터</b> 자막·장면 구간(scenes.js) → 자막 표시 · 놓친 내용 탐색²</p>
+        <p><b>영상 측정</b> ffmpeg 라우드니스·밝기 → 장면별 map.json → 감각 지도 · 사전 예고</p>
       </div>
       <div class="map-box">
         <h3>영상 신호로 측정한 감각 지도<small>Tears of Steel 45초 발췌 장면 · 소리 EBU R128 라우드니스 · 빛 프레임 평균 밝기 · 음영 = 변화 구간 · ▲ = 사전 예고</small></h3>
-        <svg id="map-chart" viewBox="0 0 1000 100" role="img" aria-label="소리 크기와 화면 밝기 측정 곡선과 사전 예고 시점"></svg>
+        <svg id="map-chart" viewBox="0 0 1000 92" role="img" aria-label="소리 크기와 화면 밝기 측정 곡선과 사전 예고 시점"></svg>
       </div>
     </div>
     <div class="s3-side">
@@ -334,14 +335,14 @@
     </div>
     <div class="poc">
       <div class="poc-col"><span class="t">자동 검증 · Playwright · 공개 배포본</span><div class="kpis2"><div><b>32항목</b><span>확장 프로그램 통과<br>유튜브 실측 10 포함</span></div><div><b>0건</b><span>4개 화면 폭 · 3편 영상<br>JS·리소스 오류</span></div></div></div>
-      <div class="poc-col"><span class="t">사람이 평가하는 항목 · 향후</span><p class="poc-note" style="margin-top:2mm;font-size:12.5pt;color:var(--text)">실제 참여자 10명 피팅 실험과 사용성 평가(SUS)를 준비하고 있어요<br>직접 찾은 선호값에 피팅이 얼마나 가까워지는지, 피팅 전후 편안함을 사람이 답해요</p></div>
+      <div class="poc-col"><span class="t">사람이 평가하는 항목 · 향후</span><p class="poc-note" style="margin-top:2mm;font-size:12.5pt;color:var(--text)">성인 신경다양성 당사자 10명<br>기본 설정과 개인 설정의 시청 편안함을 비교하고 사용성(SUS)을 평가할 예정이에요</p></div>
     </div>
     <p class="next"><b>향후</b> 고른 값 근처에서 한 번 더 비교하는 2단계 비교 · 노란 자막처럼 선택지를 넓히는 자막 색·크기 옵션 · 오픈소스 공개 후 지원 영상 범위 확대¹</p>
   </section>
 </div>
 
 <footer class="block">
-  <p class="credits">검토 자료 17건 · 학술논문 11편, 전문자료 6건(AAO · AOA · ASHA · NICE CG142 · NICE CG170 · NIMH RDoC) · 설문은 신경다양성 이용자 76명 대상 팀 자체 조사<br>영화 Tears of Steel © Blender Foundation CC BY 3.0 · Pretendard OFL · 통계 출처 통계청 2025 고령자 통계, 국민건강보험공단 2024, 방송통신위원회 2024 방송매체 이용행태조사</p>
+  <p class="credits">검토 자료 17건 · 학술논문 11편, 전문자료 6건(AAO · AOA · ASHA · NICE CG142 · NICE CG170 · NIMH RDoC) · 설문은 팀이 구글 폼으로 진행한 온라인 조사 · 76명 응답 · 신경다양성 당사자 20%<br>영화 Tears of Steel © Blender Foundation CC BY 3.0 · Pretendard OFL · 통계 출처 통계청 2025 고령자 통계, 국민건강보험공단 2024, 방송통신위원회 2024 방송매체 이용행태조사</p>
 
 </footer>
 
@@ -374,7 +375,7 @@ try {
   const map = await (await fetch('../web/dist/assets/scenes/tears-lab-map.json')).json();
   const svg = document.getElementById('map-chart');
   const d = map.duration, x0 = 78, x = t => x0 + (992 - x0) * t / d;
-  const laneS = [4, 38], laneL = [46, 80];
+  const laneS = [4, 35], laneL = [42, 73];
   const yS = v => laneS[1] - (Math.min(-5, Math.max(-45, v)) + 45) / 40 * (laneS[1] - laneS[0]);
   const yL = v => laneL[1] - (Math.min(160, Math.max(20, v)) - 20) / 140 * (laneL[1] - laneL[0]);
   for (const e of map.events) { const lane = e.type === '빛 변화' ? laneL : laneS; el('rect', { x: x(e.at), y: lane[0], width: Math.max(5, x(e.end) - x(e.at)), height: lane[1] - lane[0], fill: e.type === '빛 변화' ? '#4df3ff' : '#ff2e63', opacity: .28 }, svg); }
@@ -382,12 +383,12 @@ try {
   const path = (pts, fy) => pts.filter(p => p[1] > -69).map((p, i) => `${i ? 'L' : 'M'}${x(p[0]).toFixed(1)},${fy(p[1]).toFixed(1)}`).join(' ');
   el('path', { d: path(map.curves.loudness, yS), stroke: '#ff2e63', 'stroke-width': 2.4, fill: 'none' }, svg);
   el('path', { d: path(map.curves.luma, yL), stroke: '#4df3ff', 'stroke-width': 2.4, fill: 'none' }, svg);
-  el('text', { x: 0, y: 18, 'font-size': 13, fill: '#f3f2f8', 'font-weight': 700 }, svg, '소리');
-  el('text', { x: 0, y: 32, 'font-size': 9.5, fill: '#aaa7bd' }, svg, '−45 ~ −5 LUFS');
-  el('text', { x: 0, y: 60, 'font-size': 13, fill: '#f3f2f8', 'font-weight': 700 }, svg, '밝기');
-  el('text', { x: 0, y: 74, 'font-size': 9.5, fill: '#aaa7bd' }, svg, '평균 20 ~ 160');
-  for (const t of [0, 15, 30, 45]) { const tx = Math.min(t, d); el('line', { x1: x(tx), x2: x(tx), y1: laneL[1], y2: laneL[1] + 4, stroke: '#aaa7bd', 'stroke-width': 1.5 }, svg); el('text', { x: x(tx), y: 97, 'font-size': 10, fill: '#aaa7bd', 'text-anchor': t === 0 ? 'start' : t === 45 ? 'end' : 'middle' }, svg, `${t}초`); }
-  for (const e of (map.noticeEvents || [])) el('path', { d: `M${x(e.at) - 5},92 L${x(e.at) + 5},92 L${x(e.at)},85 Z`, fill: '#cdff5f' }, svg);
+  el('text', { x: 0, y: 17, 'font-size': 13, fill: '#f3f2f8', 'font-weight': 700 }, svg, '소리');
+  el('text', { x: 0, y: 30, 'font-size': 9.5, fill: '#aaa7bd' }, svg, '−45 ~ −5 LUFS');
+  el('text', { x: 0, y: 55, 'font-size': 13, fill: '#f3f2f8', 'font-weight': 700 }, svg, '밝기');
+  el('text', { x: 0, y: 68, 'font-size': 9.5, fill: '#aaa7bd' }, svg, '평균, 0–255');
+  for (const t of [0, 15, 30, 45]) { const tx = Math.min(t, d); el('line', { x1: x(tx), x2: x(tx), y1: laneL[1], y2: laneL[1] + 4, stroke: '#aaa7bd', 'stroke-width': 1.5 }, svg); el('text', { x: x(tx), y: 89, 'font-size': 10, fill: '#aaa7bd', 'text-anchor': t === 0 ? 'start' : t === 45 ? 'end' : 'middle' }, svg, `${t}초`); }
+  for (const e of (map.noticeEvents || [])) el('path', { d: `M${x(e.at) - 5},84 L${x(e.at) + 5},84 L${x(e.at)},77 Z`, fill: '#cdff5f' }, svg);
   const mapTitle = document.querySelector('.map-box h3 small'); if (mapTitle) mapTitle.textContent += ` · 사전 예고 ${(map.noticeEvents || []).length}회 · 변화 구간 ${map.events.length}개`;
 } catch (e) { errors.push('map:' + e.message); }
 await document.fonts.ready;
