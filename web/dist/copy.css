@@ -97,3 +97,5 @@ p,li,small{text-wrap:pretty}
 #expand-settings .chev{display:inline-flex;width:16px;height:16px;flex:none}
 #expand-settings .chev svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 @media(max-width:760px){#expand-settings{width:auto;margin:0}}
+/* ≤368px: the dock row (tabs 150 + gap 12 + button 139 = 301px) exceeds the 256–296px available, so the button takes its own row above the tabs */
+@media(max-width:368px){.studio-grid .preferences,.studio-grid .preferences.expanded{grid-template-columns:minmax(0,1fr)}.preferences .dock-heading{grid-column:1;grid-row:1;justify-self:end}.preferences .setting-tabs{grid-column:1;grid-row:2;min-width:0;width:100%}.preferences .setting-content{grid-column:1;grid-row:3}.preferences .dock-actions{grid-column:1;grid-row:4}}
