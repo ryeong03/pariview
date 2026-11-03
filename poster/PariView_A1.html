@@ -53,7 +53,7 @@
   .demo-qr span { display: block; font-size: 11pt; color: var(--muted); margin-top: 1mm; line-height: 1.35; }
 
   /* 1 */
-  #s1 { height: 157mm; }
+  #s1 { height: 160.1mm; }
   .s1-top { display: grid; grid-template-columns: 182mm 1fr 196mm; gap: 6mm; height: 66mm; }
   .box { background: var(--panel-2); border-radius: 4mm; padding: 3.2mm 4.5mm; }
   .box h3 { font-size: 18pt; font-weight: 700; margin-bottom: 2mm; }
@@ -75,7 +75,7 @@
   .ev .ref { font-size: 11pt; color: var(--blue); margin-top: 1.5mm; }
 
   /* 2 */
-  #s2 { height: 200.9mm; }
+  #s2 { height: 215.6mm; }
   .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6mm; }
   .step { background: var(--panel-2); border-radius: 4mm; padding: 4mm 4.5mm 4.5mm; }
   .step .label { font-size: 14pt; font-weight: 800; color: var(--red); letter-spacing: 1pt; }
@@ -105,7 +105,7 @@
   .profile-basis b { color: var(--cyan); margin-right: 3mm; }
 
   /* 3 */
-  #s3 { height: 105.1mm; }
+  #s3 { height: 87.3mm; }
   .s3 { display: grid; grid-template-columns: 300mm 1fr; gap: 7mm; }
   .arch { width: 100%; height: 84mm; }
   .map-box { margin-top: 3mm; }
@@ -396,7 +396,7 @@
   .rlink b { font-size: 17pt; } .rlink em { font-size: 13pt; } .rlink small { font-size: 11.5pt; }
   .sub-flows { font-size: 14pt; }
 
-  .shot .stack { display: flex; flex-direction: column; justify-content: space-between; gap: 4mm; height: 130mm; }
+  .shot .stack { display: flex; flex-direction: column; justify-content: space-between; gap: 4mm; height: 126mm; }
   .shot .stack.one { justify-content: flex-start; }
   .shot .stack > img, .shot .stack figure { flex: 0 1 auto; min-height: 0; }
   .shot .stack > img, .shot .stack figure img { width: 100%; height: auto; max-height: 100%; object-fit: contain; object-position: top; display: block; border-radius: 1.5mm; }
@@ -446,12 +446,26 @@
   #s4 { height: 151.7mm; }
   #s5 { height: 56.3mm; }
 
+
+  .matrix.small { grid-template-columns: 1fr 45mm 33mm 33mm; }
+  .matrix.small .mh small { white-space: normal; line-height: 1.25; font-size: 8.5pt; }
+  .matrix.small .mr { font-size: 11.5pt; }
+  .matrix.small .o.drm { flex-direction: row; gap: 1.2mm; }
+  .matrix.small .o.drm small { font-size: 8.5pt; font-weight: 700; line-height: 1; }
+  .r3.cmp .legend { font-size: 9.5pt; white-space: nowrap; }
+  .profiles5 { display: grid; grid-template-columns: auto repeat(5, 1fr); gap: 2.5mm; align-items: stretch; margin-top: 1.5mm; }
+  .profiles5 > b { align-self: center; font-size: 12.5pt; color: var(--lime); line-height: 1.2; padding-right: 1mm; }
+  .profiles5 span { display: grid; grid-template-columns: 7mm 1fr; grid-template-rows: auto auto; column-gap: 1.5mm; align-items: center; padding: 1.1mm 2.5mm; background: var(--panel-2); border: .35mm solid var(--line); border-radius: 1.5mm; }
+  .profiles5 span i { grid-row: 1 / 3; font-style: normal; font-size: 14pt; text-align: center; }
+  .profiles5 span b { font-size: 12pt; line-height: 1.2; }
+  .profiles5 span small { font-size: 9.5pt; color: var(--muted); line-height: 1.2; }
+  .s3v9 .research { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5mm 4mm; align-content: start; }
 </style>
 </head>
 <body>
 <div class="poster" id="poster">
 
-<div class="block topbar"><span>이화여자대학교 공과대학 · 2026 캡스톤디자인 · 사회기여형</span><span class="team">팀 Lucent · 정아윤 · 박세령 · 정서윤</span></div>
+<div class="block topbar"><span>이화여자대학교 공과대학 · 2026 캡스톤디자인 · 사회기여형</span><span class="team">팀 Lucent · 정아윤 기획 및 아이디어 · 박세령 개발 및 구현 · 정서윤 연구 조사 및 콘텐츠 설계</span></div>
 <header class="block hero5">
   <div class="hero-left">
     <div class="brand"><img class="symbol" src="assets/logo-symbol-3d.png" alt=""><img class="wordmark" src="assets/logo-wordmark-3d.png" alt="PariView"></div>
@@ -484,14 +498,14 @@
   <div class="row3">
     <div class="r3 cmp"><div class="r3t">기존 기능 비교</div>
       <div class="matrix small">
-        <div class="mh"></div><div class="mh">OTT 접근성<small>대사 강조·섬광 완화</small></div><div class="mh">기기 · 플레이어<small>밝기 · 음량</small></div><div class="mh pv">PariView</div>
-        <div class="mr">소리 자극 조절</div><div class="t">△</div><div class="t">△</div><div class="o">○</div>
+        <div class="mh"></div><div class="mh">OTT 접근성<small>Amazon Dialogue Boost<br>Apple Dim Flashing Lights</small></div><div class="mh">기기 · 플레이어<small>밝기 · 음량</small></div><div class="mh pv">PariView</div>
+        <div class="mr">소리 자극 조절</div><div class="t">△</div><div class="t">△</div><div class="o drm">○<small>비DRM</small></div>
         <div class="mr">빛 자극 조절</div><div class="t">△</div><div class="t">△</div><div class="o">○</div>
         <div class="mr">같은 장면 A/B로 설정</div><div class="x">✕</div><div class="x">✕</div><div class="o">○</div>
         <div class="mr">원본 비교 · 되돌리기</div><div class="t">△</div><div class="t">△</div><div class="o">○</div>
         <div class="mr">자막 선택</div><div class="t">△</div><div class="t">△</div><div class="o">○</div>
       </div>
-      <p class="legend">○ 지원 · △ 일부/조건부 · ✕ 확인 범위에서 없음 · 서비스·기기별로 달라요</p></div>
+      <p class="legend">○ 지원 · △ 일부/조건부 · ✕ 확인 범위에서 없음 · 비DRM = DRM 없는 영상 · 서비스·기기별로 달라요</p></div>
     <div class="arr">→</div>
     <div class="r3 dif"><div class="r3t">PariView의 차별점</div>
       <ol class="difs"><li><b>진단이 아니라 비교로</b><span>AI 추천 시작점 → 같은 장면 A/B → 저장 → 재조절</span></li><li><b>화면·소리·자막을 한 흐름에서</b><span>5단계 비교</span></li><li><b>지원 영상에서 설정 이어쓰기</b><span>크롬 익스텐션 · 유튜브 등</span></li></ol></div>
@@ -518,6 +532,7 @@
       <div class="stack"><img src="assets/dock.png" alt=""><img src="assets/studio-popup.png" alt=""></div>
       <p>보면서 다시 조절하고, 저장하면 크롬 익스텐션이 유튜브에도 적용해요</p></div>
   </div>
+<div class="profiles5"><b>AI 추천 시작점<br>프로필 5</b><span><i>🌙</i><b>자극을 편안하게</b><small>소리와 빛에 민감한 날이라면</small></span><span><i>▶️</i><b>이야기에 집중</b><small>이야기의 흐름을 따라가고 싶다면</small></span><span><i>☀️</i><b>조금 더 또렷하게</b><small>또렷하게 듣고 크게 보고 싶다면</small></span><span><i>👓</i><b>부드럽게 시작</b><small>부드러운 화면과 쉬운 말이 필요하다면</small></span><span><i>🔊</i><b>평소처럼 편안하게</b><small>평소 화면과 소리를 조금씩 맞추고 싶다면</small></span></div>
 </section>
 
 <section id="s3" class="block sec">
@@ -528,6 +543,7 @@
       <div class="rlink"><b>🧩 개인차</b><em>→ 같은 장면 비교 · 재피팅</em><small>📄 MacLennan et al. 2022 · 자폐 성인 49명</small></div>
       <div class="rlink"><b>🎚️ 환경 조절</b><em>→ 화면·소리 항목을 나눠 조절</em><small>📄 NICE CG142 · 성인 자폐 진단·관리 지침</small></div>
       <div class="rlink"><b>🕹️ 사용자 통제</b><em>→ 선택 · 건너뛰기 · 원본 복귀</em><small>📄 Unwin et al. 2022 · 아동 41명</small></div>
+      <div class="rlink"><b>🧠 시청각 반응</b><em>→ 소리·빛 변화를 함께 표시 · 예고는 선택형</em><small>📄 Matsuzaki et al. 2022 · Yosef et al. 2026</small></div>
       <p class="lab-line">📚 논문 11 · 전문자료 6 · 출처는 QR</p>
     </div>
     <div class="tech">

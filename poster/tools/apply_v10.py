@@ -12,7 +12,7 @@ def rep(o, n):
 
 # card 01: adaptive wording (keeps the real screenshot)
 rep('<p>같은 장면 A · B 중 지금 편한 쪽을 눌러요 · 비슷해요 · 건너뛰기</p>',
-    '<p>A · B 중 편한 쪽을 누르면 <b>다음 비교가 바뀌어요</b> · 5회로 시작, 원하면 5회 추가</p>')
+    '<p>A · B 중 편한 쪽을 누르면 <b>다음 비교가 바뀌어요</b> · 5회로 시작, 원하면 5회씩 추가</p>')
 rep('<li><b>진단이 아니라 비교로</b><span>AI 추천 시작점 → 같은 장면 A/B → 저장 → 재조절</span></li>',
     '<li><b>진단이 아니라 비교로</b><span>AI 추천 시작점 → 적응형 A/B → 저장 → 재조절</span></li>')
 
@@ -21,14 +21,22 @@ old = '<div class="sub-flows"><p><b>🤖 AI 추천 · Claude</b>'
 assert s.count(old) == 1
 a = s.index(old); b = s.index('</div>', s.index('어두운 장면 보정</p>', a)) + len('</div>')
 subflows = s[a:b]
-adaptive = ('<div class="adaptive"><b>🎯 적응형 피팅</b><span class="step">A/B 선택</span><i>→</i><span class="step">선호 범위 갱신<small>축별 사후분포</small></span><i>→</i>'
-            '<span class="step">다음 쌍 선택<small>기대 정보이득 최대</small></span><i>→</i><span class="step">5회 후 추정 설정<small>원하면 5회 추가 · 비슷해요·건너뛰기 가능</small></span></div>')
+adaptive = ('<div class="adaptive"><b>🎯 적응형 피팅</b><span class="step">A/B 선택<small>비슷해요 · 건너뛰기 가능</small></span><i>→</i><span class="step">선호 범위 갱신<small>축별 사후분포</small></span><i>→</i>'
+            '<span class="step">다음 쌍 선택<small>기대 정보이득 최대</small></span><i>→</i><span class="step">5회 후 추정 설정<small>원하면 5회씩 추가 · 최대 20회</small></span></div>')
 s = s[:a] + '<div class="under"><div class="under-l">' + subflows + adaptive + '</div>' + chart + '</div>' + s[b:]
 
 # section 2: give 4mm of the screenshot stack to section 3
-css_stack = [l for l in s.split('\n') if '.shot .stack' in l and 'height: 130mm' in l]
+css_stack = [l for l in s.split('\n') if '.shot .stack' in l and 'height: 126mm' in l]
 assert len(css_stack) == 1, css_stack
-s = s.replace(css_stack[0], css_stack[0].replace('height: 130mm', 'height: 126mm'))
+s = s.replace(css_stack[0], css_stack[0].replace('height: 126mm', 'height: 122mm'))
+
+# card 01 screenshot: use the adaptive capture when the web agent has delivered it (keeps step2.png on disk)
+import os
+if os.path.exists(os.path.join(os.path.dirname(p), 'assets', 'step2-adaptive.png')):
+    rep('<img src="assets/step2.png"', '<img src="assets/step2-adaptive.png"')
+    print('card 01 → step2-adaptive.png')
+else:
+    print('WARNING: assets/step2-adaptive.png not found — card 01 keeps step2.png')
 
 # section 4 diagram: 피팅 UI caption
 rep('프로필 5 · A/B 5단계', '프로필 5 · 적응형 A/B 5+5')
