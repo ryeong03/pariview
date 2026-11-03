@@ -1,0 +1,63 @@
+{
+  "fontsLoaded": true,
+  "brokenImages": [],
+  "pages": [
+    {
+      "page": 1,
+      "bodyBottom": 1043.84375,
+      "footerTop": 1062.203125,
+      "gap": 18.359375,
+      "overflow": []
+    },
+    {
+      "page": 2,
+      "bodyBottom": 960.203125,
+      "footerTop": 1062.203125,
+      "gap": 102,
+      "overflow": []
+    },
+    {
+      "page": 3,
+      "bodyBottom": 926.609375,
+      "footerTop": 1062.203125,
+      "gap": 135.59375,
+      "overflow": []
+    },
+    {
+      "page": 4,
+      "bodyBottom": 1005.515625,
+      "footerTop": 1062.203125,
+      "gap": 56.6875,
+      "overflow": []
+    },
+    {
+      "page": 5,
+      "bodyBottom": 986.9375,
+      "footerTop": 1062.203125,
+      "gap": 75.265625,
+      "overflow": []
+    },
+    {
+      "page": 6,
+      "bodyBottom": 968.375,
+      "footerTop": 1062.203125,
+      "gap": 93.828125,
+      "overflow": []
+    },
+    {
+      "page": 7,
+      "bodyBottom": 983.109375,
+      "footerTop": 1062.203125,
+      "gap": 79.09375,
+      "overflow": []
+    }
+  ],
+  "errors": [],
+  "pdfPages": 7,
+  "pageSizeMM": [
+    209.89,
+    297.01
+  ],
+  "textCharacters": 9987,
+  "pdfLinks": 30
+}

@@ -11,7 +11,7 @@
   * { box-sizing: border-box; }
   :root {
     --bg: #15131f; --panel: #1e1b2c; --panel-2: #272339; --line: #36314c;
-    --text: #f3f2f8; --muted: #aaa7bd; --red: #ff3d63; --blue: #8fb0ff; --gold: #ffc35a;
+    --text: #f3f2f8; --muted: #aaa7bd; --red: #ff2e63; --blue: #3ef2ff; --gold: #c6ff4a;
   }
   html, body { margin: 0; padding: 0; }
   body { background: var(--bg); color: var(--text); font-family: "Pretendard", "Apple SD Gothic Neo", sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -27,6 +27,7 @@
   .sec-head { display: flex; align-items: center; gap: 4mm; margin-bottom: 4mm; }
   .sec-head .no { display: inline-flex; align-items: center; justify-content: center; width: 12mm; height: 12mm; border-radius: 3mm; background: var(--red); font-size: 19pt; font-weight: 800; }
   .sec-head h2 { font-size: 28pt; font-weight: 800; letter-spacing: -.6pt; }
+  .wizard-head { height: 31mm; margin: -12mm 0 -11mm 1mm; }
   .sec-head .tag { margin-left: auto; font-size: 12pt; letter-spacing: 1.6pt; color: var(--muted); }
   .muted { color: var(--muted); }
   .note { font-size: 11.5pt; line-height: 1.4; color: var(--muted); }
@@ -46,9 +47,9 @@
   .team { text-align: right; font-size: 20pt; line-height: 1.5; }
   .team small { display: block; font-size: 13pt; color: var(--muted); }
   .falcon { height: 56mm; display: block; }
-  .demo-qr { display: flex; align-items: center; gap: 4mm; background: var(--panel); padding: 3.5mm 4mm; border-radius: 4mm; }
-  .demo-qr img { width: 33mm; height: 33mm; background: #fff; padding: 1.5mm; border-radius: 2mm; }
-  .demo-qr b { display: block; font-size: 16pt; }
+  .demo-qr { display: flex; flex-direction: column; align-items: center; gap: 2mm; background: var(--panel); padding: 3mm 3.5mm; border-radius: 4mm; }
+  .demo-qr img { width: 31mm; height: 31mm; background: #fff; padding: 1.5mm; border-radius: 2mm; }
+  .demo-qr b { display: block; font-size: 14pt; }
   .demo-qr span { display: block; font-size: 11pt; color: var(--muted); margin-top: 1mm; line-height: 1.35; }
 
   /* 1 */
@@ -79,14 +80,14 @@
   .step { background: var(--panel-2); border-radius: 4mm; padding: 4mm 4.5mm 4.5mm; }
   .step .label { font-size: 14pt; font-weight: 800; color: var(--red); letter-spacing: 1pt; }
   .step h3 { display: inline; font-size: 20pt; margin-left: 2mm; }
-  .step img { display: block; width: 100%; height: 78mm; object-fit: cover; object-position: top center; border-radius: 3mm; margin: 3mm 0; background: #fff; }
+  .step img { display: block; width: 100%; height: 75mm; object-fit: cover; object-position: top center; border-radius: 3mm; margin: 3mm 0; background: #fff; }
   .step img.fit { object-fit: contain; object-position: center; }
   .step p { font-size: 14pt; line-height: 1.4; color: var(--muted); }
   .profiles-title { display: flex; align-items: baseline; gap: 4mm; margin: 4mm 0 2.5mm; }
   .profiles-title h3 { font-size: 19pt; }
   .profiles-title span { font-size: 13pt; color: var(--muted); }
   .profiles { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4mm; }
-  .profile { background: var(--panel-2); border-radius: 4mm; border-top: 1.6mm solid var(--c); padding: 3.2mm 4mm; height: 68mm; }
+  .profile { background: var(--panel-2); border-radius: 4mm; border-top: 1.6mm solid var(--c); padding: 3.2mm 4mm; height: 67mm; }
   .profile .en { font-size: 15pt; font-weight: 800; }
   .profile .ko { font-size: 13pt; color: var(--c); font-weight: 700; margin-top: .5mm; }
   .profile .who { font-size: 11.5pt; color: var(--muted); line-height: 1.35; margin-top: 2mm; height: 10mm; }
@@ -94,27 +95,29 @@
   .profile li { font-size: 12.5pt; line-height: 1.5; }
   .profile li::before { content: ""; display: inline-block; width: 1.6mm; height: 1.6mm; border-radius: 50%; background: var(--c); margin-right: 2mm; vertical-align: middle; }
   .profile .vals { font-size: 11pt; color: var(--muted); margin-top: 2mm; }
+  .profile-basis { margin-top: 3mm; font-size: 13.5pt; color: var(--muted); }
+  .profile-basis b { color: var(--cyan); margin-right: 3mm; }
 
   /* 3 */
-  #s3 { height: 149mm; }
+  #s3 { height: 148mm; }
   .s3 { display: grid; grid-template-columns: 300mm 1fr; gap: 7mm; }
-  .arch { width: 100%; height: 80mm; }
+  .arch { width: 100%; height: 84mm; }
   .map-box { margin-top: 3mm; }
   .map-box h3 { font-size: 15pt; }
   .map-box h3 small { font-size: 11.5pt; color: var(--muted); font-weight: 400; margin-left: 2mm; }
-  .map-box svg { width: 100%; height: 30mm; margin-top: 1.5mm; }
-  .tech li { display: grid; grid-template-columns: 9mm 1fr; gap: 2mm; padding: 2.2mm 0; border-bottom: .3mm solid var(--line); }
+  .map-box svg { width: 100%; height: 22mm; margin-top: 1.5mm; }
+  .tech li { display: grid; grid-template-columns: 9mm 1fr; gap: 2mm; padding: 2mm 0; border-bottom: .3mm solid var(--line); }
   .tech li:last-child { border-bottom: 0; }
   .tech i { font-style: normal; font-size: 15pt; font-weight: 800; color: var(--red); }
   .tech b { font-size: 15.5pt; }
   .tech p { font-size: 12.5pt; color: var(--muted); line-height: 1.4; margin-top: .8mm; }
 
   /* 4 + 5 */
-  .bottom { height: 141mm; display: grid; grid-template-columns: 262mm 1fr; gap: 6mm; }
+  .bottom { height: 142mm; display: grid; grid-template-columns: 262mm 1fr; gap: 6mm; }
   table { width: 100%; border-collapse: separate; border-spacing: 0 1.5mm; font-size: 13.5pt; }
   th { font-size: 14pt; padding: 3mm; text-align: center; background: var(--panel-2); }
   th.pv { background: var(--red); border-radius: 3mm 3mm 0 0; }
-  td { padding: 2.5mm 3mm; text-align: center; line-height: 1.4; background: var(--panel-2); }
+  td { padding: 2.3mm 3mm; text-align: center; line-height: 1.4; background: var(--panel-2); }
   td:first-child { font-weight: 700; width: 36mm; }
   td.pv { color: var(--text); font-weight: 700; background: #3a1d2c; }
   .compare-note { margin-top: 2mm; }
@@ -133,6 +136,38 @@
   footer .credits { flex: 1; font-size: 11pt; color: var(--muted); line-height: 1.45; }
   footer .gh { display: flex; align-items: center; gap: 3mm; font-size: 12pt; }
   footer .gh img { width: 16mm; height: 16mm; background: #fff; padding: 1mm; border-radius: 1.5mm; }
+
+  /* ===== Fluorescent layer: dark violet base, vivid solid accents, no glow ===== */
+  :root { --red: #ff2e63; --blue: #4df3ff; --cyan: #4df3ff; --lime: #cdff5f; --gold: #ffe03d; --panel: #1b1829; --panel-2: #231f35; --line: #3a3456; }
+  .sec { border-radius: 2mm; border: .35mm solid var(--line); }
+  .sec-head .no { background: var(--lime); color: #15131f; border-radius: 1mm; }
+  .sec-head .tag { color: var(--cyan); }
+  .box, .step, .effect { border-radius: 1.5mm; border: .3mm solid var(--line); }
+  .step .label, .tech i { color: var(--lime); }
+  .step img { border-radius: 1mm; border: .3mm solid var(--line); }
+  .profile { border-top: 0; border-radius: 1.5mm; border: .4mm solid var(--c); }
+  .profile .en { color: var(--c); }
+  .profile .ko { color: var(--text); }
+  .profile ul { border-top: .3mm solid var(--line); }
+  .profile li::before { border-radius: 0; width: 1.6mm; height: 1.6mm; }
+  .ev { border-left: .7mm solid var(--lime); }
+  .ev .ref, .card .ref { color: var(--cyan); }
+  .checks b, .poc .t { color: var(--lime); }
+  .evidence .lab { display: flex; flex-direction: column; gap: 1mm; color: var(--text); padding-top: 0; }
+  .evidence .lab b { font-size: 40pt; line-height: 1; color: var(--lime); font-weight: 800; }
+  .evidence .lab span { font-size: 13pt; line-height: 1.35; color: var(--muted); font-weight: 600; }
+  .survey b, .kpi b, .poc b { color: var(--lime); }
+  th.pv { border-radius: 0; background: var(--red); }
+  td.pv { background: #2a1830; border-left: .5mm solid var(--red); }
+  .poc { border-radius: 1.5mm; border: .4mm solid var(--cyan); }
+  .next b { color: var(--gold); }
+  .demo-qr { border-radius: 1.5mm; border: .4mm solid var(--cyan); }
+  .demo-qr b { color: var(--cyan); }
+  .profile-basis b { color: var(--lime); }
+  footer { border-top: .35mm solid var(--line); }
+  /* Section 2 mascot: large, may cross the section edge but never the text */
+  #s2 { position: relative; overflow: visible; }
+  .wizard-head { position: absolute; left: 136mm; top: -17mm; height: 54mm; margin: 0; }
 </style>
 </head>
 <body>
@@ -147,7 +182,7 @@
   <div class="side">
     <div class="team">팀 Lucent<br>정아윤 · 박세령 · 정서윤</div>
     <div class="side-bottom"><img class="falcon" src="assets/falcon-render.png" alt="">
-    <div class="demo-qr"><img src="assets/qr-demo.svg" alt=""><div><b>바로 체험하기</b><span>pariview-production<br>.up.railway.app</span></div></div></div>
+    <div class="demo-qr"><img src="assets/qr-demo.svg" alt=""><b>웹에서 체험하기</b></div><div class="demo-qr"><img src="assets/qr-youtube.svg" alt=""><b>유튜브에서 확인하기</b></div></div>
   </div>
 </header>
 
@@ -157,9 +192,9 @@
     <div class="box">
       <h3>같은 영상, 모두에게 같은 경험일까요?</h3>
       <div class="problems">
-        <div><svg viewBox="0 0 64 64" fill="none" stroke="#ff3d63" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 26h10l12-10v32L18 38H8z"/><path d="M40 22q6 10 0 20M47 15q12 17 0 34"/></svg><p>갑작스러운<br>음량 변화와 효과음</p></div>
-        <div><svg viewBox="0 0 64 64" fill="none" stroke="#ff3d63" stroke-width="3" stroke-linecap="round"><path d="M6 32q26-24 52 0q-26 24-52 0z"/><circle cx="32" cy="32" r="8"/><path d="M32 4v6M32 54v6M10 12l4 4M54 12l-4 4"/></svg><p>강한 명도·대비와<br>빠른 화면 전환</p></div>
-        <div><svg viewBox="0 0 64 64" fill="none" stroke="#ff3d63" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 44h12l6-12M34 20l6-8h18"/><path d="M27 26l6-4"/><circle cx="14" cy="18" r="5"/><path d="M44 40h14M44 48h10"/></svg><p>집중 흐름 단절과<br>정보 처리 부담</p></div>
+        <div><svg viewBox="0 0 64 64" fill="none" stroke="#ff2e63" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 26h10l12-10v32L18 38H8z"/><path d="M40 22q6 10 0 20M47 15q12 17 0 34"/></svg><p>갑작스러운<br>음량 변화와 효과음</p></div>
+        <div><svg viewBox="0 0 64 64" fill="none" stroke="#ff2e63" stroke-width="3" stroke-linecap="round"><path d="M6 32q26-24 52 0q-26 24-52 0z"/><circle cx="32" cy="32" r="8"/><path d="M32 4v6M32 54v6M10 12l4 4M54 12l-4 4"/></svg><p>강한 명도·대비와<br>빠른 화면 전환</p></div>
+        <div><svg viewBox="0 0 64 64" fill="none" stroke="#ff2e63" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 44h12l6-12M34 20l6-8h18"/><path d="M27 26l6-4"/><circle cx="14" cy="18" r="5"/><path d="M44 40h14M44 48h10"/></svg><p>집중 흐름 단절과<br>정보 처리 부담</p></div>
       </div>
     </div>
     <div class="box">
@@ -181,7 +216,7 @@
     </div>
   </div>
   <div class="evidence">
-    <div class="lab">연구에서<br>출발한 설계</div>
+    <div class="lab"><b>17</b><span>검토한 자료<br>논문 11 · 전문 6</span></div>
     <div class="ev"><p>자폐 성인 49명의 설문에서 개인별 감각 경험과 기분·피로에 따른 변화가 보고됐어요</p><p class="design">→ 진단명으로 설정을 고정하지 않고, 지금의 선호를 비교하고 다시 맞춰요</p><p class="ref">MacLennan, O’Brien &amp; Tavassoli (2022) · J Autism Dev Disord</p></div>
     <div class="ev"><p>자폐 아동 41명이 감각실을 직접 조절한 조건에서 주의집중 증가가 관찰됐어요</p><p class="design">→ 적용·건너뛰기·원본 복귀를 사용자가 직접 결정해요</p><p class="ref">Unwin, Powell &amp; Jones (2022) · Autism</p></div>
     <div class="ev"><p>영화 시청 과제에서 감각 특성이 다른 자폐 하위집단의 신경반응 차이가 관찰됐어요</p><p class="design">→ 소리와 빛의 변화를 함께 보여주고, 조절은 개인이 선택해요</p><p class="ref">Matsuzaki et al. (2022) · Brain &amp; Development</p></div>
@@ -189,7 +224,7 @@
 </section>
 
 <section id="s2" class="block sec">
-  <div class="sec-head"><span class="no">2</span><h2>PariView의 핵심 솔루션</h2><span class="tag">HOW · 실제 화면</span></div>
+  <div class="sec-head"><span class="no">2</span><h2>PariView의 핵심 솔루션</h2><img class="wizard-head" src="assets/wizard-render.png" alt=""><span class="tag">HOW · 실제 화면</span></div>
   <div class="steps">
     <div class="step"><span class="label">STEP 01</span><h3>감각 프로필 선택</h3><img class="fit" src="assets/step1.png" alt=""><p>다섯 가지 출발점 중 오늘과 가까운 모드를 골라요 질문 두 개로 추천도 받아요</p></div>
     <div class="step"><span class="label">STEP 02</span><h3>같은 장면 반응 비교</h3><img class="fit" src="assets/step2.png" alt=""><p>밝기·대비·소리 크기·음량 변화 완화·쉬운 자막을 A/B로 다섯 번 비교해요</p></div>
@@ -197,37 +232,67 @@
   </div>
   <div class="profiles-title"><h3>5가지 감각 프로필</h3><span>진단이 아닌 시작점이에요 고른 뒤 비교하며 언제든 바꿀 수 있어요</span></div>
   <div class="profiles" id="profiles"></div>
+  <p class="profile-basis"><b>학술논문 11편과 전문자료 6건을 검토한 설계</b> 개인차 · 사용자 통제 · 시각 평가 · 소리 내성의 관점을 다섯 가지 시작 설정에 연결했어요</p>
 </section>
 
 <section id="s3" class="block sec">
   <div class="sec-head"><span class="no">3</span><h2>시스템 구조도 및 기술 요소</h2><span class="tag">SYSTEM</span></div>
   <div class="s3">
     <div>
-      <svg class="arch" viewBox="0 0 1000 290" role="img" aria-label="시스템 구조">
-        <defs><marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#aaa7bd"/></marker></defs>
-        <g font-size="19" fill="#f3f2f8">
-          <circle cx="44" cy="120" r="22" fill="none" stroke="#f3f2f8" stroke-width="3"/><path d="M14 190q0-40 30-40t30 40" fill="none" stroke="#f3f2f8" stroke-width="3"/><text x="44" y="220" text-anchor="middle" font-size="17">사용자</text>
-          <path d="M80 140 L118 140" stroke="#aaa7bd" stroke-width="2.5" marker-end="url(#ar)"/>
-          <rect x="122" y="14" width="420" height="262" rx="16" fill="none" stroke="#36314c" stroke-width="2.5"/>
-          <text x="140" y="44" font-size="16" fill="#aaa7bd">PariView 웹 · HTML·CSS·JavaScript</text>
-          <rect x="140" y="62" width="180" height="78" rx="10" fill="#272339"/><text x="230" y="96" text-anchor="middle" font-weight="700">피팅 UI</text><text x="230" y="122" text-anchor="middle" font-size="14" fill="#aaa7bd">프로필 · A/B 비교</text>
-          <rect x="342" y="62" width="182" height="50" rx="10" fill="#272339"/><text x="433" y="93" text-anchor="middle" font-size="16">CSS filter</text>
-          <rect x="342" y="122" width="182" height="50" rx="10" fill="#272339"/><text x="433" y="153" text-anchor="middle" font-size="16">Web Audio</text>
-          <rect x="342" y="184" width="182" height="74" rx="10" fill="#ff3d63"/><text x="433" y="215" text-anchor="middle" font-weight="700">영상 재생</text><text x="433" y="240" text-anchor="middle" font-size="14">화면 · 소리 조절</text>
-          <rect x="140" y="176" width="180" height="82" rx="10" fill="none" stroke="#8fb0ff" stroke-width="2.5"/><text x="230" y="210" text-anchor="middle" font-size="17">localStorage</text><text x="230" y="236" text-anchor="middle" font-size="13" fill="#aaa7bd">설정값 저장</text>
-          <path d="M320 92 L338 88" stroke="#aaa7bd" stroke-width="2.5" marker-end="url(#ar)"/><path d="M320 114 L338 140" stroke="#aaa7bd" stroke-width="2.5" marker-end="url(#ar)"/>
-          <path d="M433 112v8M433 172v8" stroke="#aaa7bd" stroke-width="2.5"/>
-          <path d="M230 140v32" stroke="#8fb0ff" stroke-width="2.5" marker-end="url(#ar)"/>
-
-          <rect x="600" y="14" width="390" height="262" rx="16" fill="none" stroke="#36314c" stroke-width="2.5"/>
-          <text x="618" y="44" font-size="16" fill="#aaa7bd">Chrome Extension · Manifest V3</text>
-          <rect x="618" y="62" width="168" height="78" rx="10" fill="#272339"/><text x="702" y="96" text-anchor="middle">Content</text><text x="702" y="122" text-anchor="middle">Script</text>
-          <rect x="806" y="62" width="166" height="78" rx="10" fill="none" stroke="#8fb0ff" stroke-width="2.5"/><text x="889" y="96" text-anchor="middle" font-size="16">chrome.storage</text><text x="889" y="122" text-anchor="middle" font-size="16">.local</text>
-          <rect x="618" y="176" width="236" height="82" rx="10" fill="#272339"/><text x="736" y="210" text-anchor="middle" font-size="17">다른 사이트의 영상</text><text x="736" y="236" text-anchor="middle" font-size="13" fill="#aaa7bd">같은 filter · Web Audio</text>
-          <rect x="872" y="176" width="100" height="82" rx="10" fill="#272339"/><text x="922" y="212" text-anchor="middle" font-size="17">Popup</text><text x="922" y="236" text-anchor="middle" font-size="13" fill="#aaa7bd">켜기·끄기</text>
-          <path d="M320 218 C 470 300, 560 290, 610 110" stroke="#8fb0ff" stroke-width="2.5" stroke-dasharray="8 6" marker-end="url(#ar)" fill="none"/>
-          <text x="548" y="282" font-size="14" fill="#8fb0ff" text-anchor="middle">저장 이벤트로 동기화</text>
-          <path d="M786 101h16" stroke="#aaa7bd" stroke-width="2.5" marker-end="url(#ar)"/><path d="M850 140 L760 172" stroke="#aaa7bd" stroke-width="2.5" marker-end="url(#ar)"/><path d="M922 172v-28" stroke="#aaa7bd" stroke-width="2.5" marker-end="url(#ar)"/>
+      <svg class="arch" viewBox="0 0 1000 300" role="img" aria-label="시스템 구조: 피팅, 렌더링, 동기화 세 흐름">
+        <defs><marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#aaa7bd"/></marker><marker id="arL" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#cdff5f"/></marker><marker id="arC" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#4df3ff"/></marker></defs>
+        <g font-size="16" fill="#f3f2f8">
+          <rect x="0" y="0" width="1000" height="86" rx="6" fill="#231f35"/>
+          <text x="986" y="22" text-anchor="end" font-size="13" fill="#cdff5f" font-weight="700">01 피팅 · 사용자 입력 → 설정값</text>
+          <rect x="14" y="34" width="118" height="40" rx="5" fill="none" stroke="#cdff5f" stroke-width="2.5"/><text x="73" y="59" text-anchor="middle" font-weight="700">프로필 5종</text>
+          <path d="M132 54h22" stroke="#cdff5f" stroke-width="2.5" marker-end="url(#arL)"/>
+          <rect x="158" y="34" width="150" height="40" rx="5" fill="none" stroke="#cdff5f" stroke-width="2.5"/><text x="233" y="59" text-anchor="middle" font-weight="700">A/B 비교 × 5</text>
+          <path d="M308 54h22" stroke="#cdff5f" stroke-width="2.5" marker-end="url(#arL)"/>
+          <rect x="334" y="34" width="166" height="40" rx="5" fill="#cdff5f"/><text x="417" y="59" text-anchor="middle" font-weight="800" fill="#15131f">선호 집계 · 설정값</text>
+          <path d="M500 54h22" stroke="#cdff5f" stroke-width="2.5" marker-end="url(#arL)"/>
+          <rect x="526" y="30" width="460" height="48" rx="5" fill="none" stroke="#3a3456" stroke-width="2"/>
+          <text x="756" y="50" text-anchor="middle" font-size="14" fill="#aaa7bd">밝기 · 대비 · 채도 · 색온도 · 음량 · 고음 완화 · 말소리 EQ · 음량 압축</text>
+          <text x="756" y="69" text-anchor="middle" font-size="14" fill="#aaa7bd">자막 · 쉬운 자막 · 자막 크기 · 장면 안내 · 휴식 안내</text>
+          <rect x="0" y="98" width="1000" height="100" rx="6" fill="#231f35"/>
+          <text x="986" y="120" text-anchor="end" font-size="13" fill="#ff2e63" font-weight="700">02 렌더링 · 같은 영상, 사용자별 출력</text>
+          <text x="14" y="154" font-size="13" fill="#aaa7bd">화면</text>
+          <rect x="54" y="134" width="88" height="30" rx="4" fill="none" stroke="#ff2e63" stroke-width="2"/><text x="98" y="154" text-anchor="middle" font-size="14">brightness</text>
+          <path d="M142 149h14" stroke="#aaa7bd" stroke-width="2" marker-end="url(#ar)"/>
+          <rect x="160" y="134" width="76" height="30" rx="4" fill="none" stroke="#ff2e63" stroke-width="2"/><text x="198" y="154" text-anchor="middle" font-size="14">contrast</text>
+          <path d="M236 149h14" stroke="#aaa7bd" stroke-width="2" marker-end="url(#ar)"/>
+          <rect x="254" y="134" width="78" height="30" rx="4" fill="none" stroke="#ff2e63" stroke-width="2"/><text x="293" y="154" text-anchor="middle" font-size="14">saturate</text>
+          <path d="M332 149h14" stroke="#aaa7bd" stroke-width="2" marker-end="url(#ar)"/>
+          <rect x="350" y="134" width="66" height="30" rx="4" fill="none" stroke="#ff2e63" stroke-width="2"/><text x="383" y="154" text-anchor="middle" font-size="14">sepia</text>
+          <text x="14" y="190" font-size="13" fill="#aaa7bd">소리</text>
+          <rect x="54" y="170" width="74" height="30" rx="4" fill="none" stroke="#ff2e63" stroke-width="2"/><text x="91" y="190" text-anchor="middle" font-size="14">source</text>
+          <path d="M128 185h14" stroke="#aaa7bd" stroke-width="2" marker-end="url(#ar)"/>
+          <rect x="146" y="170" width="80" height="30" rx="4" fill="none" stroke="#ff2e63" stroke-width="2"/><text x="186" y="190" text-anchor="middle" font-size="14">lowpass</text>
+          <path d="M226 185h14" stroke="#aaa7bd" stroke-width="2" marker-end="url(#ar)"/>
+          <rect x="244" y="170" width="92" height="30" rx="4" fill="none" stroke="#ff2e63" stroke-width="2"/><text x="290" y="190" text-anchor="middle" font-size="14">EQ 3 kHz</text>
+          <path d="M336 185h14" stroke="#aaa7bd" stroke-width="2" marker-end="url(#ar)"/>
+          <rect x="354" y="170" width="104" height="30" rx="4" fill="none" stroke="#ff2e63" stroke-width="2"/><text x="406" y="190" text-anchor="middle" font-size="14">compressor</text>
+          <path d="M458 185h14" stroke="#aaa7bd" stroke-width="2" marker-end="url(#ar)"/>
+          <rect x="476" y="170" width="56" height="30" rx="4" fill="none" stroke="#ff2e63" stroke-width="2"/><text x="504" y="190" text-anchor="middle" font-size="14">gain</text>
+          <path d="M416 149h30v36h-30" stroke="#ff2e63" stroke-width="2" fill="none"/>
+          <path d="M532 185h30" stroke="#ff2e63" stroke-width="2.5" marker-end="url(#ar)"/>
+          <rect x="566" y="134" width="120" height="66" rx="5" fill="#ff2e63"/><text x="626" y="162" text-anchor="middle" font-weight="800">영상 출력</text><text x="626" y="184" text-anchor="middle" font-size="13">video 요소</text>
+          <path d="M686 167h20" stroke="#aaa7bd" stroke-width="2" marker-end="url(#ar)"/>
+          <rect x="710" y="134" width="130" height="66" rx="5" fill="none" stroke="#4df3ff" stroke-width="2.5"/><text x="775" y="160" text-anchor="middle" font-weight="700">원본 비교</text><text x="775" y="182" text-anchor="middle" font-size="13" fill="#aaa7bd">필터 · EQ 우회</text>
+          <rect x="856" y="134" width="130" height="66" rx="5" fill="none" stroke="#4df3ff" stroke-width="2.5"/><text x="921" y="160" text-anchor="middle" font-weight="700">감각 지도</text><text x="921" y="182" text-anchor="middle" font-size="13" fill="#aaa7bd">장면 사전 안내</text>
+          <rect x="0" y="210" width="1000" height="90" rx="6" fill="#231f35"/>
+          <text x="986" y="232" text-anchor="end" font-size="13" fill="#4df3ff" font-weight="700">03 동기화 · 브라우저 어디서나 같은 설정</text>
+          <rect x="14" y="246" width="140" height="42" rx="5" fill="none" stroke="#4df3ff" stroke-width="2.5"/><text x="84" y="266" text-anchor="middle" font-weight="700">localStorage</text><text x="84" y="282" text-anchor="middle" font-size="12" fill="#aaa7bd">pariview-fit-v1</text>
+          <path d="M154 267h24" stroke="#4df3ff" stroke-width="2.5" marker-end="url(#arC)"/>
+          <rect x="182" y="246" width="150" height="42" rx="5" fill="none" stroke="#4df3ff" stroke-width="2.5"/><text x="257" y="266" text-anchor="middle" font-weight="700">content script</text><text x="257" y="282" text-anchor="middle" font-size="12" fill="#aaa7bd">PariView 페이지</text>
+          <path d="M332 267h24" stroke="#4df3ff" stroke-width="2.5" marker-end="url(#arC)"/>
+          <rect x="360" y="246" width="160" height="42" rx="5" fill="#4df3ff"/><text x="440" y="266" text-anchor="middle" font-weight="800" fill="#15131f">chrome.storage</text><text x="440" y="282" text-anchor="middle" font-size="12" fill="#15131f">Manifest V3</text>
+          <path d="M520 267h24" stroke="#4df3ff" stroke-width="2.5" marker-end="url(#arC)"/>
+          <rect x="548" y="246" width="150" height="42" rx="5" fill="none" stroke="#4df3ff" stroke-width="2.5"/><text x="623" y="266" text-anchor="middle" font-weight="700">content script</text><text x="623" y="282" text-anchor="middle" font-size="12" fill="#aaa7bd">다른 사이트</text>
+          <path d="M698 267h24" stroke="#4df3ff" stroke-width="2.5" marker-end="url(#arC)"/>
+          <rect x="726" y="246" width="150" height="42" rx="5" fill="none" stroke="#ff2e63" stroke-width="2.5"/><text x="801" y="266" text-anchor="middle" font-weight="700">02 렌더링 재적용</text><text x="801" y="282" text-anchor="middle" font-size="12" fill="#aaa7bd">유튜브 등 video</text>
+          <rect x="890" y="246" width="96" height="42" rx="5" fill="none" stroke="#4df3ff" stroke-width="2.5"/><text x="938" y="266" text-anchor="middle" font-weight="700">popup</text><text x="938" y="282" text-anchor="middle" font-size="12" fill="#aaa7bd">켜기 · 끄기</text>
+          <path d="M417 74v16" stroke="#cdff5f" stroke-width="2.5" marker-end="url(#arL)"/><text x="428" y="92" font-size="11" fill="#cdff5f">적용</text>
+          <path d="M84 200v40" stroke="#4df3ff" stroke-width="2.5" marker-end="url(#arC)"/><text x="94" y="226" font-size="11" fill="#4df3ff">저장</text>
         </g>
       </svg>
       <div class="map-box">
@@ -276,8 +341,8 @@
 </div>
 
 <footer class="block">
-  <p class="credits">설문은 신경다양성 이용자 76명 대상 팀 자체 조사 · 시뮬레이션 목표값은 통계와 연구를 참고해 팀이 정했어요<br>영화 Tears of Steel © Blender Foundation CC BY 3.0 · Pretendard OFL · 통계 출처 통계청 2025 고령자 통계, 국민건강보험공단 2024, 방송통신위원회 2024 방송매체 이용행태조사</p>
-  <div class="gh"><img src="assets/qr-github.svg" alt=""><div>코드와 기록<br><span class="muted">github.com/ryeong03/pariview</span></div></div>
+  <p class="credits">검토 자료 17건 · 학술논문 11편, 전문자료 6건(AAO · AOA · ASHA · NICE CG142 · NICE CG170 · NIMH RDoC) · 설문은 신경다양성 이용자 76명 대상 팀 자체 조사 · 시뮬레이션 목표값은 통계와 연구를 참고해 팀이 정했어요<br>영화 Tears of Steel © Blender Foundation CC BY 3.0 · Pretendard OFL · 통계 출처 통계청 2025 고령자 통계, 국민건강보험공단 2024, 방송통신위원회 2024 방송매체 이용행태조사</p>
+
 </footer>
 
 </div>
@@ -302,19 +367,20 @@ const features = {
 };
 try {
   const { modes } = await import('../web/dist/settings.js');
-  document.getElementById('profiles').innerHTML = modes.map(m => `<article class="profile" style="--c:${m.color}"><div class="en">${m.en}</div><div class="ko">${m.title}</div><p class="who">${who[m.id]}</p><ul>${features[m.id].map(f => `<li>${f}</li>`).join('')}</ul><p class="vals">밝기 ${m.values.brightness} · 대비 ${m.values.contrast} · 소리 ${m.values.volume}</p></article>`).join('');
+  const neon = { gentle: '#ff4fd8', focus: '#ffe03d', clarity: '#5dff9e', soft: '#4df3ff', everyday: '#b78bff' };
+  document.getElementById('profiles').innerHTML = modes.map(m => `<article class="profile" style="--c:${neon[m.id] || m.color}"><div class="en">${m.en}</div><div class="ko">${m.title}</div><p class="who">${who[m.id]}</p><ul>${features[m.id].map(f => `<li>${f}</li>`).join('')}</ul><p class="vals">프로필 초기 설정 · 밝기 ${m.values.brightness} · 대비 ${m.values.contrast} · 소리 ${m.values.volume}</p></article>`).join('');
 } catch (e) { errors.push('profiles:' + e.message); }
 try {
   const map = await (await fetch('../web/dist/assets/sensory-map.json')).json();
   const svg = document.getElementById('map-chart');
   const d = map.duration, x = t => 60 + 930 * t / d;
   const laneS = [6, 52], laneL = [62, 108];
-  for (const e of map.events) { const lane = e.type === '빛 변화' ? laneL : laneS; el('rect', { x: x(e.at), y: lane[0], width: Math.max(5, x(e.end) - x(e.at)), height: lane[1] - lane[0], fill: e.type === '빛 변화' ? '#8fb0ff' : '#ff3d63', opacity: .25 }, svg); }
+  for (const e of map.events) { const lane = e.type === '빛 변화' ? laneL : laneS; el('rect', { x: x(e.at), y: lane[0], width: Math.max(5, x(e.end) - x(e.at)), height: lane[1] - lane[0], fill: e.type === '빛 변화' ? '#4df3ff' : '#ff2e63', opacity: .28 }, svg); }
   const yS = v => laneS[1] - (Math.min(-10, Math.max(-40, v)) + 40) / 30 * (laneS[1] - laneS[0]);
   const yL = v => laneL[1] - (Math.min(160, Math.max(60, v)) - 60) / 100 * (laneL[1] - laneL[0]);
   const path = (pts, fy) => pts.filter(p => p[1] > -69).map((p, i) => `${i ? 'L' : 'M'}${x(p[0]).toFixed(1)},${fy(p[1]).toFixed(1)}`).join(' ');
-  el('path', { d: path(map.curves.loudness, yS), stroke: '#ff3d63', 'stroke-width': 3, fill: 'none' }, svg);
-  el('path', { d: path(map.curves.luma, yL), stroke: '#8fb0ff', 'stroke-width': 3, fill: 'none' }, svg);
+  el('path', { d: path(map.curves.loudness, yS), stroke: '#ff2e63', 'stroke-width': 3, fill: 'none' }, svg);
+  el('path', { d: path(map.curves.luma, yL), stroke: '#4df3ff', 'stroke-width': 3, fill: 'none' }, svg);
   el('text', { x: 0, y: 34, 'font-size': 16, fill: '#aaa7bd' }, svg, '소리');
   el('text', { x: 0, y: 90, 'font-size': 16, fill: '#aaa7bd' }, svg, '밝기');
 } catch (e) { errors.push('map:' + e.message); }

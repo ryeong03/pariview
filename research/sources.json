@@ -242,11 +242,69 @@
       "R2"
     ],
     "recommended_copy": "몇 번의 비교로, 지금 나에게 편안한 시청 설정을 찾아갑니다.",
-    "qualification": "A/B는 진단·역치 측정이 아닌 선호 탐색. 네 단계는 설계 선택이며 논문으로 검증된 최적 횟수가 아님. 재조절·재탐색 허용.",
+    "qualification": "A/B는 선호 탐색이며 현재 다섯 번의 비교는 자체 설계 선택이다. 재조절·재탐색을 허용한다.",
     "not_supported": [
       "불변의 감각 지문",
       "4회만으로 정확한 역치 도출",
       "임상 효과 또는 시청 지속 효과 보장"
     ]
+  },
+  "current_user_survey": {
+    "population": "신경다양성 이용자",
+    "reported_total": 76,
+    "total_provenance": "사용자가 50~100명이라고 회상한 후 공통 분모·반올림 역산에서 유일후보 76명 도출, 계산 설명 뒤 사용자 진행 지시에 따라 포스터에 반영",
+    "confirmation_date": "2026-11-04",
+    "statistics": [
+      {
+        "label": "기존 OTT 관련 기능 만족도",
+        "percent": 11.8,
+        "display_decimals": 1
+      },
+      {
+        "label": "기존 OTT 관련 세부 조절 기능 부족",
+        "percent": 60.5,
+        "display_decimals": 1
+      },
+      {
+        "label": "맞춤형 시청각 자극 최적화 기술 사용 의향",
+        "percent": 83,
+        "display_decimals": 0
+      }
+    ],
+    "values_provenance": "사용자 제공 포스터 초안에서 확인하고 사용자가 검증된 조사 수치라고 확인",
+    "survey_dates": null,
+    "item_valid_denominators": null,
+    "raw_response_counts_verified": false,
+    "separation": "출품계획서에 기재된 49명·57.1%·98% 자료와 별도로 기록"
+  },
+  "review_inventory": {
+    "total_materials": 17,
+    "academic_papers": 11,
+    "professional_materials": 6,
+    "core_paper_ids": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "additional_paper_ids": [
+      "M4",
+      "M7",
+      "M8",
+      "M9",
+      "M10"
+    ],
+    "professional_material_ids": [
+      "M1",
+      "M2",
+      "M3",
+      "M5",
+      "M6",
+      "M11"
+    ],
+    "counting_rule": "각 자료를 한 번만 집계, 학술지에 실린 AAO 지침 M1은 전문자료로 분류",
+    "display_copy": "학술논문 11편과 전문자료 6건을 검토한 설계"
   }
 }
