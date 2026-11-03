@@ -21,7 +21,7 @@ g = []
 g.append(f'<rect x="0" y="0" width="{W}" height="{H}" rx="6" fill="{SURF}" stroke="{LINE}" stroke-width="1.2"/>')
 # title + legend (text tokens; swatches carry identity)
 g.append(f'<text x="12" y="17" font-size="16" font-weight="800" fill="{TEXT}">비교 횟수에 따른 설정값 오차</text>')
-g.append(f'<text x="12" y="31" font-size="12.5" fill="{MUTED}">합성 데이터 · 조건별 500 · 띠 = 95% 구간</text>')
+g.append(f'<text x="12" y="31" font-size="12.5" fill="{MUTED}">합성 500명 × 5조건 · 5회 후 오차 0.150 → 0.138 · 띠 95%</text>')
 lx = W - 12
 g.append(f'<text x="{lx}" y="17" text-anchor="end" font-size="13" fill="{TEXT}">적응형</text>')
 g.append(f'<line x1="{lx-58}" y1="12.5" x2="{lx-44}" y2="12.5" stroke="{LIME}" stroke-width="3" stroke-linecap="round"/>')
