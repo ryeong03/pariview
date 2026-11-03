@@ -5,6 +5,7 @@ import {research} from './research.js';
 import {scenes} from './scenes.js';
 import {initRecommendation} from './recommendation.js';
 import {initInteractions} from './interactions.js';
+import {initExtensionConnection} from './extension-connect.js';
 import {renderResearchPage} from './research-page.js';
 import {defaults,ranges,toggles,modes,normalize,modeSettings} from './settings.js';
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
@@ -219,9 +220,7 @@ $('#recommend-form').onsubmit=e=>{
 };
 $('#profile-catalog').innerHTML=modes.map(m=>`<article class="profile-card" style="--mode-color:${m.color}"><h3>${m.en}</h3><p class="profile-ko">${m.title}</p><ul>${m.features.map(f=>`<li>${f}</li>`).join('')}</ul><button class="text-link" data-mode-start="${m.id}">이 프로필로 시작 ↗</button></article>`).join('');
 $$('[data-mode-start]').forEach(b=>b.onclick=()=>fitOpen(b.dataset.modeStart));
-const extensionCopy={none:['아직 연결되지 않았어요','설치한 뒤 이 페이지를 새로고침하면 연결돼요'],connected:['확장 프로그램이 연결됐어요','감각 피팅 결과를 저장하면 설정이 넘어가요'],synced:['설정이 확장 프로그램에 저장됐어요','실제 적용 여부는 유튜브에서 PariView 아이콘을 눌러 확인해요']};
-function renderExtension(){const st=document.documentElement.dataset.pariviewExtension||'none';let [t,d]=extensionCopy[st]||extensionCopy.none;if(st==='none'&&matchMedia('(max-width:700px)').matches){t='PC 크롬에서 연결할 수 있어요';d='PC에서 설치하면 저장한 설정을 다른 영상에도 쓸 수 있어요';}$('#extension-status').dataset.state=st;$('#extension-status-title').textContent=t;$('#extension-status-desc').textContent=d;}
-document.addEventListener('pariview-extension-ready',renderExtension);renderExtension();
+initExtensionConnection({openChrome:()=>showTab('chrome'),reducedMotion:()=>reduced});
 const steps=[
  {key:'brightness',title:'어느 화면 밝기가 더 편한가요?',sub:'같은 장면을 다른 밝기로 비교해 보세요',a:65,b:90,an:'조금 어둡게',bn:'조금 밝게',kind:'visual'},
  {key:'contrast',title:'어느 쪽의 대비가 더 편한가요?',sub:'색과 윤곽이 느껴지는 정도를 골라보세요',a:78,b:105,an:'부드러운 대비',bn:'또렷한 대비',kind:'visual'},

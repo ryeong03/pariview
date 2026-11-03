@@ -1,0 +1,26 @@
+.extension-status{display:block;margin-bottom:32px}
+.extension-status-message{display:flex;align-items:center;gap:18px}
+.extension-status-message>svg{width:26px;height:26px;flex-shrink:0;color:#858893}
+.extension-status[data-state=connected] .extension-status-message>svg,
+.extension-status[data-state=synced] .extension-status-message>svg{color:#15803d}
+.extension-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:22px;padding-left:44px}
+.extension-actions .primary{gap:10px;font-size:16px;padding:14px 20px}
+.extension-actions .primary svg{width:18px;height:18px}
+.extension-actions .secondary{font-size:14px;padding:12px 18px;background:#fff}
+.extension-status .extension-release-note{font-size:13px;line-height:1.6;margin:14px 0 0 44px}
+#extension-installation{scroll-margin-top:28px}
+#extension-install-title:focus-visible{outline:2px solid var(--brand,#fa0030);outline-offset:5px;border-radius:4px}
+.extension-manual-install{margin-top:14px}
+.extension-manual-install summary{cursor:pointer;color:#6b7684;font-size:14px;padding:8px 0}
+.extension-manual-install[open] summary{margin-bottom:10px}
+.install-steps .extension-manual-install p{font-size:14px;margin-bottom:16px}
+.install-steps .extension-manual-install a[download]{font-size:14px}
+@media(max-width:700px){
+  .extension-status{padding:20px;margin-bottom:20px}
+  .extension-status-message{align-items:flex-start;gap:12px}
+  .extension-actions{display:none}
+  .extension-status .extension-release-note{display:none}
+  #extension-store-link{display:none}
+  .install-steps article{gap:14px}
+  .install-steps article>div{min-width:0}
+}
