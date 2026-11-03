@@ -116,7 +116,7 @@ def call_provider(plan):
     # Anthropic supports minItems 0/1, not maxItems; compose enforces <= 3.
     schema['properties']['actionIds'].pop('maxItems', None)
     packet = {
-        'model': config['model'], 'max_tokens': 1600,
+        'model': config['model'], 'max_tokens': 4000,
         'system': (
             'You select editable viewing-preference starting options for PariView. '
             'Choose one to three unique candidate IDs, one available next comparison ID, and one allowed starting mode ID. '
@@ -141,7 +141,9 @@ def call_provider(plan):
                                  mode for mode in CATALOG['startingModes']
                                  if mode['id'] in schema['properties']['startingModeId']['enum']],
                              'reviewedResearch': list(CATALOG['sources'].values()), 'boundary': CATALOG['boundary']}, ensure_ascii=False)}],
-        'output_config': {'format': {'type': 'json_schema', 'schema': schema}}
+        # Use low effort for fixed-list selection to reduce latency; the existing 10 s timeout still applies.
+        # Thinking tokens count toward max_tokens, so 4000 leaves room before a max_tokens stop forces the default.
+        'output_config': {'effort': 'low', 'format': {'type': 'json_schema', 'schema': schema}}
     }
     request = urllib.request.Request('https://api.anthropic.com/v1/messages', data=json.dumps(packet).encode(),
                                      headers={'x-api-key': os.environ['ANTHROPIC_API_KEY'], 'anthropic-version': '2023-06-01', 'Content-Type': 'application/json'}, method='POST')
