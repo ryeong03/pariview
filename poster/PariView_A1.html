@@ -33,7 +33,7 @@
   .note { font-size: 11.5pt; line-height: 1.4; color: var(--muted); }
 
   /* header */
-  header { height: 84.2mm; display: grid; grid-template-columns: 1fr 150mm; gap: 8mm; position: relative; }
+  header { height: 73.3mm; display: grid; grid-template-columns: 1fr 150mm; gap: 8mm; position: relative; }
   .brand { display: flex; align-items: center; gap: 3mm; height: 13mm; }
   .brand .symbol { height: 12mm; }
   .brand .wordmark { height: 12.5mm; }
@@ -53,7 +53,7 @@
   .demo-qr span { display: block; font-size: 11pt; color: var(--muted); margin-top: 1mm; line-height: 1.35; }
 
   /* 1 */
-  #s1 { height: 161.5mm; }
+  #s1 { height: 157mm; }
   .s1-top { display: grid; grid-template-columns: 182mm 1fr 196mm; gap: 6mm; height: 66mm; }
   .box { background: var(--panel-2); border-radius: 4mm; padding: 3.2mm 4.5mm; }
   .box h3 { font-size: 18pt; font-weight: 700; margin-bottom: 2mm; }
@@ -75,7 +75,7 @@
   .ev .ref { font-size: 11pt; color: var(--blue); margin-top: 1.5mm; }
 
   /* 2 */
-  #s2 { height: 211.6mm; }
+  #s2 { height: 200.9mm; }
   .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6mm; }
   .step { background: var(--panel-2); border-radius: 4mm; padding: 4mm 4.5mm 4.5mm; }
   .step .label { font-size: 14pt; font-weight: 800; color: var(--red); letter-spacing: 1pt; }
@@ -105,7 +105,7 @@
   .profile-basis b { color: var(--cyan); margin-right: 3mm; }
 
   /* 3 */
-  #s3 { height: 131.1mm; }
+  #s3 { height: 105.1mm; }
   .s3 { display: grid; grid-template-columns: 300mm 1fr; gap: 7mm; }
   .arch { width: 100%; height: 84mm; }
   .map-box { margin-top: 3mm; }
@@ -119,7 +119,7 @@
   .tech p { font-size: 12.5pt; color: var(--muted); line-height: 1.4; margin-top: .8mm; }
 
   /* 4 + 5 */
-  .bottom { height: 160.5mm; display: grid; grid-template-columns: 262mm 1fr; gap: 6mm; }
+  .bottom { height: auto; display: grid; grid-template-columns: 262mm 1fr; gap: 6mm; }
   table { width: 100%; border-collapse: separate; border-spacing: 0 1.5mm; font-size: 13.5pt; }
   th { font-size: 14pt; padding: 3mm; text-align: center; background: var(--panel-2); }
   th.pv { background: var(--red); border-radius: 3mm 3mm 0 0; }
@@ -316,7 +316,7 @@
   .effects3.col div > div { display: block; padding: 0; border: 0; background: none; }
   .effects3.col svg { width: 9mm; height: 9mm; margin: 0; }
   .effects3.col b { font-size: 13.5pt; } .effects3.col span { font-size: 11.5pt; margin-top: .6mm; }
-  .shots3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5mm; }
+  .shots3 { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 5mm; }
   .shot { background: var(--panel-2); border-radius: 2mm; border: .35mm solid var(--line); padding: 3.5mm 4mm; }
   .shot-t { font-size: 20pt; font-weight: 800; margin-bottom: 2.5mm; }
   .shot-t i { font-style: normal; color: var(--lime); margin-right: 3mm; font-size: 17pt; }
@@ -369,11 +369,11 @@
   /* ===== v7: no hero art, bigger solution shots, fewer words ===== */
   header.hero5 { display: grid; grid-template-columns: 1fr 176mm; gap: 10mm; align-items: center; }
   .hero5 .brand { height: 13mm; }
-  .hero5 h1 { margin-top: 4mm; font-size: 54pt; letter-spacing: -2.1pt; line-height: 1.08; }
-  .hero5 .formal { margin-top: 4mm; font-size: 23pt; font-weight: 700; line-height: 1.45; }
+  .hero5 h1 { margin-top: 2.5mm; font-size: 46pt; letter-spacing: -1.9pt; line-height: 1.08; }
+  .hero5 .formal { margin-top: 2.5mm; font-size: 20pt; font-weight: 700; line-height: 1.4; }
   .hero5 .affil { margin-top: 3mm; font-size: 15pt; color: var(--text); }
   .hero5 .qr-row { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
-  .hero5 .qr-row .demo-qr img { width: 34mm; height: 34mm; }
+  .hero5 .qr-row .demo-qr img { width: 24mm; height: 24mm; }
   .hero5 .qr-row .demo-qr b { font-size: 14pt; }
   .hero5 .live { grid-column: 1 / -1; border-left: 0; border-top: .5mm solid var(--lime); padding: 2.5mm 0 0; }
   .hero5 .live b { font-size: 15pt; } .hero5 .live span { font-size: 12.5pt; }
@@ -392,7 +392,8 @@
   .rlink b { font-size: 17pt; } .rlink em { font-size: 13pt; } .rlink small { font-size: 11.5pt; }
   .sub-flows { font-size: 14pt; }
 
-  .shot .stack { display: flex; flex-direction: column; justify-content: space-between; gap: 4mm; height: 149mm; }
+  .shot .stack { display: flex; flex-direction: column; justify-content: space-between; gap: 4mm; height: 130mm; }
+  .shot .stack.one { justify-content: flex-start; }
   .shot .stack > img, .shot .stack figure { flex: 0 1 auto; min-height: 0; }
   .shot .stack > img, .shot .stack figure img { width: 100%; height: auto; max-height: 100%; object-fit: contain; object-position: top; display: block; border-radius: 1.5mm; }
   .shot .stack figure { margin: 0; display: flex; flex-direction: column; }
@@ -410,6 +411,36 @@
   .qa-line b { color: var(--text); margin-right: 1.5mm; }
   .matrix.small { grid-template-columns: 1fr 26mm 26mm 26mm; }
   .matrix.small .mr small { display: block; font-size: 9.5pt; color: var(--muted); font-weight: 400; margin-top: .3mm; }
+
+  /* ===== v9: multidisciplinary row, full-width architecture, business band ===== */
+  .approach { display: flex; align-items: center; flex-wrap: wrap; gap: 2mm 2.5mm; margin: -1mm 0 3.5mm; }
+  .approach > b { font-size: 13.5pt; color: var(--lime); margin-right: 1.5mm; }
+  .approach .chip { display: inline-flex; flex-direction: column; padding: 1mm 2.6mm; border: .35mm solid var(--line); border-radius: 1.5mm; font-size: 12pt; font-weight: 700; line-height: 1.2; }
+  .approach .chip small { font-size: 9.5pt; color: var(--muted); font-weight: 400; }
+  .approach .plus { color: var(--muted); font-size: 14pt; }
+  .s3v9 { display: grid; grid-template-columns: 182mm 1fr; gap: 8mm; }
+  .s3v9 .map-box { margin-top: 0; padding-top: 0; border-top: 0; }
+  .s3v9 .sub-flows { margin-top: 2mm; }
+  .matrix.small .mr { padding: .6mm 2.5mm; }
+  .matrix.small .x, .matrix.small .t, .matrix.small .o { min-height: 6mm; font-size: 15pt; }
+  .difs { gap: 1.5mm; }
+  .effects3.col { gap: 1.8mm; }
+  .lab-line { display: none; }
+  .problems svg { width: 12mm; height: 12mm; } .targets svg { width: 10mm; height: 10mm; } .survey b { font-size: 30pt; }
+  .approach .chip small { display: none; }
+  #s5 .sec-head .tag { display: none; }
+  .s3v9 .rlink b { font-size: 15pt; } .s3v9 .rlink em { font-size: 12.5pt; } .s3v9 .rlink small { font-size: 10.5pt; }
+  .s3v9 .research { gap: 1.6mm; }
+  #s5 .sec-head { margin-bottom: 2.5mm; }
+  .biz4 b { font-size: 13pt; }
+  .qa-line { margin-top: 2mm; font-size: 12pt; }
+  #s4 .arch8 { width: 84%; height: auto; display: block; margin: 0 auto; }
+  .biz4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3.5mm; }
+  .biz4 > div { padding: 2mm 3.5mm; background: var(--panel-2); border-radius: 1.5mm; border-left: .7mm solid var(--lime); }
+  .biz4 b { display: block; font-size: 14pt; color: var(--lime); margin-bottom: 1mm; }
+  .biz4 span { display: block; font-size: 11pt; line-height: 1.35; }
+  #s4 { height: 151.7mm; }
+  #s5 { height: 56.3mm; }
 </style>
 </head>
 <body>
@@ -455,10 +486,10 @@
         <div class="mr">원본 비교 · 되돌리기</div><div class="t">△</div><div class="t">△</div><div class="o">○</div>
         <div class="mr">자막 선택</div><div class="t">△</div><div class="t">△</div><div class="o">○</div>
       </div>
-      <p class="legend">○ 지원 · △ 일부 서비스·항목만 · ✕ 확인된 기능 없음 · 서비스·기기별로 달라요</p></div>
+      <p class="legend">○ 지원 · △ 일부/조건부 · ✕ 확인 범위에서 없음 · 서비스·기기별로 달라요</p></div>
     <div class="arr">→</div>
     <div class="r3 dif"><div class="r3t">PariView의 차별점</div>
-      <ol class="difs"><li><b>진단이 아니라 비교로</b><span>AI 추천 시작점 → 같은 장면 A/B → 저장 → 재조절</span></li><li><b>화면·소리·자막을 한 흐름에서</b><span>5단계 비교</span></li><li><b>저장한 설정을 어디서나</b><span>크롬 익스텐션 · 유튜브 등</span></li></ol></div>
+      <ol class="difs"><li><b>진단이 아니라 비교로</b><span>AI 추천 시작점 → 같은 장면 A/B → 저장 → 재조절</span></li><li><b>화면·소리·자막을 한 흐름에서</b><span>5단계 비교</span></li><li><b>지원 영상에서 설정 이어쓰기</b><span>크롬 익스텐션 · 유튜브 등</span></li></ol></div>
     <div class="arr">→</div>
     <div class="r3 val"><div class="r3t">이용자 가치 · 기대효과</div>
       <div class="effects3 col">
@@ -473,8 +504,8 @@
   <div class="sec-head"><span class="no">2</span><h2>핵심 솔루션 · 실제 화면</h2><img class="wizard-head" src="assets/wizard-render.png" alt=""></div>
   <div class="shots3">
     <div class="shot"><div class="shot-t"><i>01</i>비교</div>
-      <div class="stack"><img src="assets/step2.png" alt=""><img src="assets/step2-zoom.png" alt=""></div>
-      <p>같은 장면을 A/B로 보고 지금 편한 쪽을 골라요</p></div>
+      <div class="stack one"><img src="assets/step2.png" alt=""></div>
+      <p>같은 장면 A · B 중 지금 편한 쪽을 눌러요 · 비슷해요 · 건너뛰기</p></div>
     <div class="shot"><div class="shot-t"><i>02</i>적용</div>
       <div class="stack"><figure><figcaption><b>원본</b>밝기 100 · 대비 100 · 기본 자막</figcaption><img src="assets/compare-original.png" alt=""></figure><figure><figcaption><b class="on">맞춤</b>밝기 55 · 대비 110 · 채도 45 · 노란 쉬운 자막</figcaption><img src="assets/compare-custom.png" alt=""></figure></div>
       <p>고른 빛·소리·자막 설정을 영상에 바로 적용해요</p></div>
@@ -485,78 +516,67 @@
 </section>
 
 <section id="s3" class="block sec">
-  <div class="sec-head"><span class="no">3</span><h2>연구 근거와 핵심 기술</h2><span class="tag">WHY THIS DESIGN · 의학·감각 연구 → 비교·재조절 설계</span></div>
-  <div class="s3v6">
+  <div class="sec-head"><span class="no">3</span><h2>연구 근거와 핵심 기술</h2><span class="tag">WHY THIS DESIGN · 연구 → 비교·재조절 설계</span></div>
+  <div class="approach"><b>접근 방식</b><span class="chip">🩺 감각 의학<small>NICE CG142 · MEG 연구</small></span><span class="plus">+</span><span class="chip">🎚️ 오디오 신호처리<small>EBU R128 · 2–4kHz 음성 대역</small></span><span class="plus">+</span><span class="chip">🏫 특수교육<small>감각실 연구 · 쉬운 자막</small></span><span class="plus">+</span><span class="chip">♿ 접근성 디자인<small>AAO · ASHA · W3C 자막 지침</small></span><span class="plus">+</span><span class="chip">💻 소프트웨어<small>웹 · 익스텐션 · AI 추천</small></span><span class="plus">+</span><span class="chip">🤝 사용자 참여<small>당사자 참여·피드백</small></span></div>
+  <div class="s3v9">
     <div class="research">
-            <div class="rlink"><b>🧩 개인차</b><em>→ 같은 장면 비교 · 재피팅</em><small>📄 MacLennan et al. 2022 · 자폐 성인 49명</small></div>
+      <div class="rlink"><b>🧩 개인차</b><em>→ 같은 장면 비교 · 재피팅</em><small>📄 MacLennan et al. 2022 · 자폐 성인 49명</small></div>
       <div class="rlink"><b>🎚️ 환경 조절</b><em>→ 화면·소리 항목을 나눠 조절</em><small>📄 NICE CG142 · 성인 자폐 진단·관리 지침</small></div>
       <div class="rlink"><b>🕹️ 사용자 통제</b><em>→ 선택 · 건너뛰기 · 원본 복귀</em><small>📄 Unwin et al. 2022 · 아동 41명</small></div>
-      <div class="rlink"><b>🎬 시청각 반응</b><em>→ 소리·빛 변화를 함께 표시 · 사전 예고</em><small>📄 Matsuzaki et al. 2022 · 영화 시청 MEG</small></div>
       <p class="lab-line">📚 논문 11 · 전문자료 6 · 출처는 QR</p>
     </div>
     <div class="tech">
-      <div class="flow">
-        <div class="node in">같은 영상<small>HTML video</small></div>
-        <div class="arrow">→</div>
-        <div class="node set">사용자 설정값<small>프로필 · A/B 비교 · 저장</small></div>
-        <div class="arrow">→</div>
-        <div class="branches">
-          <div class="node br screen"><b>화면 · CSS filter</b><span>밝기 → 대비 → 채도 → 색온도</span></div>
-          <div class="node br sound"><b>소리 · Web Audio</b><span>고음 완화 → 말소리 EQ → 음량 압축 → 음량</span></div>
-        </div>
-        <div class="arrow">→</div>
-        <div class="node out">나에게 맞는 출력<small>원본 비교 · 기본값 복귀</small></div>
-      </div>
-      <div class="sub-flows"><p><b>🤖 AI 추천 · Claude</b> 선택한 필요·현재 설정 → 검토된 후보에서 시작 설정 선택 · 미리보기·수정·취소 · 연결 없으면 규칙 기반</p><p><b>장면 데이터</b> scenes.js → 자막 · 놓친 내용 &nbsp;&nbsp; <b>영상 측정</b> ffmpeg → map.json → 감각 지도 · 사전 예고</p></div>
       <div class="map-box">
         <h3>영상 신호로 측정한 감각 지도<small>Tears of Steel 45초 · 음영 = 변화 구간 · ▲ = 사전 예고</small></h3>
         <svg id="map-chart" viewBox="0 0 1000 58" role="img" aria-label="소리 크기와 화면 밝기 측정 곡선과 사전 예고 시점"></svg>
       </div>
+      <div class="sub-flows"><p><b>🤖 AI 추천 · Claude</b> 선택한 필요·현재 설정 → 검토된 후보에서 시작 설정 선택 · 미리보기·수정·취소 · 연결 없으면 규칙 기반</p><p><b>🎧 소리</b> Web Audio 고음 완화 → 3kHz 말소리 EQ → 음량 압축 → 음량 &nbsp; <b>🖥️ 화면</b> CSS filter 밝기 · 대비 · 채도 · 색온도 · 실시간 프레임 밝기 측정 → 어두운 장면 보정</p></div>
     </div>
   </div>
 </section>
 
-<div class="block bottom">
-  <section class="sec">
-    <div class="sec-head"><span class="no">4</span><h2>시스템 구조도 · 기술 요소</h2></div>
-    <svg class="arch8" viewBox="0 0 1000 316" role="img" aria-label="시스템 구조도와 기술 요소">
+<section id="s4" class="block sec">
+  <div class="sec-head"><span class="no">4</span><h2>시스템 구조도 · 기술 요소</h2><span class="tag">SYSTEM</span></div>
+  <svg class="arch8" viewBox="0 0 1300 326" role="img" aria-label="시스템 구조도와 기술 요소">
       <defs><marker id="ah" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto"><path d="M0,1 L11,5.5 L0,10 z" fill="#aaa7bd"/></marker></defs>
       <g font-family="Pretendard, 'Apple SD Gothic Neo', sans-serif">
-      <circle cx="30" cy="70" r="9" fill="none" stroke="#f3f2f8" stroke-width="2.2"/><path d="M14 96q0-14 16-14t16 14" fill="none" stroke="#f3f2f8" stroke-width="2.2" stroke-linecap="round"/><text x="30" y="112" text-anchor="middle" font-size="10.5" font-weight="700" fill="#f3f2f8">사용자</text>
-      <rect x="70" y="30" width="700" height="170" rx="10" fill="none" stroke="#5a5478" stroke-width="1.6" stroke-dasharray="6 5"/><text x="82" y="23" font-size="10" letter-spacing="1.6" fill="#cdff5f" font-weight="700">CLIENT · PariView 웹 · HTML · CSS · JS (빌드 없음)</text>
-      <rect x="84" y="46" width="160" height="66" rx="7" fill="#231f35" stroke="#cdff5f" stroke-width="2"/><image href="assets/icons/html5.svg" x="140" y="53" width="12" height="12"/><image href="assets/icons/css.svg" x="158" y="53" width="12" height="12"/><image href="assets/icons/javascript.svg" x="176" y="53" width="12" height="12"/><text x="164" y="78" text-anchor="middle" font-size="12.5" font-weight="800" fill="#f3f2f8">피팅 UI</text><text x="164" y="92.0" text-anchor="middle" font-size="9.2" fill="#c6c3d6">프로필 5 · A/B 5단계</text><text x="164" y="104.5" text-anchor="middle" font-size="9.2" fill="#c6c3d6">추천 질문 2 · 되돌리기</text>
-      <rect x="258" y="46" width="160" height="66" rx="7" fill="#231f35" stroke="#3a3456" stroke-width="2"/><text x="338" y="65" text-anchor="middle" font-size="12.5" font-weight="800" fill="#f3f2f8">설정 저장</text><text x="338" y="79.0" text-anchor="middle" font-size="9.2" fill="#c6c3d6">localStorage</text><text x="338" y="91.5" text-anchor="middle" font-size="9.2" fill="#c6c3d6">저장 이벤트 → 익스텐션</text>
-      <rect x="432" y="46" width="160" height="66" rx="7" fill="#231f35" stroke="#3a3456" stroke-width="2"/><text x="512" y="65" text-anchor="middle" font-size="12.5" font-weight="800" fill="#f3f2f8">렌더링</text><text x="512" y="79.0" text-anchor="middle" font-size="9.2" fill="#c6c3d6">CSS filter 밝기·대비·채도·색온도</text><text x="512" y="91.5" text-anchor="middle" font-size="9.2" fill="#c6c3d6">Web Audio EQ → 압축 → 음량</text>
-      <rect x="606" y="46" width="150" height="66" rx="7" fill="#231f35" stroke="#3a3456" stroke-width="2"/><text x="681" y="65" text-anchor="middle" font-size="12.5" font-weight="800" fill="#f3f2f8">영상 출력</text><text x="681" y="79.0" text-anchor="middle" font-size="9.2" fill="#c6c3d6">HTML video · 원본 비교</text><text x="681" y="91.5" text-anchor="middle" font-size="9.2" fill="#c6c3d6">자막 · 사전 예고 표시</text>
-      <rect x="432" y="124" width="160" height="62" rx="7" fill="#231f35" stroke="#3a3456" stroke-width="2"/><text x="512" y="143" text-anchor="middle" font-size="12.5" font-weight="800" fill="#f3f2f8">장면 데이터</text><text x="512" y="157.0" text-anchor="middle" font-size="9.2" fill="#c6c3d6">scenes.js 자막 · 구간</text><text x="512" y="169.5" text-anchor="middle" font-size="9.2" fill="#c6c3d6">map.json 감각 지도 · 예고</text>
-      <rect x="606" y="124" width="150" height="62" rx="7" fill="#231f35" stroke="#3a3456" stroke-width="2"/><image href="assets/icons/threedotjs.svg" x="675" y="131" width="12" height="12"/><text x="681" y="156" text-anchor="middle" font-size="12.5" font-weight="800" fill="#f3f2f8">브랜드 · 모션</text><text x="681" y="170.0" text-anchor="middle" font-size="9.2" fill="#c6c3d6">Three.js 3D 로고 · 마스코트</text><text x="681" y="182.5" text-anchor="middle" font-size="9.2" fill="#c6c3d6">Anime.js · GSAP</text>
-      <rect x="790" y="30" width="210" height="170" rx="10" fill="none" stroke="#5a5478" stroke-width="1.6" stroke-dasharray="6 5"/><text x="802" y="23" font-size="10" letter-spacing="1.6" fill="#cdff5f" font-weight="700">EXTENSION · Chrome MV3</text>
-      <rect x="800" y="46" width="190" height="44" rx="7" fill="#231f35" stroke="#3a3456" stroke-width="2"/><image href="assets/icons/googlechrome.svg" x="889" y="53" width="12" height="12"/><text x="895" y="78" text-anchor="middle" font-size="12.5" font-weight="800" fill="#f3f2f8">content script</text><text x="895" y="92.0" text-anchor="middle" font-size="9.2" fill="#c6c3d6">video 탐지 → 같은 filter · Web Audio</text>
-      <rect x="800" y="100" width="190" height="40" rx="7" fill="#231f35" stroke="#3a3456" stroke-width="2"/><text x="895" y="119" text-anchor="middle" font-size="12.5" font-weight="800" fill="#f3f2f8">chrome.storage</text><text x="895" y="133.0" text-anchor="middle" font-size="9.2" fill="#c6c3d6">설정 동기화</text>
-      <rect x="800" y="150" width="190" height="40" rx="7" fill="#231f35" stroke="#3a3456" stroke-width="2"/><text x="895" y="169" text-anchor="middle" font-size="12.5" font-weight="800" fill="#f3f2f8">popup</text><text x="895" y="183.0" text-anchor="middle" font-size="9.2" fill="#c6c3d6">켜기 · 끄기 · 유튜브 등 지원 영상</text>
-      <rect x="70" y="238" width="490" height="70" rx="10" fill="none" stroke="#5a5478" stroke-width="1.6" stroke-dasharray="6 5"/><text x="82" y="231" font-size="10" letter-spacing="1.6" fill="#cdff5f" font-weight="700">SERVER · Python 3.13 표준 라이브러리 · Docker · Railway</text>
-      <rect x="84" y="244" width="200" height="60" rx="7" fill="#231f35" stroke="#3a3456" stroke-width="2"/><image href="assets/icons/python.svg" x="160" y="251" width="12" height="12"/><image href="assets/icons/docker.svg" x="178" y="251" width="12" height="12"/><image href="assets/icons/railway.svg" x="196" y="251" width="12" height="12"/><text x="184" y="276" text-anchor="middle" font-size="12.5" font-weight="800" fill="#f3f2f8">정적 배포 서버</text><text x="184" y="290.0" text-anchor="middle" font-size="9.2" fill="#c6c3d6">gzip · HTTP Range · 영상 3편</text><text x="184" y="302.5" text-anchor="middle" font-size="9.2" fill="#c6c3d6">사용자 응답 저장 없음</text>
-      <rect x="298" y="244" width="250" height="60" rx="7" fill="#231f35" stroke="#cdff5f" stroke-width="2"/><image href="assets/icons/claude.svg" x="417" y="251" width="12" height="12"/><text x="423" y="276" text-anchor="middle" font-size="12.5" font-weight="800" fill="#f3f2f8">AI 추천 API · Claude</text><text x="423" y="290.0" text-anchor="middle" font-size="9.2" fill="#c6c3d6">JSON Schema 구조화 출력 · 후보 카탈로그 검증</text><text x="423" y="302.5" text-anchor="middle" font-size="9.2" fill="#c6c3d6">미연결·실패 시 규칙 기반 제안</text>
-      <rect x="580" y="238" width="420" height="70" rx="10" fill="none" stroke="#5a5478" stroke-width="1.6" stroke-dasharray="6 5"/><text x="592" y="231" font-size="10" letter-spacing="1.6" fill="#cdff5f" font-weight="700">ANALYSIS · ffmpeg · 오프라인</text>
-      <rect x="594" y="244" width="190" height="60" rx="7" fill="#231f35" stroke="#3a3456" stroke-width="2"/><image href="assets/icons/ffmpeg.svg" x="683" y="251" width="12" height="12"/><text x="689" y="276" text-anchor="middle" font-size="12.5" font-weight="800" fill="#f3f2f8">ffmpeg 신호 측정</text><text x="689" y="290.0" text-anchor="middle" font-size="9.2" fill="#c6c3d6">ebur128 라우드니스</text><text x="689" y="302.5" text-anchor="middle" font-size="9.2" fill="#c6c3d6">signalstats 프레임 밝기</text>
-      <rect x="798" y="244" width="192" height="60" rx="7" fill="#231f35" stroke="#3a3456" stroke-width="2"/><text x="894" y="263" text-anchor="middle" font-size="12.5" font-weight="800" fill="#f3f2f8">sensory_map.py</text><text x="894" y="277.0" text-anchor="middle" font-size="9.2" fill="#c6c3d6">장면별 map.json</text><text x="894" y="289.5" text-anchor="middle" font-size="9.2" fill="#c6c3d6">events · noticeEvents (5초 1회)</text>
-      <path d="M48 70 H80" stroke="#aaa7bd" stroke-width="2.2" fill="none" marker-end="url(#ah)"/><path d="M244 79 H254" stroke="#aaa7bd" stroke-width="2.2" fill="none" marker-end="url(#ah)"/><path d="M418 79 H428" stroke="#aaa7bd" stroke-width="2.2" fill="none" marker-end="url(#ah)"/><path d="M592 79 H602" stroke="#aaa7bd" stroke-width="2.2" fill="none" marker-end="url(#ah)"/>
-      <path d="M512 124 V116" stroke="#aaa7bd" stroke-width="2.2" fill="none" marker-end="url(#ah)"/>
-      <path d="M338 46 V38 H780 V120 H796" stroke="#aaa7bd" stroke-width="2.2" fill="none" marker-end="url(#ah)"/><text x="560" y="34" text-anchor="middle" font-size="9.5" fill="#aaa7bd">저장 이벤트 동기화</text>
-      <path d="M423 244 V214 H164 V116" stroke="#aaa7bd" stroke-width="2.2" fill="none" marker-end="url(#ah)"/><text x="200" y="208" text-anchor="middle" font-size="9.5" fill="#aaa7bd">추천</text>
-      <path d="M894 244 V214 H512 V190" stroke="#aaa7bd" stroke-width="2.2" fill="none" marker-end="url(#ah)"/><text x="703" y="208" text-anchor="middle" font-size="9.5" fill="#aaa7bd">측정 데이터</text>
+      <circle cx="39" cy="74" r="10" fill="none" stroke="#f3f2f8" stroke-width="2.2"/><path d="M22 102q0-15 17-15t17 15" fill="none" stroke="#f3f2f8" stroke-width="2.2" stroke-linecap="round"/><text x="39" y="120" text-anchor="middle" font-size="11.5" font-weight="700" fill="#f3f2f8">사용자</text>
+      <rect x="91" y="32" width="910" height="176" rx="10" fill="none" stroke="#5a5478" stroke-width="1.6" stroke-dasharray="6 5"/><text x="103" y="25" font-size="11" letter-spacing="1.6" fill="#cdff5f" font-weight="700">CLIENT · PariView 웹 · HTML · CSS · JS (빌드 없음)</text>
+      <rect x="109" y="44" width="208" height="70" rx="7" fill="#231f35" stroke="#cdff5f" stroke-width="2"/><image href="assets/icons/html5.svg" x="186" y="52" width="14" height="14"/><image href="assets/icons/css.svg" x="206" y="52" width="14" height="14"/><image href="assets/icons/javascript.svg" x="226" y="52" width="14" height="14"/><text x="213" y="80" text-anchor="middle" font-size="13.5" font-weight="800" fill="#f3f2f8">피팅 UI</text><text x="213" y="95.0" text-anchor="middle" font-size="10.5" fill="#c6c3d6">프로필 5 · A/B 5단계</text><text x="213" y="108.5" text-anchor="middle" font-size="10.5" fill="#c6c3d6">추천 질문 2 · 되돌리기</text>
+      <rect x="335" y="44" width="208" height="70" rx="7" fill="#231f35" stroke="#3a3456" stroke-width="2"/><text x="439" y="65" text-anchor="middle" font-size="13.5" font-weight="800" fill="#f3f2f8">설정 저장</text><text x="439" y="80.0" text-anchor="middle" font-size="10.5" fill="#c6c3d6">localStorage</text><text x="439" y="93.5" text-anchor="middle" font-size="10.5" fill="#c6c3d6">저장 이벤트 → 익스텐션</text>
+      <rect x="562" y="44" width="208" height="70" rx="7" fill="#231f35" stroke="#3a3456" stroke-width="2"/><text x="666" y="65" text-anchor="middle" font-size="13.5" font-weight="800" fill="#f3f2f8">렌더링</text><text x="666" y="80.0" text-anchor="middle" font-size="10.5" fill="#c6c3d6">CSS filter 밝기·대비·채도·색온도</text><text x="666" y="93.5" text-anchor="middle" font-size="10.5" fill="#c6c3d6">Web Audio EQ → 압축 → 음량</text><text x="666" y="107" text-anchor="middle" font-size="10.5" fill="#c6c3d6">프레임 밝기 측정 → 어두운 장면 보정</text>
+      <rect x="788" y="44" width="195" height="70" rx="7" fill="#231f35" stroke="#3a3456" stroke-width="2"/><text x="886" y="65" text-anchor="middle" font-size="13.5" font-weight="800" fill="#f3f2f8">영상 출력</text><text x="886" y="80.0" text-anchor="middle" font-size="10.5" fill="#c6c3d6">HTML video · 원본 비교</text><text x="886" y="93.5" text-anchor="middle" font-size="10.5" fill="#c6c3d6">자막 · 사전 예고 표시</text>
+      <rect x="562" y="124" width="208" height="68" rx="7" fill="#231f35" stroke="#3a3456" stroke-width="2"/><text x="666" y="145" text-anchor="middle" font-size="13.5" font-weight="800" fill="#f3f2f8">장면 데이터</text><text x="666" y="160.0" text-anchor="middle" font-size="10.5" fill="#c6c3d6">scenes.js 자막 · 구간</text><text x="666" y="173.5" text-anchor="middle" font-size="10.5" fill="#c6c3d6">map.json 감각 지도 · 예고</text>
+      <rect x="788" y="124" width="195" height="68" rx="7" fill="#231f35" stroke="#3a3456" stroke-width="2"/><image href="assets/icons/threedotjs.svg" x="878" y="132" width="14" height="14"/><text x="886" y="160" text-anchor="middle" font-size="13.5" font-weight="800" fill="#f3f2f8">브랜드 · 모션</text><text x="886" y="175.0" text-anchor="middle" font-size="10.5" fill="#c6c3d6">Three.js 3D 로고 · 마스코트</text><text x="886" y="188.5" text-anchor="middle" font-size="10.5" fill="#c6c3d6">Anime.js · GSAP</text>
+      <rect x="1027" y="32" width="273" height="176" rx="10" fill="none" stroke="#5a5478" stroke-width="1.6" stroke-dasharray="6 5"/><text x="1039" y="25" font-size="11" letter-spacing="1.6" fill="#cdff5f" font-weight="700">EXTENSION · Chrome MV3</text>
+      <rect x="1040" y="44" width="247" height="60" rx="7" fill="#231f35" stroke="#3a3456" stroke-width="2"/><image href="assets/icons/googlechrome.svg" x="1156" y="52" width="14" height="14"/><text x="1164" y="80" text-anchor="middle" font-size="13.5" font-weight="800" fill="#f3f2f8">content script</text><text x="1164" y="95.0" text-anchor="middle" font-size="10.5" fill="#c6c3d6">video 탐지 → 같은 filter · Web Audio</text>
+      <rect x="1040" y="112" width="247" height="42" rx="7" fill="#231f35" stroke="#3a3456" stroke-width="2"/><text x="1164" y="133" text-anchor="middle" font-size="13.5" font-weight="800" fill="#f3f2f8">chrome.storage</text><text x="1164" y="148.0" text-anchor="middle" font-size="10.5" fill="#c6c3d6">설정 동기화</text>
+      <rect x="1040" y="160" width="247" height="42" rx="7" fill="#231f35" stroke="#3a3456" stroke-width="2"/><text x="1164" y="181" text-anchor="middle" font-size="13.5" font-weight="800" fill="#f3f2f8">popup</text><text x="1164" y="196.0" text-anchor="middle" font-size="10.5" fill="#c6c3d6">켜기 · 끄기 · 유튜브 등 지원 영상</text>
+      <rect x="91" y="240" width="637" height="80" rx="10" fill="none" stroke="#5a5478" stroke-width="1.6" stroke-dasharray="6 5"/><text x="103" y="233" font-size="11" letter-spacing="1.6" fill="#cdff5f" font-weight="700">SERVER · Python 3.13 표준 라이브러리 · Docker · Railway</text>
+      <rect x="109" y="246" width="260" height="68" rx="7" fill="#231f35" stroke="#3a3456" stroke-width="2"/><image href="assets/icons/python.svg" x="212" y="254" width="14" height="14"/><image href="assets/icons/docker.svg" x="232" y="254" width="14" height="14"/><image href="assets/icons/railway.svg" x="252" y="254" width="14" height="14"/><text x="239" y="282" text-anchor="middle" font-size="13.5" font-weight="800" fill="#f3f2f8">정적 배포 서버</text><text x="239" y="297.0" text-anchor="middle" font-size="10.5" fill="#c6c3d6">gzip · HTTP Range · 영상 3편</text><text x="239" y="310.5" text-anchor="middle" font-size="10.5" fill="#c6c3d6">사용자 응답 저장 없음</text>
+      <rect x="387" y="246" width="325" height="68" rx="7" fill="#231f35" stroke="#cdff5f" stroke-width="2"/><image href="assets/icons/claude.svg" x="542" y="254" width="14" height="14"/><text x="550" y="282" text-anchor="middle" font-size="13.5" font-weight="800" fill="#f3f2f8">AI 추천 API · Claude</text><text x="550" y="297.0" text-anchor="middle" font-size="10.5" fill="#c6c3d6">JSON Schema 구조화 출력 · 후보 카탈로그 검증</text><text x="550" y="310.5" text-anchor="middle" font-size="10.5" fill="#c6c3d6">미연결·실패 시 규칙 기반 제안</text>
+      <rect x="754" y="240" width="546" height="80" rx="10" fill="none" stroke="#5a5478" stroke-width="1.6" stroke-dasharray="6 5"/><text x="766" y="233" font-size="11" letter-spacing="1.6" fill="#cdff5f" font-weight="700">ANALYSIS · ffmpeg · 오프라인</text>
+      <rect x="772" y="246" width="247" height="68" rx="7" fill="#231f35" stroke="#3a3456" stroke-width="2"/><image href="assets/icons/ffmpeg.svg" x="888" y="254" width="14" height="14"/><text x="896" y="282" text-anchor="middle" font-size="13.5" font-weight="800" fill="#f3f2f8">ffmpeg 신호 측정</text><text x="896" y="297.0" text-anchor="middle" font-size="10.5" fill="#c6c3d6">ebur128 라우드니스</text><text x="896" y="310.5" text-anchor="middle" font-size="10.5" fill="#c6c3d6">signalstats 프레임 밝기</text>
+      <rect x="1037" y="246" width="250" height="68" rx="7" fill="#231f35" stroke="#3a3456" stroke-width="2"/><text x="1162" y="267" text-anchor="middle" font-size="13.5" font-weight="800" fill="#f3f2f8">sensory_map.py</text><text x="1162" y="282.0" text-anchor="middle" font-size="10.5" fill="#c6c3d6">장면별 map.json</text><text x="1162" y="295.5" text-anchor="middle" font-size="10.5" fill="#c6c3d6">events · noticeEvents (5초 1회)</text>
+      <path d="M62 74 L104 74" stroke="#aaa7bd" stroke-width="2.2" fill="none" marker-end="url(#ah)"/><path d="M317 79 L330 79" stroke="#aaa7bd" stroke-width="2.2" fill="none" marker-end="url(#ah)"/><path d="M543 79 L556 79" stroke="#aaa7bd" stroke-width="2.2" fill="none" marker-end="url(#ah)"/><path d="M770 79 L783 79" stroke="#aaa7bd" stroke-width="2.2" fill="none" marker-end="url(#ah)"/>
+      <path d="M666 124 L666 116" stroke="#aaa7bd" stroke-width="2.2" fill="none" marker-end="url(#ah)"/>
+      <path d="M439 44 L439 38 L1014 38 L1014 133 L1035 133" stroke="#aaa7bd" stroke-width="2.2" fill="none" marker-end="url(#ah)"/><text x="728" y="34" text-anchor="middle" font-size="10.5" fill="#aaa7bd">저장 이벤트 동기화</text>
+      <path d="M550 246 L550 218 L213 218 L213 116" stroke="#aaa7bd" stroke-width="2.2" fill="none" marker-end="url(#ah)"/><text x="260" y="214" text-anchor="middle" font-size="10.5" fill="#aaa7bd">AI 추천</text>
+      <path d="M1162 246 L1162 218 L666 218 L666 194" stroke="#aaa7bd" stroke-width="2.2" fill="none" marker-end="url(#ah)"/><text x="914" y="214" text-anchor="middle" font-size="10.5" fill="#aaa7bd">측정 데이터</text>
       </g>
     </svg>
-    <p class="qa-line"><b>검증</b> Playwright 4개 화면 폭 · 익스텐션 32항목 · 시나리오 시뮬레이션 10종 &nbsp; <b>배포</b> Docker · Railway 공개 서버</p>
-  </section>
-  <section class="sec">
-    <div class="sec-head"><span class="no">5</span><h2>기대효과 및 향후 발전 방향</h2></div>
-    <div class="adopt"><b>특수교육 · 복지기관 도입 제안</b><span>기관 시청 환경에 설치형으로, OTT·플레이어에는 접근성 옵션으로</span></div>
-    <div class="adopt soft"><b>지금 되는 것</b><span>영상 3편 × 45초 · 프로필 5 · 5단계 비교 · 되돌리기 · 크롬 익스텐션 · 자동 테스트 32항목 · 당사자 사용 확인</span></div>
-    <p class="next"><b>향후</b> 2단계 비교 · 사용성 평가(SUS) · 지원 영상 확대</p>
+  <p class="qa-line"><b>검증</b> 유튜브 실측 10항목 · 익스텐션 자동 테스트 32항목 · Playwright 4개 화면 폭 &nbsp; <b>배포</b> Docker · Railway 공개 서버</p>
+</section>
 
-  </section>
-</div>
+<section id="s5" class="block sec">
+  <div class="sec-head"><span class="no">5</span><h2>기대효과 · 사업화 · 향후</h2><span class="tag">사회기여 · 사업화 · 신산업</span></div>
+  <div class="biz4">
+    <div><b>시장성</b><span>OTT 이용률 79.2%(2024) · 유럽접근성법(EAA) 2025.6.28 시청각 미디어 접근 서비스에 접근성 요건 적용 · 장애인차별금지법 제20·21조 정보접근 차별금지·정당한 편의 제공</span></div>
+    <div><b>도입 · 사업화 계획</b><span>교육·복지기관이 도입하고, 기관 이용권 · 플레이어 연동 · 운영 지원으로 제공 · 코어는 오픈소스(MIT) · OTT 사업자용 접근성 옵션 SDK</span></div>
+    <div><b>지식재산권</b><span>같은 장면 A/B 비교로 개인 감각 설정값을 도출하고 브라우저 확장으로 지원 플랫폼 간 설정을 연동하는 방법 · 특허 출원 검토 중</span></div>
+    <div><b>신산업 · 향후</b><span>AI 기반 디지털 헬스케어 · 접근성 기술 · 신경다양성 당사자 참여 검증 완료 · 2단계 비교 · 사용성 평가(SUS) · 지원 영상 확대</span></div>
+  </div>
+</section>
 
 <footer class="block">
   <p class="credits">영화 Tears of Steel · Sintel · Big Buck Bunny © Blender Foundation CC BY · Pretendard OFL · 통계 통계청 2025 · 국민건강보험공단 2024 · 방송통신위원회 2024</p>
