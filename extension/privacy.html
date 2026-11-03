@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PariView 확장 프로그램 개인정보 처리 안내</title>
+<style>body{max-width:760px;margin:56px auto;padding:0 24px 48px;font:16px/1.8 -apple-system,"Apple SD Gothic Neo",sans-serif;color:#17181d}h1{font-size:30px;line-height:1.35;letter-spacing:-.8px}h2{font-size:20px;margin-top:32px}a{color:#003cdc}p,li{color:#4d535e}table{border-collapse:collapse;width:100%;font-size:14px}th,td{text-align:left;vertical-align:top;border-bottom:1px solid #e5e7eb;padding:12px 8px}th{white-space:nowrap}aside{background:#f6f7f9;padding:18px 20px;border-radius:14px}.meta{font-size:13px;color:#666}</style></head>
+<body>
+<p class="meta">PariView · 크롬 확장 프로그램 · 2026년 11월 4일</p>
+<h1>내 시청 설정은<br>내 브라우저 안에서 사용해요</h1>
+<aside>PariView 확장 프로그램은 저장한 화면·소리 설정을 웹 영상에 적용해요<br>확장 프로그램이 설정·시청 기록·영상·소리를 개발자 서버나 제3자에게 보내지 않아요</aside>
+<h2>기기에 저장하는 정보</h2>
+<table><thead><tr><th>정보</th><th>사용 목적</th></tr></thead><tbody>
+<tr><th>저장한 시청 설정</th><td>밝기·대비·채도·따뜻함·음량·소리 효과 등 PariView에서 저장한 설정과 저장 시각을 다시 적용하기 위해 사용해요 일부 웹 전용 설정은 함께 보관하지만 확장에서 실행하지 않아요</td></tr>
+<tr><th>적용 켜짐·꺼짐</th><td>사용자가 선택한 확장 프로그램 적용 상태를 유지해요</td></tr>
+<tr><th>설정을 가져온 페이지 주소</th><td>‘PariView에서 다시 맞추기’로 돌아가기 위해 PariView 페이지의 origin과 경로를 저장해요 주소의 검색 매개변수와 해시는 저장하지 않아요</td></tr>
+</tbody></table>
+<p>정보는 현재 Chrome 프로필의 <code>chrome.storage.local</code>에 보관해요 확장 프로그램은 계정 간 동기화나 별도 서버 저장을 제공하지 않아요</p>
+<h2>재생 중 기기 안에서 처리하는 정보</h2>
+<ul>
+<li>영상 요소와 재생·일시정지·음소거·로딩·보호 여부를 확인해 필터와 팝업의 현재 탭 상태를 표시해요</li>
+<li>영상 소스의 주소와 출처를 확인해 소리 효과를 안전하게 적용할 수 있는지 판단해요 영상 주소 목록이나 시청 기록으로 저장하지 않아요</li>
+<li>지원되는 영상의 소리 신호를 브라우저 Web Audio에서 실시간 처리해요 소리를 녹음하거나 파일로 보관하지 않아요</li>
+<li>소리 재생을 허용하기 위해 페이지에서 클릭·키보드 동작이 발생했는지 확인해요 입력한 글자·키 값·폼 내용은 읽거나 저장하지 않아요</li>
+</ul>
+<h2>접근 권한을 쓰는 이유</h2>
+<p><strong>storage</strong>는 시청 설정과 켜짐·꺼짐을 보관하는 데 사용해요<br><strong>HTTP·HTTPS 페이지의 콘텐츠 접근</strong>은 유튜브와 다른 웹사이트 및 삽입된 프레임의 HTML 영상을 찾아 화면·소리를 조절하는 데 사용해요 크롬의 사이트 접근 설정에서 허용할 사이트를 제한할 수 있어요</p>
+<p>계정 비밀번호·인증 쿠키·결제 정보·연락처를 읽지 않아요 마이크·카메라·브라우저 방문 기록 API를 사용하지 않아요</p>
+<h2>외부 전송과 제3자 공유</h2>
+<p>확장 프로그램에는 분석 SDK·광고 추적·원격 실행 코드가 없어요 로컬 시청 설정과 처리한 미디어 데이터를 판매하거나 외부 서버·광고사·개발자에게 전송하지 않아요</p>
+<p>PariView나 유튜브 링크를 눌러 여는 웹사이트는 브라우저가 해당 사이트에 직접 접속해요 그 웹사이트의 요청과 웹에서 사용자가 실행하는 기능은 확장 프로그램의 데이터 전송과 별개예요</p>
+<p>PariView 확장 프로그램의 정보 사용은 Chrome Web Store User Data Policy의 Limited Use 요구사항을 따르며 시청 설정 적용이라는 사용자 기능에만 한정해요</p>
+<h2>변경·삭제와 보관 기간</h2>
+<p>새 설정을 저장하면 이전 설정을 덮어써요 팝업에서 적용을 꺼도 설정은 남아 있어요 확장 프로그램을 삭제하면 확장 프로그램의 로컬 저장 정보가 삭제돼요</p>
+<p>PariView 웹사이트에 별도로 남은 설정은 크롬의 해당 사이트 데이터 삭제 기능으로 지울 수 있어요 확장 프로그램과 웹사이트 데이터는 각각 관리돼요</p>
+<h2>문의와 변경 안내</h2>
+<p>개발 프로젝트: PariView · 팀 Lucent<br>사용 문의와 개인정보 관련 문의는 <a href="https://github.com/ryeong03/pariview/issues" target="_blank" rel="noopener">PariView 프로젝트 문의</a>에 남길 수 있어요 공개 문의에는 비밀번호·인증번호·민감한 개인정보를 적지 말아주세요</p>
+<p>처리 방식이 바뀌면 이 안내와 시행 날짜를 업데이트해요</p>
+<p><a href="https://pariview-production.up.railway.app/#chrome">PariView로 돌아가기 →</a></p>
+</body></html>

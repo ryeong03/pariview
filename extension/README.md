@@ -4,6 +4,8 @@ PC 크롬에서 PariView의 저장한 화면·소리 설정을 유튜브 등 HTM
 
 ## 설치와 사용
 
+웹스토어 설치 후에는 아래 3번부터 진행해요 ZIP 직접 설치는 개발·시연용이에요
+
 1. `pariview-extension.zip`의 압축을 풀어요
 2. `chrome://extensions` → 개발자 모드 → 압축해제된 확장 프로그램을 로드합니다 → `manifest.json`이 있는 폴더를 선택해요
 3. [PariView](https://pariview-production.up.railway.app/)를 새로고침하고 설정을 저장해요
@@ -24,6 +26,13 @@ PC 크롬에서 PariView의 저장한 화면·소리 설정을 유튜브 등 HTM
 - 장면 안내·자막·요약·AI 분석·자동 밝기·배경음 분리·장면 전환 보간은 확장에서 제공하지 않아요
 - 닫힌 Shadow DOM 플레이어나 브라우저 내부 페이지는 지원하지 않아요
 - 설정은 현재 크롬 프로필 안에만 저장돼요 별도 로그인이나 서버 전송은 없어요
+
+## 배포 파일
+
+- `pariview-webstore.zip`: Chrome Web Store 제출용, manifest.json이 ZIP 최상위에 있어요
+- `pariview-extension.zip`: 개발·시연용, 압축을 풀면 설치 폴더가 생겨요
+- 소스 코드는 MIT 라이선스이며 각 ZIP에 LICENSE가 포함돼요
+- [개인정보 처리 안내](privacy.html)
 
 ## 검증 및 패키징
 

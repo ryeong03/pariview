@@ -6,11 +6,11 @@ Checks: 1 connect before save  2 save → synced  3 filter on another page
         4 reset → defaults      5 popup off/on   6 video keeps playing
 Uses Playwright's bundled Chromium (headless channel 'chromium'); Chrome stable ignores --load-extension.
 """
-import hashlib, json, subprocess, sys, tempfile, time
+import hashlib, json, os, subprocess, sys, tempfile, time
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
-EXT = Path(__file__).resolve().parents[1]
+EXT = Path(os.environ.get('PARIVIEW_EXTENSION', Path(__file__).resolve().parents[1])).resolve()
 APP = 'http://127.0.0.1:4178/'
 ext_id = ''.join(chr(ord('a') + int(c, 16)) for c in hashlib.sha256(str(EXT).encode()).hexdigest()[:32])
 
