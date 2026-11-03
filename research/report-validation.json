@@ -32,16 +32,16 @@
     },
     {
       "page": 5,
-      "bodyBottom": 986.9375,
+      "bodyBottom": 1007.328125,
       "footerTop": 1062.203125,
-      "gap": 75.265625,
+      "gap": 54.875,
       "overflow": []
     },
     {
       "page": 6,
-      "bodyBottom": 968.375,
+      "bodyBottom": 992.171875,
       "footerTop": 1062.203125,
-      "gap": 93.828125,
+      "gap": 70.03125,
       "overflow": []
     },
     {
@@ -58,6 +58,6 @@
     209.89,
     297.01
   ],
-  "textCharacters": 9987,
+  "textCharacters": 10072,
   "pdfLinks": 30
 }
