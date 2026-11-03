@@ -38,7 +38,10 @@ body.reduce-motion .approved-hero::after{animation:none}
 @media(max-width:760px){.studio-grid{min-height:calc(100svh - 148px - 80px);align-content:start}}
 
 /* Studio: heading + player + dock + collapsed "감각 지도" row fit one viewport on laptop heights (1280×720 ~ 1536×864) */
-@media(min-width:761px){.stage-card,.preferences{max-width:min(1080px,calc((100dvh - 446px)*var(--scene-ratio,2.397)))}}
+@media(min-width:761px){
+ .stage-card{max-width:min(1080px,calc((100dvh - 446px)*var(--scene-ratio,2.397)))}
+ .preferences{max-width:min(1080px,calc((100dvh - 446px)*2.397))}
+}
 
 /* Hero curtain: as the first screen scrolls away, a soft brand-red tint closes in from both window edges
    (scroll-driven, no JS). Off when motion is reduced or the browser lacks scroll timelines */

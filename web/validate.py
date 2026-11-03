@@ -7,6 +7,9 @@ results={}
 with sync_playwright() as p:
  b=p.chromium.launch(executable_path='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',args=['--enable-webgl','--ignore-gpu-blocklist'])
  page=b.new_page(viewport={'width':1440,'height':900})
+ # This regression flow keeps the user's settings across scenes with adaptation off.
+ # Scene adaptation is checked separately with the real app hooks.
+ page.add_init_script("sessionStorage.setItem('pariview-scene-adapt-off','1')")
  errors=[];bad=[]
  page.on('pageerror',lambda e:errors.append(str(e)))
  page.on('response',lambda r:bad.append({'url':r.url,'status':r.status}) if r.status>=400 else None)
@@ -99,9 +102,16 @@ with sync_playwright() as p:
  for width,height in viewports:
   page.set_viewport_size({'width':width,'height':height});page.wait_for_timeout(150)
   assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1'),width
-  page.evaluate("document.querySelector('#watch-studio').scrollIntoView({behavior:'instant',block:'start'})")
+  scene_layouts=[]
+  for sid in ['sintel','bunny','tears-lab']:
+   page.evaluate('(id)=>window.__pariview.selectScene(id)',sid)
+   page.wait_for_function('window.__pariview.video.readyState>=2')
+   page.evaluate("document.querySelector('#watch-studio').scrollIntoView({behavior:'instant',block:'start'})")
+   details=page.locator('.timeline-details').bounding_box();end=details['y']+details['height']
+   assert end<=height+2,(width,height,sid,end)
+   scene_layouts.append({'scene':sid,'detailsBottom':round(end,1)})
   box=page.locator('.preferences').bounding_box();bottom=box['y']+box['height'];assert bottom<=height+2,(width,height,bottom)
-  results['viewports'].append({'width':width,'height':height,'controlsBottom':round(bottom,1)})
+  results['viewports'].append({'width':width,'height':height,'controlsBottom':round(bottom,1),'sceneLayouts':scene_layouts})
   if width in [1440,390]:page.screenshot(path=str(ROOT.parent/f'assets/verified-studio-{width}.png'))
   if width==390:
    page.evaluate('window.__pariview.openFit()');page.locator('#start-comparison').click();assert page.locator('#fit-next').is_visible();page.keyboard.press('Escape')

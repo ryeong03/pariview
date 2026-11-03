@@ -111,7 +111,8 @@ function selectScene(id,autoplay=false){
  video.playbackRate=1;video.muted=muted;video.poster=scene.poster;video.src=scene.src;
  $('#seek').max=scene.duration;$('#duration').textContent=formatTime(scene.duration);$('#track-middle').textContent=formatTime(scene.duration/2);$('#track-end').textContent=formatTime(scene.duration);
  reflectScene();reflect();loadSensoryMap();video.load();updateTime();
- $('#scene-announcement').textContent=`${scene.film} ${scene.duration}초 장면을 선택했어요 설정은 유지돼요`;
+ $('#scene-announcement').textContent=`${scene.film} ${scene.duration}초 장면을 선택했어요`;
+ document.dispatchEvent(new CustomEvent('pariview-scene',{detail:scene.id}));
 }
 $('#choose-scene').onclick=()=>{video.pause();renderSceneOptions();$('#scene-dialog').showModal();};
 $('#close-scene').onclick=()=>$('#scene-dialog').close();
@@ -273,7 +274,7 @@ video.addEventListener('loadedmetadata',initialFrame);if(video.readyState>=1)ini
 reflectScene();loadSensoryMap();reflect();renderPlay();updateTime();
 createFalcon($('#hero-falcon'),{reduced:()=>reduced});createFalcon($('#wizard-falcon'),{wizard:true,reduced:()=>reduced});
 if(['#research','#chrome'].includes(location.hash))showTab(location.hash.slice(1));
-window.__pariview={get settings(){return {...settings}},get original(){return original},get audioRoute(){return audioRoute},get muted(){return muted},get reduced(){return reduced},get recommendation(){return recommendation},video,openFit:fitOpen,modes,showSettingTab,scenes,selectScene,get scene(){return currentScene},get events(){return events},get comparisonPlaying(){return previewPlaying}};
+window.__pariview={get settings(){return {...settings}},get original(){return original},get audioRoute(){return audioRoute},get muted(){return muted},get reduced(){return reduced},get recommendation(){return recommendation},video,openFit:fitOpen,modes,showSettingTab,scenes,selectScene,get scene(){return currentScene},get events(){return events},get comparisonPlaying(){return previewPlaying},applyScenePreset(next){settings=normalize(next);saved=false;sceneLift=1;reflect();}};
 let recommendationSnapshot=null;
 const recommendationUI=initRecommendation({
  getSettings:()=>({...settings}),
