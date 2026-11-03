@@ -116,11 +116,12 @@ def provider_error_summary(error):
     if isinstance(error, urllib.error.HTTPError):
         try:
             kind = json.loads(error.read(4096) or b'{}').get('error', {}).get('type', '')
-        except (ValueError, OSError, AttributeError):
+        except Exception:
+            # Diagnostic reads must not interrupt the ready-to-use default.
             kind = ''
     known_types = {'invalid_request_error', 'authentication_error', 'permission_error', 'not_found_error', 'billing_error',
-                   'request_too_large', 'rate_limit_error', 'api_error', 'overloaded_error'}
-    if kind and (not isinstance(kind, str) or kind not in known_types):
+                   'conflict_error', 'request_too_large', 'rate_limit_error', 'api_error', 'timeout_error', 'overloaded_error'}
+    if not isinstance(kind, str) or (kind and kind not in known_types):
         kind = 'unknown_error'
     return f'provider_error {type(error).__name__} status={status or "-"} type={kind or "-"}'
 
@@ -215,7 +216,11 @@ def recommend(payload):
         except Exception as error:
             # Silent by default. PARIVIEW_AI_DEBUG=1 prints status and error type only (no bodies, credentials, or user text).
             if os.environ.get('PARIVIEW_AI_DEBUG', '').strip() == '1':
-                print(provider_error_summary(error), flush=True)
+                try:
+                    print(provider_error_summary(error), flush=True)
+                except Exception:
+                    # Diagnostics are optional, including when stdout is unavailable.
+                    pass
             AI_COOLDOWN_UNTIL = time.monotonic() + 30
             return compose(plan, status='default_provider')
     finally:

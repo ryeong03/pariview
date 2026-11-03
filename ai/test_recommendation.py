@@ -423,6 +423,17 @@ if __name__ == '__main__':
 
 
 class ProviderHardeningTests(unittest.TestCase):
+    def setUp(self):
+        self.env = patch.dict(os.environ, {}, clear=True)
+        self.env.start()
+        server.AI_CALL_TIMES.clear()
+        server.AI_COOLDOWN_UNTIL = 0
+
+    def tearDown(self):
+        self.env.stop()
+        server.AI_CALL_TIMES.clear()
+        server.AI_COOLDOWN_UNTIL = 0
+
     def test_api_key_is_trimmed_and_unquoted(self):
         import os
         from unittest.mock import patch
@@ -444,7 +455,12 @@ class ProviderHardeningTests(unittest.TestCase):
         error = urllib.error.HTTPError('https://api.anthropic.com/v1/messages', 402, 'Payment Required', {},
                                        io.BytesIO(b'{"error":{"type":"billing_error","message":"secret-user-text"}}'))
         self.assertEqual(server.provider_error_summary(error), 'provider_error HTTPError status=402 type=billing_error')
-        for kind in ['secret-user-text', {'message': 'secret-user-text'}, ['secret-user-text']]:
+        for status, kind in [(409, 'conflict_error'), (504, 'timeout_error')]:
+            body = io.BytesIO(json.dumps({'error': {'type': kind}}).encode())
+            error = urllib.error.HTTPError('https://api.anthropic.com/v1/messages', status, 'Error', {}, body)
+            self.assertEqual(server.provider_error_summary(error), f'provider_error HTTPError status={status} type={kind}')
+        for kind in ['secret-user-text', 'authentication_error\nsecret-user-text', {},
+                     {'message': 'secret-user-text'}, ['secret-user-text']]:
             body = io.BytesIO(json.dumps({'error': {'type': kind}}).encode())
             error = urllib.error.HTTPError('https://api.anthropic.com/v1/messages', 400, 'Bad Request', {}, body)
             self.assertEqual(server.provider_error_summary(error), 'provider_error HTTPError status=400 type=unknown_error')
@@ -467,3 +483,47 @@ class ProviderHardeningTests(unittest.TestCase):
             self.assertEqual(out.getvalue(), expected)
             self.assertNotIn('secret-user-text', out.getvalue())
         server.AI_COOLDOWN_UNTIL = 0
+
+    def test_interrupted_error_body_keeps_default_recommendation(self):
+        from http.client import IncompleteRead
+        import urllib.error
+        env = {'PARIVIEW_AI_ENABLED': '1', 'ANTHROPIC_API_KEY': 'unit-key',
+               'PARIVIEW_AI_MODEL': 'claude-test', 'PARIVIEW_AI_DEBUG': '1'}
+        for failure in [IncompleteRead(b'secret-user-text', 1), RuntimeError('secret-user-text')]:
+            with self.subTest(failure=type(failure).__name__):
+                server.AI_COOLDOWN_UNTIL = 0
+                error = urllib.error.HTTPError('https://api.anthropic.com/v1/messages', 400, 'Error', {}, io.BytesIO())
+                with patch.dict(os.environ, env), patch.object(error, 'read', side_effect=failure), \
+                        patch.object(server, 'call_provider', side_effect=error), patch('builtins.print') as log:
+                    self.assertEqual(server.provider_error_summary(error), 'provider_error HTTPError status=400 type=-')
+                    result = server.recommend({'useAI': True})
+                self.assertEqual((result['source'], result['status']), ('rules', 'default_provider'))
+                log.assert_called_once_with('provider_error HTTPError status=400 type=-', flush=True)
+                self.assertGreater(server.AI_COOLDOWN_UNTIL, 0)
+                self.assertFalse(server.AI_LOCK.locked())
+
+    def test_diagnostic_failures_keep_default_recommendation(self):
+        env = {'PARIVIEW_AI_ENABLED': '1', 'ANTHROPIC_API_KEY': 'unit-key',
+               'PARIVIEW_AI_MODEL': 'claude-test', 'PARIVIEW_AI_DEBUG': '1'}
+        failures = [('ai.server.provider_error_summary', RuntimeError('secret-user-text')),
+                    ('builtins.print', BrokenPipeError('unavailable stdout')),
+                    ('builtins.print', UnicodeEncodeError('ascii', '\uac00', 0, 1, 'encoding failure'))]
+        for target, failure in failures:
+            with self.subTest(target=target, failure=type(failure).__name__):
+                server.AI_COOLDOWN_UNTIL = 0
+                with patch.dict(os.environ, env), patch.object(server, 'call_provider', side_effect=TimeoutError()), \
+                        patch(target, side_effect=failure) as diagnostic:
+                    result = server.recommend({'useAI': True})
+                diagnostic.assert_called_once()
+                self.assertEqual((result['source'], result['status']), ('rules', 'default_provider'))
+                self.assertGreater(server.AI_COOLDOWN_UNTIL, 0)
+                self.assertFalse(server.AI_LOCK.locked())
+
+    def test_disabled_diagnostics_do_not_read_or_log_errors(self):
+        env = {'PARIVIEW_AI_ENABLED': '1', 'ANTHROPIC_API_KEY': 'unit-key', 'PARIVIEW_AI_MODEL': 'claude-test'}
+        with patch.dict(os.environ, env), patch.object(server, 'call_provider', side_effect=TimeoutError()), \
+                patch.object(server, 'provider_error_summary') as summary, patch('builtins.print') as log:
+            result = server.recommend({'useAI': True})
+        self.assertEqual((result['source'], result['status']), ('rules', 'default_provider'))
+        summary.assert_not_called()
+        log.assert_not_called()
