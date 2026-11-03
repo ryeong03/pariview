@@ -67,19 +67,41 @@ with sync_playwright() as p:
  assert profile_results['soft']['easyCaptions']
  assert profile_results['everyday']['warmth']==25 and profile_results['everyday']['breakReminder']
  results['five_profiles']=profile_results
- # Explicit preferences, uncertainty, back navigation, live audio, then cognitive choice.
+ # Adaptive numeric comparisons: previous selections change future pairs.
+ # Layout can swap A/B, so choose/play by the actual value instead of a fixed letter.
  page.evaluate('window.__pariview.openFit()');page.locator('[data-mode="0"]').click();page.locator('#start-comparison').click()
- page.locator('#play-comparison').click();page.wait_for_function('window.__pariview.comparisonPlaying');page.wait_for_timeout(1000)
- previews=page.locator('.fit-preview').evaluate_all('vs=>vs.map(v=>({paused:v.paused,rate:v.playbackRate,time:v.currentTime}))')
- assert all(not v['paused'] and v['rate']==.75 for v in previews)
- assert abs(previews[0]['time']-previews[1]['time'])<.08
- results['simultaneous_comparison']=previews
- page.locator('#play-comparison').click();assert page.locator('.fit-preview').evaluate_all('vs=>vs.every(v=>v.paused)')
- page.locator('[data-choose="a"]').click();page.locator('#fit-next').click();page.locator('#choose-equal').click();page.locator('#fit-next').click()
- page.locator('[data-listen="a"]').click();page.wait_for_function('!window.__pariview.video.paused',timeout=10000)
- assert page.evaluate('window.__pariview.video.playbackRate')==.75
- page.locator('[data-choose="a"]').click();page.locator('#fit-next').click();page.locator('[data-choose="b"]').click();page.locator('#fit-next').click();page.locator('[data-choose="b"]').click();page.locator('#fit-next').click();page.locator('#result-back').click();page.locator('#fit-next').click();page.locator('#apply-fit').click()
- fit=page.evaluate('window.__pariview.settings');assert fit['brightness']==65 and fit['contrast']==80 and fit['volume']==22 and not fit['compression'] and fit['easyCaptions']
+ questions=[];visual_checked=False;audio_checked=False
+ for index,outcome in enumerate(['a','equal','a','unsure','b']):
+  question=page.evaluate('window.__pariview.fitQuestion');questions.append(question)
+  assert page.evaluate('window.__pariview.fitState.answered')==index
+  if question['kind']=='visual' and not visual_checked:
+   page.locator('#play-comparison').click();page.wait_for_function('window.__pariview.comparisonPlaying');page.wait_for_timeout(1000)
+   previews=page.locator('.fit-preview').evaluate_all('vs=>vs.map(v=>({paused:v.paused,rate:v.playbackRate,time:v.currentTime}))')
+   assert all(not v['paused'] and v['rate']==.75 for v in previews)
+   assert abs(previews[0]['time']-previews[1]['time'])<.08
+   results['simultaneous_comparison']=previews;visual_checked=True
+   page.locator('#play-comparison').click();assert page.locator('.fit-preview').evaluate_all('vs=>vs.every(v=>v.paused)')
+  if question['kind']=='audio' and not audio_checked:
+   lower='a' if question['a']<question['b'] else 'b';higher='b' if lower=='a' else 'a'
+   assert page.locator(f'[data-listen="{higher}"]').is_disabled()
+   page.locator(f'[data-listen="{lower}"]').click();page.wait_for_function('window.__pariview.comparisonPlaying',timeout=15000)
+   assert page.evaluate('window.__pariview.video.playbackRate')==.75
+   assert page.locator(f'[data-listen="{higher}"]').is_enabled();audio_checked=True
+  page.locator(f'[data-choose="{outcome}"]' if outcome in ['a','b'] else '#choose-'+outcome).click()
+  assert page.evaluate('window.__pariview.fitState.answered')==index  # No double update before Next.
+  page.locator('#fit-next').click()
+ assert visual_checked and audio_checked
+ assert len({q['axis'] for q in questions[:3]})==3
+ state=page.evaluate('window.__pariview.fitState');assert state['answered']==5 and state['counts']['effective']==3 and state['stopReason']=='budget'
+ expected=state['settings'];assert expected['compression'] and not expected['easyCaptions']
+ page.locator('#result-back').click();assert page.evaluate('window.__pariview.fitQuestion.id')==questions[-1]['id']
+ assert page.evaluate('window.__pariview.fitState.answered')==4
+ page.locator('#fit-next').click();assert page.evaluate('window.__pariview.fitState.settings')==expected
+ page.locator('#result-compression').click();page.locator('#result-easyCaptions').click()
+ expected.update(compression=False,easyCaptions=True)
+ page.locator('#apply-fit').click()
+ fit=page.evaluate('window.__pariview.settings');assert fit==expected
+ results['adaptive_comparisons']=[{'axis':q['axis'],'a':q['a'],'b':q['b']} for q in questions]
  assert page.evaluate('window.__pariview.video.paused && window.__pariview.video.muted && window.__pariview.video.playbackRate===1')
  page.reload(wait_until='networkidle');assert page.evaluate('window.__pariview.settings')==fit
  results['fitting_and_persistence']=fit

@@ -1,0 +1,72 @@
+{
+  "verified_on": "2026-11-04",
+  "scope": "적응형 선호 알고리즘 기술 근거 · 기존 17개 감각 근거 집계와 별도",
+  "sources": [
+    {
+      "id": "A1",
+      "authors": [
+        "Andrew B Watson"
+      ],
+      "year": 2017,
+      "title": "QUEST+: A general multidimensional Bayesian adaptive psychometric method",
+      "journal": "Journal of Vision",
+      "volume": "17",
+      "issue": "3",
+      "article": "10",
+      "doi": "10.1167/17.3.10",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28355623/",
+      "checked": "Primary abstract and metadata; publisher full-text returned 403",
+      "supports": "Bayesian adaptive psychometric testing across stimulus dimensions, parameters, outcomes and pair comparisons",
+      "boundary": "Not a validation of PariView preference model or its five-query budget"
+    },
+    {
+      "id": "A2",
+      "authors": [
+        "Niels Søgaard Jensen",
+        "Ole Hau",
+        "Jens Brehm Bagger Nielsen",
+        "Thor Bundgaard Nielsen",
+        "Søren Vase Legarth"
+      ],
+      "year": 2019,
+      "title": "Perceptual Effects of Adjusting Hearing-Aid Gain by Means of a Machine-Learning Approach Based on Individual User Preference",
+      "journal": "Trends in Hearing",
+      "volume": "23",
+      "article": "2331216519847413",
+      "doi": "10.1177/2331216519847413",
+      "url": "https://doi.org/10.1177/2331216519847413",
+      "checked": "Publisher full-text methods, outcomes, abstract",
+      "sample": 20,
+      "population": "Experienced hearing-aid users with sensorineural hearing loss, age54–83",
+      "method": "12 sound scenarios,20 iterative paired comparisons per scenario, subsequent double-blind recording ratings",
+      "supports": "Prior preferences inform the next pair; outcome differences depend on listening attribute and situation",
+      "boundary": "KEMAR/laboratory and hearing loss context, not ND audiovisual fitting; no five-query claim"
+    },
+    {
+      "id": "A3",
+      "authors": [
+        "Dhruv Vyas",
+        "Ryan Brummet",
+        "Yumna Anwar",
+        "Justin Jensen",
+        "Erik Jorgensen",
+        "Yu-Hsiang Wu",
+        "Octav Chipara"
+      ],
+      "year": 2022,
+      "online_published": "2021-11-25",
+      "issue_date": "2022-03",
+      "title": "Personalizing over-the-counter hearing aids using pairwise comparisons",
+      "journal": "Smart Health",
+      "volume": "23",
+      "article": "100231",
+      "doi": "10.1016/j.smhl.2021.100231",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10312409/",
+      "checked": "Primary full-text including abstract, introduction and methods",
+      "sample": 35,
+      "method": "15 presets, each pair rated4times,420 comparisons per subject; subsequent simulation-based algorithm evaluation",
+      "supports": "Noisy and sometimes multiple preference points; feedback-efficient selection of presets",
+      "boundary": "Median25 comparisons is their simulation finding and cannot substantiate universal five-query convergence"
+    }
+  ]
+}

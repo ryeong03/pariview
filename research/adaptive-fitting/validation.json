@@ -1,0 +1,27 @@
+{
+  "pass": true,
+  "synthetic_cases": 2500,
+  "paired_policy_runs": 5000,
+  "points_per_run": 6,
+  "max_recomputed_nmae_difference": 1.1102230246251565e-16,
+  "fixed_query_patterns": 1,
+  "nonresponses_leave_estimates_unchanged": true,
+  "empty_human_templates": true,
+  "actual_participant_records": 0,
+  "engine_sha256": "8c7f8bc51ada508b743c8db97d8b635e171ba0db8ee44fceac4625d02a301192",
+  "pdf": {
+    "pages": 1,
+    "width_points": 864.0,
+    "height_points": 331.20001220703125
+  },
+  "visual_review": "comparison-overview.png inspected; all conditions disclosed",
+  "reproducible_same_seed_raw_sha256": "8e02796a84724b6e53cd108751fb66687f754320dce12c319f0bc0746d791ea4",
+  "same_seed_replay_exact_match": true,
+  "empty_human_analysis": {
+    "observed_n": 0,
+    "complete_paired_n": 0,
+    "data_rows": 0,
+    "curve_created": false,
+    "state": "empty_provided_templates"
+  }
+}

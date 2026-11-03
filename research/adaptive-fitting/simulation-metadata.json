@@ -1,0 +1,98 @@
+{
+  "kind": "synthetic_algorithm_evaluation",
+  "created_at": "2026-11-03T21:17:48.803Z",
+  "seed": 20261104,
+  "n_per_condition": 500,
+  "scenarios": [
+    {
+      "id": "deterministic",
+      "tau": 0,
+      "lapse": 0
+    },
+    {
+      "id": "matched",
+      "tau": 0.08,
+      "lapse": 0.1
+    },
+    {
+      "id": "noisy",
+      "tau": 0.16,
+      "lapse": 0.2
+    },
+    {
+      "id": "nonresponse",
+      "tau": 0.08,
+      "lapse": 0.1,
+      "equal": 0.1,
+      "unsure": 0.1,
+      "skip": 0.05
+    },
+    {
+      "id": "asymmetric",
+      "tau": 0.08,
+      "lapse": 0.1,
+      "asymmetric": true
+    }
+  ],
+  "config": {
+    "version": "pariview-adaptive-fit-v1",
+    "model": "independent-quadratic-ideal-point",
+    "gridSize": 101,
+    "candidateGridSize": 21,
+    "lapse": 0.1,
+    "temperature": 0.08,
+    "minNormalizedGap": 0.1,
+    "maxNormalizedGap": 0.5,
+    "minActualGap": 2,
+    "initialBudget": 5,
+    "maxBudget": 20,
+    "intervalMass": 0.8,
+    "precisionWidth": 0.15,
+    "precisionMinAnswersPerAxis": 2,
+    "prior": "uniform",
+    "fixedDistance": "absolute-center-distance-plus-absolute-gap-distance"
+  },
+  "exported_bounds": {
+    "brightness": [
+      45,
+      100
+    ],
+    "contrast": [
+      65,
+      110
+    ],
+    "volume": [
+      0,
+      70
+    ]
+  },
+  "evaluation_bounds": {
+    "brightness": [
+      45,
+      100
+    ],
+    "contrast": [
+      65,
+      110
+    ],
+    "volume": [
+      0,
+      70
+    ]
+  },
+  "engine_sha256": "8c7f8bc51ada508b743c8db97d8b635e171ba0db8ee44fceac4625d02a301192",
+  "settings_sha256": "21786ba722b55574e84c89fd1067ad8528897722b2376e65ada749a5702f6ab2",
+  "initial_settings": {
+    "brightness": 85,
+    "contrast": 90,
+    "volume": 35
+  },
+  "comparisons": 5,
+  "primary_policies": [
+    "adaptive",
+    "fixed"
+  ],
+  "records": 2500,
+  "actual_participant_records": 0,
+  "interpretation": "Finite-budget normalized setting error under declared synthetic preference models; not comfort, clinical benefit, or a five-trial convergence guarantee"
+}

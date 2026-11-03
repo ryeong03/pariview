@@ -6,6 +6,7 @@ import {scenes} from './scenes.js';
 import {initRecommendation} from './recommendation.js';
 import {initInteractions} from './interactions.js';
 import {initExtensionConnection} from './extension-connect.js';
+import {createAdaptiveFit,FIT_AXES} from './adaptive-fit.js';
 import {renderResearchPage} from './research-page.js';
 import {defaults,ranges,toggles,modes,normalize,modeSettings} from './settings.js';
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
@@ -228,12 +229,28 @@ const steps=[
  {key:'compression',title:'소리의 변화를 어떻게 듣고 싶나요?',sub:'같은 장면에서 소리 크기의 차이를 비교해 보세요',a:true,b:false,an:'변화 폭을 줄여서',bn:'원본 변화 그대로',kind:'audio'},
  {key:'easyCaptions',title:'어느 자막이 더 읽기 편한가요?',sub:'같은 뜻을 담은 두 문장을 비교해 보세요',a:false,b:true,an:'기본 자막',bn:'쉬운 자막',kind:'cognitive'}
 ];
-let fitStep=0,answers=Array(steps.length).fill(null),previewTimeout,returnFocus,fitBase,modeIndex=4,previewEpoch=0,previewSync,previewAbort,previewPlaying=false,previewAudioKey=null,fitReturnTime=0;
+let previewTimeout,returnFocus,fitBase,modeIndex=4,previewEpoch=0,previewSync,previewAbort,previewPlaying=false,previewAudioKey=null,fitReturnTime=0;
+let fitSession=null,fitDirectStep=null,fitChoice=null,fitRecords=[],fitOverrides={},fitAudioHeard=null,fitArchives=[];
 const COMPARISON_RATE=.75,COMPARISON_SECONDS=8;
 let comparisonHistory=[];
-function recordChoice(value){answers[fitStep]=value;comparisonHistory.push({axis:steps[fitStep].key,outcome:value});comparisonHistory=comparisonHistory.slice(-20);}
+const fitAxisNames={brightness:'화면 밝기',contrast:'화면 대비',volume:'전체 음량',compression:'음량 변화 완화',easyCaptions:'자막 표현'};
+const fitOutcomeNames={a:'A',b:'B',equal:'비슷해요',unsure:'잘 모르겠어요',skip:'건너뜀'};
+const fitValue=(axis,value)=>typeof value==='boolean'?(axis==='easyCaptions'?(value?'쉬운 자막':'기본 자막'):(value?'켜짐':'꺼짐')):value+'%';
+function currentFitStep(){
+ if(fitDirectStep)return {...steps.find(s=>s.key===fitDirectStep),id:'direct-'+fitDirectStep};
+ const q=fitSession?.peek();if(!q)return null;
+ return {...steps.find(s=>s.key===q.axis),...q,key:q.axis,an:fitValue(q.axis,q.a),bn:fitValue(q.axis,q.b)};
+}
+function recordChoice(value){fitChoice=value;}
+function beginFitting(base,axis){
+ fitBase=normalize(base);fitChoice=null;fitRecords=[];fitOverrides={};fitAudioHeard=null;fitArchives=[];
+ fitDirectStep=['compression','easyCaptions'].includes(axis)?axis:null;
+ fitSession=fitDirectStep?null:createAdaptiveFit({settings:fitBase,budget:5,...(FIT_AXES.includes(axis)?{firstAxis:axis}:{}),context:{clipId:currentScene.id,segment:{start:currentScene.previewAt,end:currentScene.previewAt+COMPARISON_SECONDS},playbackRate:COMPARISON_RATE,fixedOptions:fitBase}});
+ renderFit();focusFitHeading();
+}
+function focusFitHeading(){const heading=$('#fit-body h2');heading?.setAttribute('tabindex','-1');$('#fit-dialog .fit-modal').scrollTop=0;heading?.focus({preventScroll:true});}
 const phaseNav=phase=>`<div class="fit-steps"><span class="${phase===1?'current':''}"><i>01</i>감각 프로필</span><span class="${phase===2?'current':''}"><i>02</i>선호 비교</span><span class="${phase===3?'current':''}"><i>03</i>시청 환경</span></div>`;
-function fitOpen(modeId){returnFocus=document.activeElement;fitReturnTime=video.currentTime;video.pause();fitStep=0;answers=Array(steps.length).fill(null);modeIndex=modes.findIndex(m=>m.id===(typeof modeId==='string'?modeId:recommendation?.id||settings.profileId));if(modeIndex<0)modeIndex=4;fitBase={...settings};$('#fit-dialog').showModal();renderModes();if(!reduced)gsap.fromTo('.fit-modal',{opacity:0,y:10},{opacity:1,y:0,duration:.25});}
+function fitOpen(modeId){returnFocus=document.activeElement;fitReturnTime=video.currentTime;video.pause();fitSession=null;fitDirectStep=null;fitChoice=null;fitRecords=[];fitOverrides={};fitAudioHeard=null;modeIndex=modes.findIndex(m=>m.id===(typeof modeId==='string'?modeId:recommendation?.id||settings.profileId));if(modeIndex<0)modeIndex=4;fitBase={...settings};if(!$('#fit-dialog').open)$('#fit-dialog').showModal();renderModes();if(!reduced)gsap.fromTo('.fit-modal',{opacity:0,y:10},{opacity:1,y:0,duration:.25});}
 function refreshPreviewControls(){
  const both=$('#play-comparison');if(both){both.textContent=previewPlaying?'■ 두 화면 일시정지':'▶ 두 화면 함께 보기';both.setAttribute('aria-pressed',String(previewPlaying));}
  $$('[data-listen]').forEach(button=>{const active=previewPlaying&&previewAudioKey===button.dataset.listen;button.textContent=active?'■ 멈추기':`▶ ${button.dataset.listen.toUpperCase()} 듣기`;button.setAttribute('aria-pressed',String(active));});
@@ -242,8 +259,8 @@ function stopPreview(){
  previewEpoch++;previewAbort?.abort();clearTimeout(previewTimeout);clearInterval(previewSync);previewPlaying=false;previewAudioKey=null;
  $$('.fit-preview').forEach(v=>v.pause());video.pause();video.playbackRate=1;video.muted=muted;refreshPreviewControls();reflect();
 }
-function fitClose(){stopPreview();$('#fit-dialog').close();video.currentTime=fitReturnTime;updateTime();returnFocus?.focus();}
-$('#close-fit').onclick=fitClose;$('#fit-dialog').addEventListener('cancel',e=>{e.preventDefault();fitClose();});$$('[data-action="fit"]').forEach(el=>el.onclick=()=>fitOpen());
+function fitClose(remember=false){stopPreview();fitSession?.stop();if(remember===true)comparisonHistory=[...comparisonHistory,...fitRecords].slice(-20);fitRecords=[];$('#fit-dialog').close();video.currentTime=fitReturnTime;updateTime();returnFocus?.focus();}
+$('#close-fit').onclick=()=>fitClose();$('#fit-dialog').addEventListener('cancel',e=>{e.preventDefault();fitClose();});$$('[data-action="fit"]').forEach(el=>el.onclick=()=>fitOpen());
 function waitForMedia(media,condition,event,signal){
  if(condition())return Promise.resolve();
  return new Promise((resolve,reject)=>{
@@ -261,14 +278,16 @@ async function preparePreview(media,start,signal){
 }
 async function startComparison(audioKey=null){
  if(previewPlaying&&previewAudioKey===audioKey){stopPreview();return;}
- stopPreview();const epoch=previewEpoch,start=currentScene.previewAt,previews=$$('.fit-preview'),s=steps[fitStep];
+ const s=currentFitStep();if(!s)return;
+ const lower=s.a<=s.b?'a':'b';if(s.key==='volume'&&audioKey&&audioKey!==lower&&fitAudioHeard!==s.id)return;
+ stopPreview();const epoch=previewEpoch,start=currentScene.previewAt,previews=$$('.fit-preview');
  previewAbort=new AbortController();const signal=previewAbort.signal,media=[...previews];
  previews.forEach(v=>{v.muted=true;});
  if(audioKey){initAudio();if(!audioContext){notify('이 브라우저에서는 소리 비교를 사용할 수 없어요');return;}video.muted=false;routeAudio({...fitBase,[s.key]:s[audioKey]},false);media.push(video);}
  try{
   await Promise.all(media.map(v=>preparePreview(v,start,signal)));if(epoch!==previewEpoch)return;
   await Promise.all(media.map(v=>v.play()));if(epoch!==previewEpoch){media.forEach(v=>v.pause());return;}
-  previewPlaying=true;previewAudioKey=audioKey;refreshPreviewControls();
+  previewPlaying=true;previewAudioKey=audioKey;if(s.key==='volume'&&audioKey===lower){fitAudioHeard=s.id;$$('[data-listen]').forEach(b=>b.disabled=false);}refreshPreviewControls();
   const leader=audioKey?video:previews[0];
   previewSync=setInterval(()=>{
    if(epoch!==previewEpoch)return;
@@ -279,39 +298,88 @@ async function startComparison(audioKey=null){
  }catch(error){if(epoch!==previewEpoch||error.name==='AbortError')return;stopPreview();notify('장면을 재생하지 못했어요 다시 눌러주세요');}
 }
 function renderModes(){
- stopPreview();gsap.set('#fit-progress-fill',{width:'10%'});const selected=modes[modeIndex];
- $('#fit-body').innerHTML=phaseNav(1)+`<div class="fit-step-count">나의 출발점 고르기 <span>1 / 3 단계</span></div><h2 class="fit-heading">오늘은 어떻게 보고 싶나요?</h2><p class="fit-subtitle">다섯 가지 프로필 중 가까운 모드를 골라주세요 다음 화면에서 하나씩 비교해요</p><div class="mode-options">${modes.map((m,i)=>`<button class="mode-option ${i===modeIndex?'selected':''}" data-mode="${i}" aria-pressed="${i===modeIndex}">${recommendation?.id===m.id?'<span class="recommend-badge">추천</span>':''}<svg><use href="#i-${m.icon}"/></svg><span class="mode-en">${m.en}</span><b>${m.title}</b><p>${m.desc}</p><span class="mode-check">${i===modeIndex?'✓ 선택했어요':'이 모드로 시작'}</span></button>`).join('')}</div><div class="mode-detail"><b>${selected.en}</b>${selected.features.join(' · ')}</div><div class="fit-actions"><button class="back" id="mode-current">기존 설정에서 비교</button><button class="primary" id="start-comparison">장면 비교하기 <svg><use href="#i-arrow"/></svg></button></div><p class="fit-footnote">필요에 맞게 직접 고르고 언제든 바꿀 수 있어요</p>`;
+ stopPreview();gsap.killTweensOf('#fit-progress-fill');gsap.set('#fit-progress-fill',{width:'10%'});const selected=modes[modeIndex];
+ $('#fit-body').innerHTML=phaseNav(1)+`<div class="fit-step-count">나의 출발점 고르기 <span>1 / 3 단계</span></div><h2 class="fit-heading">오늘은 어떻게 보고 싶나요?</h2><p class="fit-subtitle">가까운 모드를 고르고 5회 비교로 시작해요<br>PariView가 이전 선택을 바탕으로 다음 비교를 골라요</p><div class="mode-options">${modes.map((m,i)=>`<button class="mode-option ${i===modeIndex?'selected':''}" data-mode="${i}" aria-pressed="${i===modeIndex}">${recommendation?.id===m.id?'<span class="recommend-badge">추천</span>':''}<svg><use href="#i-${m.icon}"/></svg><span class="mode-en">${m.en}</span><b>${m.title}</b><p>${m.desc}</p><span class="mode-check">${i===modeIndex?'✓ 선택했어요':'이 모드로 시작'}</span></button>`).join('')}</div><div class="mode-detail"><b>${selected.en}</b>${selected.features.join(' · ')}</div><div class="fit-actions"><button class="back" id="mode-current">기존 설정에서 비교</button><button class="primary" id="start-comparison">장면 비교하기 <svg><use href="#i-arrow"/></svg></button></div><p class="fit-footnote">필요에 맞게 직접 고르고 언제든 바꿀 수 있어요</p>`;
  $$('[data-mode]').forEach(b=>b.onclick=()=>{modeIndex=Number(b.dataset.mode);renderModes();});
- $('#start-comparison').onclick=()=>{fitBase=modeSettings(modes[modeIndex].id,recommendation?.notices??settings.notices);fitStep=0;renderFit();};
- $('#mode-current').onclick=()=>{fitBase={...settings};if(recommendation)fitBase.notices=recommendation.notices;fitStep=0;renderFit();};
+ $('#start-comparison').onclick=()=>beginFitting(modeSettings(modes[modeIndex].id,recommendation?.notices??settings.notices));
+ $('#mode-current').onclick=()=>beginFitting({...settings,...(recommendation?{notices:recommendation.notices}:{})});
 }
 function renderFit(){
- stopPreview();const s=steps[fitStep],caption=comparisonCaption();gsap.to('#fit-progress-fill',{width:(25+(fitStep+1)*12)+'%',duration:reduced?0:.2});
- const filter=value=>`brightness(${s.key==='brightness'?value:fitBase.brightness}%) contrast(${s.key==='contrast'?value:fitBase.contrast}%) saturate(${fitBase.saturation}%)`;
+ stopPreview();const s=currentFitStep();if(!s){showResult();return;}
+ const state=fitSession?.result(),index=state?state.answered+1:1,budget=state?.budget||1,caption=comparisonCaption();
+ gsap.to('#fit-progress-fill',{width:(25+Math.min(1,index/budget)*60)+'%',duration:reduced?0:.2,overwrite:true});
+ const filter=value=>`brightness(${s.key==='brightness'?value:fitBase.brightness}%) contrast(${s.key==='contrast'?value:fitBase.contrast}%) saturate(${fitBase.saturation}%) sepia(${fitBase.warmth*.35}%)`;
  const context=s.kind==='cognitive'&&!currentScene.captions.length?'대사가 없는 장면이라 Tears of Steel의 자막 예시로 비교해요':`${currentScene.film} · ${s.kind==='cognitive'?'같은 대사의 두 표현':'같은 장면 · 0.75배속'}`;
- $('#fit-body').innerHTML=phaseNav(2)+`<div class="fit-step-count">${{visual:'화면',audio:'소리',cognitive:'자막'}[s.kind]} 선호 비교 <span>${fitStep+1} / ${steps.length} 비교</span></div><h2 class="fit-heading">${s.title}</h2><p class="fit-subtitle">${s.sub}<span class="comparison-context">${context}</span></p><div class="ab-options">${['a','b'].map(key=>`<article class="ab-option ${answers[fitStep]===key?'selected':''}" data-choice-card="${key}"><div class="option-top"><strong>${key.toUpperCase()}</strong><span>${s[key+'n']}</span></div>${s.kind==='cognitive'?`<div class="caption-preview">${escapeHTML(s[key]?caption.easy:caption.text)}</div>`:`<video class="fit-preview" data-preview="${key}" src="${currentScene.src}" poster="${currentScene.poster}" preload="auto" muted playsinline style="filter:${filter(s[key])}" aria-label="동일한 영화 장면 ${key.toUpperCase()}"></video>`}<div class="option-bottom">${s.kind==='audio'?`<button data-listen="${key}" aria-pressed="false">▶ ${key.toUpperCase()} 듣기</button>`:''}<button class="choose" data-choose="${key}" aria-pressed="${answers[fitStep]===key}">${answers[fitStep]===key?'✓ 선택했어요':'이쪽이 더 편해요'}</button></div></article>`).join('')}</div>${s.kind==='visual'?'<div class="comparison-transport"><button id="play-comparison" aria-pressed="false">▶ 두 화면 함께 보기</button><span>0.75배속 · 같은 순간을 함께 비교해요</span></div>':''}<div class="fit-uncertain"><button id="choose-equal" class="${answers[fitStep]==='equal'?'selected':''}">비슷해요</button><button id="choose-unsure" class="${answers[fitStep]==='unsure'?'selected':''}">잘 모르겠어요</button><button id="skip-step">건너뛰기</button></div><div class="fit-actions"><button id="fit-back" class="back">← 이전</button><button id="fit-next" class="primary" ${answers[fitStep]===null?'disabled':''}>${fitStep===steps.length-1?'내 설정 확인':'다음으로'} <svg><use href="#i-arrow"/></svg></button></div><p class="fit-footnote">지금의 선호를 알아보는 과정이에요 불편하면 언제든 종료해 주세요</p>`;
+ const seen=fitRecords.some(r=>r.axis===s.key),chosen=fitRecords.some(r=>r.axis===s.key&&['a','b'].includes(r.outcome));
+ const reason=chosen?`앞선 선택을 바탕으로 ${fitAxisNames[s.key]}의 비교값을 다시 골랐어요`:seen?`다른 두 값으로 ${fitAxisNames[s.key]}를 다시 확인해요`:`${fitAxisNames[s.key]}를 비교해 볼게요`;
+ const lower=s.a<=s.b?'a':'b';
+ $('#fit-body').innerHTML=phaseNav(2)+`<div class="fit-step-count">PariView ${fitSession?'맞춤':'항목'} 비교 <span>${index} / ${budget} 비교</span></div><h2 class="fit-heading">${s.title}</h2><p class="fit-subtitle">${s.sub}<span class="comparison-context">${context}</span></p>${fitSession?`<div class="fit-adaptive-note"><svg aria-hidden="true"><use href="#i-sliders"/></svg><span>${reason}</span></div>`:''}<div class="ab-options" data-fit-axis="${s.key}" data-question-id="${s.id}">${['a','b'].map(key=>`<article class="ab-option ${fitChoice===key?'selected':''}" data-choice-card="${key}" data-value="${s[key]}"><div class="option-top"><strong>${key.toUpperCase()}</strong><span>${s[key+'n']}</span></div>${s.kind==='cognitive'?`<div class="caption-preview">${escapeHTML(s[key]?caption.easy:caption.text)}</div>`:`<video class="fit-preview" data-preview="${key}" src="${currentScene.src}" poster="${currentScene.poster}" preload="auto" muted playsinline style="filter:${filter(s[key])}" aria-label="동일한 영화 장면 ${key.toUpperCase()}"></video>`}<div class="option-bottom">${s.kind==='audio'?`<button data-listen="${key}" aria-pressed="false" ${s.key==='volume'&&key!==lower&&fitAudioHeard!==s.id?'disabled':''}>▶ ${key.toUpperCase()} 듣기</button>`:''}<button class="choose" data-choose="${key}" aria-pressed="${fitChoice===key}">${fitChoice===key?'✓ 선택했어요':'이쪽이 더 편해요'}</button></div></article>`).join('')}</div>${s.kind==='visual'?'<div class="comparison-transport"><button id="play-comparison" aria-pressed="false">▶ 두 화면 함께 보기</button><span>0.75배속 · 같은 순간을 함께 비교해요</span></div>':''}${s.key==='volume'?`<p class="fit-audio-help">작은 소리 ${lower.toUpperCase()}부터 들은 뒤 다른 쪽도 들어보세요</p>`:''}<div class="fit-uncertain"><button id="choose-equal" class="${fitChoice==='equal'?'selected':''}">비슷해요</button><button id="choose-unsure" class="${fitChoice==='unsure'?'selected':''}">잘 모르겠어요</button><button id="skip-step">건너뛰기</button></div><div class="fit-comparison-footer"><div class="fit-actions"><button id="fit-back" class="back">← 이전</button><button id="fit-next" class="primary" ${fitChoice===null?'disabled':''}>${index===budget?'내 설정 확인':'다음 비교'} <svg><use href="#i-arrow"/></svg></button></div>${fitSession?`<button id="finish-fitting" class="fit-finish-early">${fitChoice===null?'여기까지 비교하고 설정 보기':'이번 선택은 넘기고 설정 보기'}</button>`:''}</div><p class="fit-footnote">지금의 선호를 알아보는 과정이에요<br>불편하면 언제든 종료하거나 직접 조절할 수 있어요</p>`;
  $$('.fit-preview').forEach(v=>{v.playbackRate=COMPARISON_RATE;v.preservesPitch=true;});
- $$('[data-choose]').forEach(b=>b.onclick=()=>{recordChoice(b.dataset.choose);renderFit();});$('#choose-equal').onclick=()=>{recordChoice('equal');renderFit();};$('#choose-unsure').onclick=()=>{recordChoice('unsure');renderFit();};$('#skip-step').onclick=()=>{recordChoice('skip');advance();};
- $('#fit-back').onclick=()=>{if(fitStep===0)renderModes();else{fitStep--;renderFit();}};$('#fit-next').onclick=advance;
+ const choose=(value,selector)=>{recordChoice(value);renderFit();$(selector)?.focus({preventScroll:true});};
+ $$('[data-choose]').forEach(b=>b.onclick=()=>choose(b.dataset.choose,`[data-choose="${b.dataset.choose}"]`));
+ $('#choose-equal').onclick=()=>choose('equal','#choose-equal');$('#choose-unsure').onclick=()=>choose('unsure','#choose-unsure');
+ $('#skip-step').onclick=()=>{recordChoice('skip');advance();};$('#fit-next').onclick=()=>advance();
+ $('#fit-back').onclick=()=>{if(fitSession?.result().answered){previousFit();}else{renderModes();focusFitHeading();}};
+ $('#finish-fitting')?.addEventListener('click',()=>{fitChoice=null;fitSession.stop();showResult();focusFitHeading();});
  $('#play-comparison')?.addEventListener('click',()=>startComparison());
  $$('[data-listen]').forEach(b=>b.onclick=()=>startComparison(b.dataset.listen));
 }
-function advance(){stopPreview();if(fitStep<steps.length-1){fitStep++;renderFit();}else showResult();}
-function getFitResult(){const result={...fitBase};steps.forEach((s,i)=>{if(answers[i]==='a'||answers[i]==='b')result[s.key]=s[answers[i]];});return result;}
+function commitFitChoice(){
+ if(fitChoice===null)return;
+ const s=currentFitStep();if(!s)return;
+ const entry={axis:s.key,outcome:fitChoice,a:s.a,b:s.b,questionId:s.id};
+ if(fitSession){fitSession.answer(s.id,fitChoice);fitRecords.push(entry);}
+ else{fitRecords=[entry];if(['a','b'].includes(fitChoice))fitOverrides[s.key]=s[fitChoice];else delete fitOverrides[s.key];}
+ fitChoice=null;
+}
+function advance(){stopPreview();commitFitChoice();if(fitSession?.peek())renderFit();else showResult();focusFitHeading();}
+function previousFit(){
+ stopPreview();if(fitSession?.result().answered){const previous=fitRecords.pop();fitSession.undo();fitChoice=previous?.outcome??null;renderFit();}
+ else if(fitDirectStep){fitChoice=fitRecords[0]?.outcome??null;renderFit();}
+ else renderModes();focusFitHeading();
+}
+function getFitResult(){return normalize({...fitBase,...fitSession?.result().settings,...fitOverrides});}
+function fitReport(){return {...fitSession.snapshot(),comparisons:structuredClone(fitRecords),previousSessions:structuredClone(fitArchives),selectedSettings:getFitResult(),createdAt:new Date().toISOString()};}
 function showResult(){
- const result=getFitResult(),mode=modes.find(m=>m.id===result.profileId);gsap.set('#fit-progress-fill',{width:'100%'});
- $('#fit-body').innerHTML=phaseNav(3)+`<div class="fit-result"><div class="result-mark"><svg><use href="#i-glasses"/></svg></div><div class="kicker">${mode.en}</div><h2>오늘의 시청 설정이<br>준비됐어요</h2><p>고른 값을 반영했어요 비슷하거나 건너뛴 항목은 시작 설정을 유지해요</p><div class="result-values"><div><small>화면 밝기</small><strong>${result.brightness}%</strong></div><div><small>화면 대비</small><strong>${result.contrast}%</strong></div><div><small>전체 음량</small><strong>${result.volume}%</strong></div><div><small>음량 변화 완화</small><strong>${result.compression?'켜짐':'꺼짐'}</strong></div><div><small>자막</small><strong>${result.easyCaptions?'쉬운 자막':'기본 자막'}</strong></div></div><button id="apply-fit" class="primary">이 설정으로 시청하기<svg><use href="#i-arrow"/></svg></button><button id="result-back" class="back">← 이전 비교로 돌아가기</button><p class="fit-footnote">편안함이 달라지면 언제든 다시 맞춰주세요</p></div>`;
- $('#apply-fit').onclick=()=>{settings=result;original=false;save();fitClose();showTab('studio');$('#watch-studio').scrollIntoView({behavior:'instant'});};$('#result-back').onclick=()=>{fitStep=steps.length-1;renderFit();};
+ stopPreview();const result=getFitResult(),state=fitSession?.result(),mode=modes.find(m=>m.id===result.profileId)||modes[4],caption=comparisonCaption();
+ const effective=state?.counts.effective??fitRecords.filter(r=>['a','b'].includes(r.outcome)).length;
+ const changedOptions=()=>Boolean(fitSession)&&['compression','easyCaptions'].some(key=>getFitResult()[key]!==fitBase[key]);
+ gsap.killTweensOf('#fit-progress-fill');gsap.set('#fit-progress-fill',{width:'100%'});
+ const extra=(key,label,description)=>`<div class="fit-result-option"><div data-result-option="${key}"><span>${label}</span><button id="result-${key}" class="switch ${result[key]?'on':''}" role="switch" aria-checked="${result[key]}" aria-label="${label}"><span></span></button></div><p>${description}</p>${key==='easyCaptions'?`<p class="fit-result-caption"><span id="result-caption-text" style="color:${result.captionYellow?'#ffe03d':'#fff'}">${escapeHTML(result.easyCaptions?caption.easy:caption.text)}</span></p>`:''}</div>`;
+ $('#fit-body').innerHTML=phaseNav(3)+`<div class="fit-result"><div class="result-mark"><svg><use href="#i-glasses"/></svg></div><div class="kicker">PariView · ${mode.en}</div><h2>${effective?'내 선택으로 맞춘':'여기서 시작하는'}<br>오늘의 시청 설정</h2><p>${state?`${state.answered}회 비교했어요`:'고른 항목을 반영했어요'}<br>선호를 고르지 않은 항목은 시작값을 유지해요</p><div class="result-values fit-result-values">${['brightness','contrast','volume'].map(key=>`<div><small>${fitAxisNames[key]}</small><strong data-result-value="${key}">${result[key]}%</strong></div>`).join('')}</div><div class="fit-result-options">${extra('compression','음량 변화 완화','소리 크기의 차이를 줄여서 들어요')}${extra('easyCaptions','쉬운 자막','준비된 자막 예시에서 읽기 편한 표현을 골라요')}</div><div class="fit-result-actions"><button id="apply-fit" class="primary">이 설정으로 시청하기<svg><use href="#i-arrow"/></svg></button><button id="continue-fit" class="secondary"></button></div><p id="fit-options-restart" hidden>소리·자막 조건을 바꾸면 새 조건으로 5회 비교를 시작해요</p><button id="result-back" class="back">← 이전 비교로 돌아가기</button><details class="fit-records"><summary>이번 비교 기록 보기</summary><p>같은 장면에서 고른 응답을 기록했어요<br>비슷해요·잘 모르겠어요·건너뛰기는 구분하며 추정값을 바꾸는 답변으로 쓰지 않아요</p>${fitRecords.length?`<table class="fit-records-table"><thead><tr><th scope="col">순서</th><th scope="col">항목</th><th scope="col">A / B</th><th scope="col">응답</th></tr></thead><tbody>${fitRecords.map((r,i)=>`<tr><td>${i+1}</td><td>${fitAxisNames[r.axis]}</td><td>${fitValue(r.axis,r.a)} / ${fitValue(r.axis,r.b)}</td><td>${fitOutcomeNames[r.outcome]}</td></tr>`).join('')}</tbody></table>`:'<p>확정한 비교 응답이 아직 없어요</p>'}${fitSession?'<button id="download-fit-records" class="text-link">비교 기록 파일 받기 ↓</button><p>이 페이지의 비교 기록을 내 기기에 내려받아요<br>서버에 업로드하지 않아요</p>':''}${fitArchives.length?'<p>옵션을 바꾸기 전 비교 기록도 파일에 함께 담아요</p>':''}</details><p class="fit-footnote">지금 편하게 느껴지는지 확인해 주세요<br>언제든 추가로 비교하거나 직접 조절할 수 있어요</p></div>`;
+ const refreshContinuation=()=>{
+  const changed=changedOptions(),button=$('#continue-fit');
+  button.hidden=!changed&&state&&!state.canExtend;
+  button.textContent=changed?'바꾼 옵션으로 5회 다시 비교':!state?'밝기·대비·음량도 비교하기':state.budget>=20?'남은 비교 이어가기':state.stopReason==='budget'?'5회 더 비교하기':'5회 추가해서 이어가기';
+  $('#fit-options-restart').hidden=!changed;
+  $('#result-back').textContent=changed?'← 옵션 변경 취소하고 이전 비교':'← 이전 비교로 돌아가기';
+ };
+ for(const key of ['compression','easyCaptions']){
+  const button=$('#result-'+key);
+  button.onclick=()=>{const next=!getFitResult()[key];fitOverrides[key]=next;button.classList.toggle('on',next);button.setAttribute('aria-checked',String(next));if(key==='easyCaptions')$('#result-caption-text').textContent=next?caption.easy:caption.text;refreshContinuation();};
+  button.parentElement.onclick=event=>{if(!event.target.closest('button'))button.click();};
+ }
+ $('#apply-fit').onclick=()=>{settings=getFitResult();original=false;save();fitClose(true);showTab('studio');$('#watch-studio').scrollIntoView({behavior:'instant'});};
+ $('#result-back').onclick=()=>{if(changedOptions())fitOverrides={};previousFit();};
+ $('#continue-fit').onclick=()=>{
+  if(changedOptions()){
+   const next=getFitResult(),archives=[...fitArchives,{...fitSession.snapshot(),comparisons:structuredClone(fitRecords),selectedSettings:next}];
+   beginFitting(next);fitArchives=archives;
+  }else if(fitSession){fitSession.extend(5);fitChoice=null;renderFit();focusFitHeading();}
+  else{const previous=[...fitRecords];beginFitting(getFitResult());fitRecords.unshift(...previous);}
+ };
+ $('#download-fit-records')?.addEventListener('click',()=>{const url=URL.createObjectURL(new Blob([JSON.stringify(fitReport(),null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='pariview-comparison-record.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+ refreshContinuation();
 }
 video.addEventListener('loadedmetadata',initialFrame);if(video.readyState>=1)initialFrame();
 reflectScene();loadSensoryMap();reflect();renderPlay();updateTime();
 createFalcon($('#hero-falcon'),{reduced:()=>reduced});createFalcon($('#wizard-falcon'),{wizard:true,reduced:()=>reduced});
 if(['#research','#chrome'].includes(location.hash))showTab(location.hash.slice(1));
-window.__pariview={get settings(){return {...settings}},get original(){return original},get audioRoute(){return audioRoute},get muted(){return muted},get reduced(){return reduced},get recommendation(){return recommendation},video,openFit:fitOpen,modes,showSettingTab,scenes,selectScene,get scene(){return currentScene},get events(){return events},get comparisonPlaying(){return previewPlaying},applyScenePreset(next){settings=normalize(next);saved=false;sceneLift=1;reflect();}};
+window.__pariview={get settings(){return {...settings}},get original(){return original},get audioRoute(){return audioRoute},get muted(){return muted},get reduced(){return reduced},get recommendation(){return recommendation},video,openFit:fitOpen,modes,showSettingTab,scenes,selectScene,get scene(){return currentScene},get events(){return events},get comparisonPlaying(){return previewPlaying},get fitState(){return fitSession?.result()||null},get fitQuestion(){return currentFitStep()},get fitSnapshot(){return fitSession?.snapshot()||null},applyScenePreset(next){settings=normalize(next);saved=false;sceneLift=1;reflect();}};
 let recommendationSnapshot=null;
 const recommendationUI=initRecommendation({
  getSettings:()=>({...settings}),
- getComparisons:()=>comparisonHistory.map(item=>({...item})),
+ getComparisons:()=>[...comparisonHistory,...fitRecords].slice(-20).map(({axis,outcome})=>({axis,outcome})),
  onPreview:next=>{
   if(!recommendationSnapshot)recommendationSnapshot={settings:{...settings},original,saved,time:video.currentTime,muted,sceneLift};
   video.pause();settings=normalize(next);original=false;sceneLift=1;reflect();
@@ -324,7 +392,7 @@ const recommendationUI=initRecommendation({
   recommendationSnapshot=null;video.pause();settings=normalize(next);original=false;sceneLift=1;save('고른 시작 설정을 저장했어요');showTab('studio');$('#watch-studio').scrollIntoView({behavior:'instant'});
  },
  onCompare:(axis,next)=>{
-  recommendationSnapshot=null;fitOpen();fitBase=normalize(next);fitStep=Math.max(0,steps.findIndex(step=>step.key===axis));renderFit();
+  recommendationSnapshot=null;fitOpen();beginFitting(next,axis);
  }
 });
 document.addEventListener('click',event=>{if(event.target.closest('[data-action="ai-recommend"],[data-recommendation-entry]'))video.pause();},true);

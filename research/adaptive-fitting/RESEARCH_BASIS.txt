@@ -1,0 +1,70 @@
+적응형 피팅의 연구 근거와 PariView 적용
+확인 2026-11-04 · 기존 감각 연구 17건 집계와 별도 기술 검토
+
+권장 명칭
+베이지안 선호 피팅 / Bayesian preference fitting
+이전 A/B 선택으로 선호값의 가능성을 갱신하고, 다음 비교의 정보이득을 계산한다
+감지할 수 있는 최소 자극을 찾는 역치 검사와 ‘어느 쪽이 편한가’라는 선호 탐색은 목적이 다르다
+PariView는 선호 탐색을 하므로 감지 정오답을 전제로 하는 staircase 규칙을 그대로 적용하지 않는다
+
+포스터용 한 줄
+이전 선택으로 선호 범위를 갱신하고, 다음 A/B 비교를 고르는 적응형 피팅
+보조 설명: 5회로 시작하고, 더 맞추고 싶으면 5회 추가
+
+현재 구현 설계
+밝기·대비·음량: 서로 독립인 단봉형 선호점 모델, 범위별 101칸 posterior
+기대 정보이득으로 다음 숫자 축과 비교값을 고르고, 실제 제시된 정수값으로 갱신
+압축·쉬운 자막: 결과 화면에서 사용자가 직접 선택
+비슷함·모름·건너뛰기: 서로 다른 응답으로 기록하고, 방향 선호로 강제 변환하지 않음
+5회는 비교 예산, 5회마다 초기 추정치를 제시하고 사용자가 추가 비교 여부를 결정
+모델 파라미터와 종료 조건은 CONTRACT.txt, 실제 구현은 web/dist/adaptive-fit.js
+
+근거 1 — 적응형 실험 설계의 일반 원리
+Andrew B Watson (2017)
+QUEST+: A general multidimensional Bayesian adaptive psychometric method
+Journal of Vision, 17(3), 10
+DOI 10.1167/17.3.10
+https://pubmed.ncbi.nlm.nih.gov/28355623/
+https://doi.org/10.1167/17.3.10
+확인 범위: PubMed 서지·초록; 출판사 본문 직접 열기는 403
+이 방법은 자극 차원·모수·반응 종류를 일반화하고 쌍대 비교 척도 추정도 다룬다
+적용: 응답을 활용해 다음 실험을 고르는 방식의 배경
+범위: 본 프로젝트의 3축 선호 함수, noise 값, 5회 정확도는 별도 설계·평가 대상
+
+근거 2 — 청각 선호에 따른 실제 적응형 비교
+Niels Søgaard Jensen, Ole Hau, Jens Brehm Bagger Nielsen, Thor Bundgaard Nielsen, Søren Vase Legarth (2019)
+Perceptual Effects of Adjusting Hearing-Aid Gain by Means of a Machine-Learning Approach Based on Individual User Preference
+Trends in Hearing, 23, 2331216519847413
+DOI 10.1177/2331216519847413
+https://doi.org/10.1177/2331216519847413
+https://pubmed.ncbi.nlm.nih.gov/31104581/
+확인 범위: 출판사 본문·방법·초록
+대상: 감각신경성 난청 참가자 20명, 54–83세, 평균 72세
+설계: 12개 소리 상황, 상황별 20회 선호 비교; 이전 비교를 학습해 다음 쌍을 결정
+적용: 스스로 수치를 조정하는 대신 A/B 선호를 받아 다음 설정을 제시하는 방법
+결과의 범위: 음질 평가는 개선됐으나 편안함은 상황에 따라 달랐고 말소리 명료도는 유의한 개선이 없었음
+한계: 특정 보청기·실험실·KEMAR 녹음 재생, 신경다양성 시청자의 영상 피팅과는 대상·과제가 다름
+
+근거 3 — 응답 불일치와 비교 횟수의 현실적 기준
+Dhruv Vyas, Ryan Brummet, Yumna Anwar, Justin Jensen, Erik Jorgensen, Yu-Hsiang Wu, Octav Chipara
+Personalizing over-the-counter hearing aids using pairwise comparisons
+Smart Health, 23, 100231 (권호 2022년 3월; 온라인 2021-11-25)
+DOI 10.1016/j.smhl.2021.100231
+https://pmc.ncbi.nlm.nih.gov/articles/PMC10312409/
+확인 범위: 원문 및 서지
+35명 청각장애 참가자의 15개 프리셋 쌍을 4회씩 비교해 1인당 420개 응답을 수집
+이 자료를 사용한 알고리즘 평가에서 선호 프리셋 확인에 중앙값 25회가 필요했다고 보고
+적용: 사용자 선택의 확률적 흔들림과 복수 선호점 가능성을 고려하고, 동일한 비교 예산에서 평가
+한계: 25회 수치는 해당 자료의 시뮬레이션 결과; 사람이 5회 만에 편안한 설정에 도달한다는 근거와 구분
+
+이 프로젝트의 계산 가정
+독립 3축·단봉 선호·고정된 반응 noise는 설명 가능하고 브라우저에서 계산하기 위한 초기 모델이다
+밝기와 대비의 상호작용, 상황·피로에 따른 변화, 여러 개의 비슷한 선호값은 충분히 표현하지 못할 수 있다
+이 한계 때문에 noisy / nonresponse / asymmetric 조건도 포함해 비교하며 모든 조건을 공개한다
+새로운 점은 베이지안 수학의 최초 발명이 아니라 영상 조절·사용자 통제·확장 연결 안에 구현한 탐색 흐름이다
+
+평가 데이터의 출처
+합성 평가: 시드와 함수가 정의된 인공 선호점, 실제 브라우저 모듈을 그대로 실행
+기존 당사자 참여 검증: 사용자가 완료를 확인했고, ‘검증은 했지만 그 수치는 기록하지 않았어’라고 추가 확인
+따라서 기존 참여 검증에서 질문별 오차·SUS·수렴속도를 역산하거나 곡선을 채우지 않음
+새 기록 경로: human-trials-template.csv / human-reference-template.csv / analyze_human.py
