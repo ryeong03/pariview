@@ -1,0 +1,11 @@
+﻿id,planned_order,actual_order,status,data_consent,fit_status,fit_elapsed_s,fit_pause_s,device_version,protocol_deviation,stop_reason,task_restore,task_adjust,support,quote_consent,A_complete,B_complete,A_comfort,B_comfort,A_visual,B_visual,A_audio,B_audio,A_caption,B_caption,preference,reason,sus_1,sus_2,sus_3,sus_4,sus_5,sus_6,sus_7,sus_8,sus_9,sus_10,difficulty,improvement
+U01,AB,,not_started,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+U02,BA,,not_started,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+U03,BA,,not_started,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+U04,AB,,not_started,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+U05,AB,,not_started,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+U06,AB,,not_started,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+U07,BA,,not_started,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+U08,BA,,not_started,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+U09,BA,,not_started,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+U10,AB,,not_started,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

@@ -1,0 +1,6 @@
+private/
+responses.xlsx
+responses.csv
+results*.json
+results*.txt
+__pycache__/

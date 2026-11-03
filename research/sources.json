@@ -250,9 +250,9 @@
     ]
   },
   "current_user_survey": {
-    "population": "신경다양성 이용자",
+    "population": "구글 폼 온라인 설문 전체 응답자 76명 · 신경다양성 당사자 20%",
     "reported_total": 76,
-    "total_provenance": "사용자가 50~100명이라고 회상한 후 공통 분모·반올림 역산에서 유일후보 76명 도출, 계산 설명 뒤 사용자 진행 지시에 따라 포스터에 반영",
+    "total_provenance": "사용자가 실제 응답자 수 76명을 직접 확인한 것으로 root 담당자가 전달함 기존 비율 역산 경위는 total_provenance_history에 보존",
     "confirmation_date": "2026-11-04",
     "statistics": [
       {
@@ -273,9 +273,79 @@
     ],
     "values_provenance": "사용자 제공 포스터 초안에서 확인하고 사용자가 검증된 조사 수치라고 확인",
     "survey_dates": null,
-    "item_valid_denominators": null,
+    "item_valid_denominators": {
+      "11.8%": 76,
+      "60.5%": 76,
+      "83%": 76
+    },
     "raw_response_counts_verified": false,
-    "separation": "출품계획서에 기재된 49명·57.1%·98% 자료와 별도로 기록"
+    "separation": "출품계획서에 기재된 49명·57.1%·98% 자료와 별도로 기록",
+    "total_provenance_history": [
+      {
+        "stage": "rounding_inference_and_initial_approval",
+        "date": "2026-11-04",
+        "text": "사용자가 50~100명이라고 회상한 후 공통 분모·반올림 역산에서 유일후보 76명 도출, 계산 설명 뒤 사용자 진행 지시에 따라 포스터에 반영"
+      }
+    ],
+    "count_status": "user_confirmed_count",
+    "count_confirmation": {
+      "user_statement": "실제 응답자 76명 확인됨",
+      "question": "포스터 설문의 76명이 실제 응답자 수로 확인된 값인지 확인",
+      "confirmation_date": "2026-11-04",
+      "exact_user_response_time": null,
+      "recorded_at": "2026-11-04T04:31:43+09:00",
+      "channel": "사용자가 root 담당자의 명시 질문에 직접 응답한 내용을 root가 연구 담당자에게 전달",
+      "relayed_by_agent": "0785a459-bc74-4646-915a-d84a20c2db32",
+      "relay_message_id": "aa3a6f1a-34fe-404b-98f2-34aafe0b43b5"
+    },
+    "raw_survey_data_reviewed_by_researcher": false,
+    "inferred_item_counts": {
+      "status": "arithmetic_candidates_not_verified_response_counts",
+      "assumptions": "모든 문항의 유효 분모가 76이고 11.8%·60.5%는 소수 첫째 자리, 83%는 정수로 반올림한다고 가정",
+      "counts": [
+        {
+          "reported_percent": 11.8,
+          "candidate_count": 9
+        },
+        {
+          "reported_percent": 60.5,
+          "candidate_count": 46
+        },
+        {
+          "reported_percent": 83,
+          "candidate_count": 63
+        }
+      ],
+      "note": "문항 분모 76명은 사용자 확인으로 기록하되 9/46/63의 원응답 수는 연구 담당자가 직접 확인하지 않았으므로 계산 후보로 유지"
+    },
+    "population_history": [
+      {
+        "previous": "신경다양성 이용자 76명",
+        "superseded_on": "2026-11-04",
+        "reason": "사용자가 전체 응답 76명 중 신경다양성 당사자 비율은 20%라고 후속 확인"
+      }
+    ],
+    "survey_tool": "Google Forms",
+    "survey_mode": "온라인 설문",
+    "neurodivergent_percent_reported": 20,
+    "neurodivergent_raw_count": null,
+    "display_copy": "구글 폼 온라인 설문 · 76명 응답 · 신경다양성 당사자 20%",
+    "recruitment_channel": null,
+    "item_denominator_verification": "사용자가 76명 전체 기준이라고 확인한 내용을 UX 담당자가 전달 · 원자료 직접 확인 없음",
+    "composition_confirmation": {
+      "date": "2026-11-04",
+      "recorded_at": "2026-11-04T04:59:07+09:00",
+      "channel": "사용자가 UX 담당자에게 직접 확인한 내용의 전달",
+      "relayed_by_agent": "d6a7c983-107e-4664-b989-e2d5d573ae02",
+      "relay_message_id": "b0c4c1de-53d4-4860-ae4b-81c237324f5f",
+      "reported_facts": [
+        "구글 폼 온라인 설문",
+        "실제 응답자 76명",
+        "신경다양성 당사자 20%",
+        "11.8%·60.5%·83%는 76명 전체 기준"
+      ],
+      "recruitment_channel_confirmed": false
+    }
   },
   "review_inventory": {
     "total_materials": 17,
@@ -306,5 +376,20 @@
     ],
     "counting_rule": "각 자료를 한 번만 집계, 학술지에 실린 AAO 지침 M1은 전문자료로 분류",
     "display_copy": "학술논문 11편과 전문자료 6건을 검토한 설계"
+  },
+  "participant_validation_user_report": {
+    "status": "user_confirmed_completed_details_unspecified",
+    "date": "2026-11-04",
+    "user_reply": "ㅇㅇ",
+    "question_topic": "실제 신경다양성 당사자 참여 검증 완료 여부·참여 인원·확인 항목",
+    "interpretation": "참여 검증 완료 여부에 대한 긍정 응답 · 인원과 항목에 대한 구체 응답은 없음",
+    "participant_count": null,
+    "verified_items": null,
+    "scores": null,
+    "procedure": null,
+    "raw_data_reviewed": false,
+    "relayed_by_agent": "0785a459-bc74-4646-915a-d84a20c2db32",
+    "relay_message_id": "4a286598-7a29-451b-93de-8812edbae18c",
+    "separation": "76명 온라인 설문·10종 시뮬레이션·자동 기능검사와 별도 기록 · field-kit은 제공용 서식이며 이미 수행된 절차로 연결하지 않음"
   }
 }

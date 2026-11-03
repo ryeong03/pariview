@@ -1,0 +1,149 @@
+{
+  "version": "1.0",
+  "created": "2026-11-04",
+  "status": "blank_materials_for_use_not_a_record_of_completed_evaluation",
+  "planned_participants": 10,
+  "population": "성인 신경다양성 당사자 자기보고",
+  "primary": "paired B minus A overall comfort on project-authored 0–10 item",
+  "order_seed": 20261104,
+  "allocations": [
+    {
+      "id": "U01",
+      "planned_order": "AB"
+    },
+    {
+      "id": "U02",
+      "planned_order": "BA"
+    },
+    {
+      "id": "U03",
+      "planned_order": "BA"
+    },
+    {
+      "id": "U04",
+      "planned_order": "AB"
+    },
+    {
+      "id": "U05",
+      "planned_order": "AB"
+    },
+    {
+      "id": "U06",
+      "planned_order": "AB"
+    },
+    {
+      "id": "U07",
+      "planned_order": "BA"
+    },
+    {
+      "id": "U08",
+      "planned_order": "BA"
+    },
+    {
+      "id": "U09",
+      "planned_order": "BA"
+    },
+    {
+      "id": "U10",
+      "planned_order": "AB"
+    }
+  ],
+  "rating_items": [
+    [
+      "comfort",
+      "방금 본 장면을 전체적으로 얼마나 편안하게 시청했나요?",
+      "매우 불편했어요",
+      "매우 편안했어요"
+    ],
+    [
+      "visual",
+      "방금 본 장면의 화면을 보는 것이 얼마나 편안했나요?",
+      "매우 불편했어요",
+      "매우 편안했어요"
+    ],
+    [
+      "audio",
+      "방금 본 장면의 소리를 듣는 것이 얼마나 편안했나요?",
+      "매우 불편했어요",
+      "매우 편안했어요"
+    ],
+    [
+      "caption",
+      "방금 본 장면의 자막을 읽는 것이 얼마나 쉬웠나요?",
+      "매우 어려웠어요",
+      "매우 쉬웠어요"
+    ]
+  ],
+  "sus_korean_project_translation": [
+    "이 서비스를 자주 사용하고 싶어요",
+    "이 서비스는 쓸데없이 복잡해요",
+    "이 서비스는 쓰기 쉬워요",
+    "이 서비스를 쓰려면 기술을 잘 아는 사람의 도움이 필요할 것 같아요",
+    "이 서비스의 여러 기능이 잘 어우러져 있어요",
+    "이 서비스는 일관되지 않은 부분이 너무 많아요",
+    "대부분의 사람이 이 서비스를 금방 배울 것 같아요",
+    "이 서비스는 쓰기 번거로워요",
+    "이 서비스를 쓰는 데 자신감이 있었어요",
+    "이 서비스를 쓰기 전에 배워야 할 것이 많았어요"
+  ],
+  "sheets": {
+    "진행": [
+      "id",
+      "planned_order",
+      "actual_order",
+      "status",
+      "data_consent",
+      "fit_status",
+      "fit_elapsed_s",
+      "fit_pause_s",
+      "device_version",
+      "protocol_deviation",
+      "stop_reason",
+      "task_restore",
+      "task_adjust",
+      "support",
+      "quote_consent"
+    ],
+    "시청": [
+      "id",
+      "A_complete",
+      "B_complete",
+      "A_comfort",
+      "B_comfort",
+      "A_visual",
+      "B_visual",
+      "A_audio",
+      "B_audio",
+      "A_caption",
+      "B_caption",
+      "preference",
+      "reason"
+    ],
+    "사용성": [
+      "id",
+      "sus_1",
+      "sus_2",
+      "sus_3",
+      "sus_4",
+      "sus_5",
+      "sus_6",
+      "sus_7",
+      "sus_8",
+      "sus_9",
+      "sus_10",
+      "difficulty",
+      "improvement"
+    ]
+  },
+  "fixed_controls": [
+    "sceneAdapt=off",
+    "autoBrightness=false",
+    "notices=false",
+    "breakReminder=false",
+    "captions=true",
+    "playbackRate=1"
+  ],
+  "evaluation_clip": "sintel 00:00–00:45",
+  "fitting_clip": "tears-lab",
+  "data_present": false
+}
