@@ -1,0 +1,26 @@
+{
+  "label": "AI 페르소나 시뮬레이션 (실제 사용자 아님)",
+  "design": "PariView의 다섯 대상층(고령층, 자폐, ADHD, 아동, 일반)을 층별로 나눈 10명이에요 인원 비율은 인구 비례가 아니라 대상층별 확인을 위해 정했어요 나이·기기·시청 환경은 아래 공식 통계를 근거로 골랐고, 원하는 설정값(target)은 연구팀의 가정이에요",
+  "demographics": [
+    {"fact": "2025년 65세 이상 인구는 1,051만 4천 명으로 전체의 20.3%", "source": "통계청(국가데이터처) 2025 고령자 통계, 2025-09-29 발표", "url": "https://www.newsis.com/view/NISX20250929_0003347644"},
+    {"fact": "2024년 말 등록장애인 263만 1,356명(인구 대비 5.1%), 2023년 자폐성장애 42,744명(1.6%)·시각장애 248,360명(9.4%)·청각장애 비율 16.4%", "source": "보건복지부 등록장애인 현황 보도 인용", "url": "https://www.futurechosun.com/archives/75130"},
+    {"fact": "2024년 ADHD 진료 인원 26만 334명, 10대 35.6%·20대 25.3%·10세 미만 17.3%·30대 15.6%", "source": "국민건강보험공단 자료(남인순 의원실 분석) 보도 인용", "url": "https://www.heraldk.com/article/2025100722425224371"},
+    {"fact": "2024년 OTT 이용률 79.2%, 10~30대 90% 이상, OTT 이용 시 스마트폰 이용률 91.2%", "source": "방송통신위원회 2024 방송매체 이용행태조사", "url": "https://newsseoul.co.kr/news/view/1065603607400457"}
+  ],
+  "behavior": {
+    "equalTolerance": 4,
+    "note": "두 선택지가 원하는 값과 비슷하게 가까우면(차이 4 미만) '비슷해요'를 골라요 켜기/끄기 항목은 원하는 쪽을 골라요"
+  },
+  "personas": [
+    {"id": "P01", "segment": "고령층", "age": 72, "gender": "여", "device": "태블릿", "context": "낮 거실, 창가 빛이 들어옴", "anchor": 0, "concern": "글씨와 윤곽이 흐리고 대사가 잘 안 들려요", "mode": "clarity", "target": {"brightness": 95, "contrast": 105, "volume": 55, "compression": true, "easyCaptions": true}},
+    {"id": "P02", "segment": "고령층", "age": 67, "gender": "남", "device": "스마트폰", "context": "밤 침실, 불을 끈 상태", "anchor": 0, "concern": "어두운 방에서 화면이 눈부셔요", "mode": "everyday", "target": {"brightness": 65, "contrast": 90, "volume": 40, "compression": true, "easyCaptions": false}},
+    {"id": "P03", "segment": "자폐", "age": 24, "gender": "여", "device": "노트북", "context": "자취방 책상, 이어폰", "anchor": 1, "concern": "갑자기 커지는 소리와 번쩍이는 장면이 힘들어요", "mode": "gentle", "target": {"brightness": 65, "contrast": 78, "volume": 20, "compression": true, "easyCaptions": false}},
+    {"id": "P04", "segment": "자폐·아동", "age": 9, "gender": "남", "device": "태블릿", "context": "보호자와 함께 거실", "anchor": 1, "concern": "큰 소리에 놀라고 긴 자막은 읽기 어려워요", "mode": "soft", "target": {"brightness": 70, "contrast": 80, "volume": 22, "compression": true, "easyCaptions": true}},
+    {"id": "P05", "segment": "ADHD·청소년", "age": 15, "gender": "남", "device": "스마트폰", "context": "학원 쉬는 시간, 이어폰", "anchor": 2, "concern": "이야기를 따라가다 자꾸 놓쳐요", "mode": "focus", "target": {"brightness": 90, "contrast": 100, "volume": 35, "compression": true, "easyCaptions": true}},
+    {"id": "P06", "segment": "ADHD·성인", "age": 27, "gender": "여", "device": "스마트폰", "context": "지하철 출퇴근, 주변 소음", "anchor": 2, "concern": "소음 속에서 대사를 놓쳐요", "mode": "focus", "target": {"brightness": 88, "contrast": 95, "volume": 48, "compression": true, "easyCaptions": false}},
+    {"id": "P07", "segment": "일반", "age": 34, "gender": "여", "device": "스마트폰", "context": "밤 침대, 가족이 자는 중", "anchor": 3, "concern": "작게 틀면 대사가 안 들리고 크게 틀면 폭발음이 커요", "mode": "everyday", "target": {"brightness": 62, "contrast": 88, "volume": 22, "compression": true, "easyCaptions": false}},
+    {"id": "P08", "segment": "일반", "age": 21, "gender": "남", "device": "노트북", "context": "밝은 카페", "anchor": 3, "concern": "밝은 곳에서 화면이 흐릿해 보여요", "mode": "clarity", "target": {"brightness": 100, "contrast": 108, "volume": 40, "compression": false, "easyCaptions": false}},
+    {"id": "P09", "segment": "청각 저하", "age": 56, "gender": "남", "device": "TV에 연결한 노트북", "context": "저녁 거실", "anchor": 1, "concern": "말소리가 배경음에 묻혀요", "mode": "clarity", "target": {"brightness": 88, "contrast": 95, "volume": 60, "compression": true, "easyCaptions": true}},
+    {"id": "P10", "segment": "일반·보호자", "age": 41, "gender": "여", "device": "태블릿", "context": "저녁, 아이와 함께", "anchor": 3, "concern": "아이와 볼 때 자극을 조금 줄이고 싶어요", "mode": "gentle", "target": {"brightness": 78, "contrast": 85, "volume": 28, "compression": true, "easyCaptions": true}}
+  ]
+}

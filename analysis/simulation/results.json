@@ -1,0 +1,833 @@
+{
+ "summary": {
+  "label": "AI 페르소나 시뮬레이션 (실제 사용자 아님)",
+  "personas": 10,
+  "meanErrorDefault": 0.1893,
+  "meanErrorFitted": 0.0773,
+  "booleanMatchDefault": 0.7,
+  "booleanMatchFitted": 1.0,
+  "improvedPersonas": 10,
+  "worsenedPersonas": 0,
+  "distinctFittedSettings": 8,
+  "meanClicks": 13.0,
+  "allSaved": true,
+  "pageErrors": 0,
+  "perKeyResidual": {
+   "brightness": 3.0,
+   "contrast": 4.7,
+   "volume": 5.1
+  }
+ },
+ "results": [
+  {
+   "id": "P01",
+   "segment": "고령층",
+   "age": 72,
+   "mode": "clarity",
+   "target": {
+    "brightness": 95,
+    "contrast": 105,
+    "volume": 55,
+    "compression": true,
+    "easyCaptions": true
+   },
+   "fitted": {
+    "brightness": 90,
+    "contrast": 105,
+    "volume": 45,
+    "compression": true,
+    "easyCaptions": true
+   },
+   "default": {
+    "brightness": 85,
+    "contrast": 90,
+    "volume": 35,
+    "compression": true,
+    "easyCaptions": false
+   },
+   "errorDefault": {
+    "brightness": 0.18181818181818182,
+    "contrast": 0.3333333333333333,
+    "volume": 0.2857142857142857,
+    "mean": 0.26695526695526695,
+    "booleanMatch": 0.5
+   },
+   "errorFitted": {
+    "brightness": 0.09090909090909091,
+    "contrast": 0.0,
+    "volume": 0.14285714285714285,
+    "mean": 0.07792207792207792,
+    "booleanMatch": 1.0
+   },
+   "answers": [
+    {
+     "key": "brightness",
+     "choice": "b",
+     "a": 65,
+     "b": 90,
+     "want": 95
+    },
+    {
+     "key": "contrast",
+     "choice": "b",
+     "a": 78,
+     "b": 105,
+     "want": 105
+    },
+    {
+     "key": "volume",
+     "choice": "b",
+     "a": 22,
+     "b": 45,
+     "want": 55
+    },
+    {
+     "key": "compression",
+     "choice": "a",
+     "a": true,
+     "b": false,
+     "want": true
+    },
+    {
+     "key": "easyCaptions",
+     "choice": "b",
+     "a": false,
+     "b": true,
+     "want": true
+    }
+   ],
+   "clicks": 13,
+   "savedToStorage": true,
+   "pageErrors": []
+  },
+  {
+   "id": "P02",
+   "segment": "고령층",
+   "age": 67,
+   "mode": "everyday",
+   "target": {
+    "brightness": 65,
+    "contrast": 90,
+    "volume": 40,
+    "compression": true,
+    "easyCaptions": false
+   },
+   "fitted": {
+    "brightness": 65,
+    "contrast": 90,
+    "volume": 45,
+    "compression": true,
+    "easyCaptions": false
+   },
+   "default": {
+    "brightness": 85,
+    "contrast": 90,
+    "volume": 35,
+    "compression": true,
+    "easyCaptions": false
+   },
+   "errorDefault": {
+    "brightness": 0.36363636363636365,
+    "contrast": 0.0,
+    "volume": 0.07142857142857142,
+    "mean": 0.14502164502164502,
+    "booleanMatch": 1.0
+   },
+   "errorFitted": {
+    "brightness": 0.0,
+    "contrast": 0.0,
+    "volume": 0.07142857142857142,
+    "mean": 0.023809523809523808,
+    "booleanMatch": 1.0
+   },
+   "answers": [
+    {
+     "key": "brightness",
+     "choice": "a",
+     "a": 65,
+     "b": 90,
+     "want": 65
+    },
+    {
+     "key": "contrast",
+     "choice": "equal",
+     "a": 78,
+     "b": 105,
+     "want": 90
+    },
+    {
+     "key": "volume",
+     "choice": "b",
+     "a": 22,
+     "b": 45,
+     "want": 40
+    },
+    {
+     "key": "compression",
+     "choice": "a",
+     "a": true,
+     "b": false,
+     "want": true
+    },
+    {
+     "key": "easyCaptions",
+     "choice": "a",
+     "a": false,
+     "b": true,
+     "want": false
+    }
+   ],
+   "clicks": 13,
+   "savedToStorage": true,
+   "pageErrors": []
+  },
+  {
+   "id": "P03",
+   "segment": "자폐",
+   "age": 24,
+   "mode": "gentle",
+   "target": {
+    "brightness": 65,
+    "contrast": 78,
+    "volume": 20,
+    "compression": true,
+    "easyCaptions": false
+   },
+   "fitted": {
+    "brightness": 65,
+    "contrast": 78,
+    "volume": 22,
+    "compression": true,
+    "easyCaptions": false
+   },
+   "default": {
+    "brightness": 85,
+    "contrast": 90,
+    "volume": 35,
+    "compression": true,
+    "easyCaptions": false
+   },
+   "errorDefault": {
+    "brightness": 0.36363636363636365,
+    "contrast": 0.26666666666666666,
+    "volume": 0.21428571428571427,
+    "mean": 0.2815295815295815,
+    "booleanMatch": 1.0
+   },
+   "errorFitted": {
+    "brightness": 0.0,
+    "contrast": 0.0,
+    "volume": 0.02857142857142857,
+    "mean": 0.009523809523809523,
+    "booleanMatch": 1.0
+   },
+   "answers": [
+    {
+     "key": "brightness",
+     "choice": "a",
+     "a": 65,
+     "b": 90,
+     "want": 65
+    },
+    {
+     "key": "contrast",
+     "choice": "a",
+     "a": 78,
+     "b": 105,
+     "want": 78
+    },
+    {
+     "key": "volume",
+     "choice": "a",
+     "a": 22,
+     "b": 45,
+     "want": 20
+    },
+    {
+     "key": "compression",
+     "choice": "a",
+     "a": true,
+     "b": false,
+     "want": true
+    },
+    {
+     "key": "easyCaptions",
+     "choice": "a",
+     "a": false,
+     "b": true,
+     "want": false
+    }
+   ],
+   "clicks": 13,
+   "savedToStorage": true,
+   "pageErrors": []
+  },
+  {
+   "id": "P04",
+   "segment": "자폐·아동",
+   "age": 9,
+   "mode": "soft",
+   "target": {
+    "brightness": 70,
+    "contrast": 80,
+    "volume": 22,
+    "compression": true,
+    "easyCaptions": true
+   },
+   "fitted": {
+    "brightness": 65,
+    "contrast": 78,
+    "volume": 22,
+    "compression": true,
+    "easyCaptions": true
+   },
+   "default": {
+    "brightness": 85,
+    "contrast": 90,
+    "volume": 35,
+    "compression": true,
+    "easyCaptions": false
+   },
+   "errorDefault": {
+    "brightness": 0.2727272727272727,
+    "contrast": 0.2222222222222222,
+    "volume": 0.18571428571428572,
+    "mean": 0.2268879268879269,
+    "booleanMatch": 0.5
+   },
+   "errorFitted": {
+    "brightness": 0.09090909090909091,
+    "contrast": 0.044444444444444446,
+    "volume": 0.0,
+    "mean": 0.04511784511784512,
+    "booleanMatch": 1.0
+   },
+   "answers": [
+    {
+     "key": "brightness",
+     "choice": "a",
+     "a": 65,
+     "b": 90,
+     "want": 70
+    },
+    {
+     "key": "contrast",
+     "choice": "a",
+     "a": 78,
+     "b": 105,
+     "want": 80
+    },
+    {
+     "key": "volume",
+     "choice": "a",
+     "a": 22,
+     "b": 45,
+     "want": 22
+    },
+    {
+     "key": "compression",
+     "choice": "a",
+     "a": true,
+     "b": false,
+     "want": true
+    },
+    {
+     "key": "easyCaptions",
+     "choice": "b",
+     "a": false,
+     "b": true,
+     "want": true
+    }
+   ],
+   "clicks": 13,
+   "savedToStorage": true,
+   "pageErrors": []
+  },
+  {
+   "id": "P05",
+   "segment": "ADHD·청소년",
+   "age": 15,
+   "mode": "focus",
+   "target": {
+    "brightness": 90,
+    "contrast": 100,
+    "volume": 35,
+    "compression": true,
+    "easyCaptions": true
+   },
+   "fitted": {
+    "brightness": 90,
+    "contrast": 105,
+    "volume": 30,
+    "compression": true,
+    "easyCaptions": true
+   },
+   "default": {
+    "brightness": 85,
+    "contrast": 90,
+    "volume": 35,
+    "compression": true,
+    "easyCaptions": false
+   },
+   "errorDefault": {
+    "brightness": 0.09090909090909091,
+    "contrast": 0.2222222222222222,
+    "volume": 0.0,
+    "mean": 0.10437710437710439,
+    "booleanMatch": 0.5
+   },
+   "errorFitted": {
+    "brightness": 0.0,
+    "contrast": 0.1111111111111111,
+    "volume": 0.07142857142857142,
+    "mean": 0.06084656084656084,
+    "booleanMatch": 1.0
+   },
+   "answers": [
+    {
+     "key": "brightness",
+     "choice": "b",
+     "a": 65,
+     "b": 90,
+     "want": 90
+    },
+    {
+     "key": "contrast",
+     "choice": "b",
+     "a": 78,
+     "b": 105,
+     "want": 100
+    },
+    {
+     "key": "volume",
+     "choice": "equal",
+     "a": 22,
+     "b": 45,
+     "want": 35
+    },
+    {
+     "key": "compression",
+     "choice": "a",
+     "a": true,
+     "b": false,
+     "want": true
+    },
+    {
+     "key": "easyCaptions",
+     "choice": "b",
+     "a": false,
+     "b": true,
+     "want": true
+    }
+   ],
+   "clicks": 13,
+   "savedToStorage": true,
+   "pageErrors": []
+  },
+  {
+   "id": "P06",
+   "segment": "ADHD·성인",
+   "age": 27,
+   "mode": "focus",
+   "target": {
+    "brightness": 88,
+    "contrast": 95,
+    "volume": 48,
+    "compression": true,
+    "easyCaptions": false
+   },
+   "fitted": {
+    "brightness": 90,
+    "contrast": 105,
+    "volume": 45,
+    "compression": true,
+    "easyCaptions": false
+   },
+   "default": {
+    "brightness": 85,
+    "contrast": 90,
+    "volume": 35,
+    "compression": true,
+    "easyCaptions": false
+   },
+   "errorDefault": {
+    "brightness": 0.05454545454545454,
+    "contrast": 0.1111111111111111,
+    "volume": 0.18571428571428572,
+    "mean": 0.11712361712361713,
+    "booleanMatch": 1.0
+   },
+   "errorFitted": {
+    "brightness": 0.03636363636363636,
+    "contrast": 0.2222222222222222,
+    "volume": 0.04285714285714286,
+    "mean": 0.10048100048100046,
+    "booleanMatch": 1.0
+   },
+   "answers": [
+    {
+     "key": "brightness",
+     "choice": "b",
+     "a": 65,
+     "b": 90,
+     "want": 88
+    },
+    {
+     "key": "contrast",
+     "choice": "b",
+     "a": 78,
+     "b": 105,
+     "want": 95
+    },
+    {
+     "key": "volume",
+     "choice": "b",
+     "a": 22,
+     "b": 45,
+     "want": 48
+    },
+    {
+     "key": "compression",
+     "choice": "a",
+     "a": true,
+     "b": false,
+     "want": true
+    },
+    {
+     "key": "easyCaptions",
+     "choice": "a",
+     "a": false,
+     "b": true,
+     "want": false
+    }
+   ],
+   "clicks": 13,
+   "savedToStorage": true,
+   "pageErrors": []
+  },
+  {
+   "id": "P07",
+   "segment": "일반",
+   "age": 34,
+   "mode": "everyday",
+   "target": {
+    "brightness": 62,
+    "contrast": 88,
+    "volume": 22,
+    "compression": true,
+    "easyCaptions": false
+   },
+   "fitted": {
+    "brightness": 65,
+    "contrast": 78,
+    "volume": 22,
+    "compression": true,
+    "easyCaptions": false
+   },
+   "default": {
+    "brightness": 85,
+    "contrast": 90,
+    "volume": 35,
+    "compression": true,
+    "easyCaptions": false
+   },
+   "errorDefault": {
+    "brightness": 0.41818181818181815,
+    "contrast": 0.044444444444444446,
+    "volume": 0.18571428571428572,
+    "mean": 0.21611351611351612,
+    "booleanMatch": 1.0
+   },
+   "errorFitted": {
+    "brightness": 0.05454545454545454,
+    "contrast": 0.2222222222222222,
+    "volume": 0.0,
+    "mean": 0.09225589225589226,
+    "booleanMatch": 1.0
+   },
+   "answers": [
+    {
+     "key": "brightness",
+     "choice": "a",
+     "a": 65,
+     "b": 90,
+     "want": 62
+    },
+    {
+     "key": "contrast",
+     "choice": "a",
+     "a": 78,
+     "b": 105,
+     "want": 88
+    },
+    {
+     "key": "volume",
+     "choice": "a",
+     "a": 22,
+     "b": 45,
+     "want": 22
+    },
+    {
+     "key": "compression",
+     "choice": "a",
+     "a": true,
+     "b": false,
+     "want": true
+    },
+    {
+     "key": "easyCaptions",
+     "choice": "a",
+     "a": false,
+     "b": true,
+     "want": false
+    }
+   ],
+   "clicks": 13,
+   "savedToStorage": true,
+   "pageErrors": []
+  },
+  {
+   "id": "P08",
+   "segment": "일반",
+   "age": 21,
+   "mode": "clarity",
+   "target": {
+    "brightness": 100,
+    "contrast": 108,
+    "volume": 40,
+    "compression": false,
+    "easyCaptions": false
+   },
+   "fitted": {
+    "brightness": 90,
+    "contrast": 105,
+    "volume": 45,
+    "compression": false,
+    "easyCaptions": false
+   },
+   "default": {
+    "brightness": 85,
+    "contrast": 90,
+    "volume": 35,
+    "compression": true,
+    "easyCaptions": false
+   },
+   "errorDefault": {
+    "brightness": 0.2727272727272727,
+    "contrast": 0.4,
+    "volume": 0.07142857142857142,
+    "mean": 0.24805194805194805,
+    "booleanMatch": 0.5
+   },
+   "errorFitted": {
+    "brightness": 0.18181818181818182,
+    "contrast": 0.06666666666666667,
+    "volume": 0.07142857142857142,
+    "mean": 0.10663780663780664,
+    "booleanMatch": 1.0
+   },
+   "answers": [
+    {
+     "key": "brightness",
+     "choice": "b",
+     "a": 65,
+     "b": 90,
+     "want": 100
+    },
+    {
+     "key": "contrast",
+     "choice": "b",
+     "a": 78,
+     "b": 105,
+     "want": 108
+    },
+    {
+     "key": "volume",
+     "choice": "b",
+     "a": 22,
+     "b": 45,
+     "want": 40
+    },
+    {
+     "key": "compression",
+     "choice": "b",
+     "a": true,
+     "b": false,
+     "want": false
+    },
+    {
+     "key": "easyCaptions",
+     "choice": "a",
+     "a": false,
+     "b": true,
+     "want": false
+    }
+   ],
+   "clicks": 13,
+   "savedToStorage": true,
+   "pageErrors": []
+  },
+  {
+   "id": "P09",
+   "segment": "청각 저하",
+   "age": 56,
+   "mode": "clarity",
+   "target": {
+    "brightness": 88,
+    "contrast": 95,
+    "volume": 60,
+    "compression": true,
+    "easyCaptions": true
+   },
+   "fitted": {
+    "brightness": 90,
+    "contrast": 105,
+    "volume": 45,
+    "compression": true,
+    "easyCaptions": true
+   },
+   "default": {
+    "brightness": 85,
+    "contrast": 90,
+    "volume": 35,
+    "compression": true,
+    "easyCaptions": false
+   },
+   "errorDefault": {
+    "brightness": 0.05454545454545454,
+    "contrast": 0.1111111111111111,
+    "volume": 0.35714285714285715,
+    "mean": 0.17426647426647426,
+    "booleanMatch": 0.5
+   },
+   "errorFitted": {
+    "brightness": 0.03636363636363636,
+    "contrast": 0.2222222222222222,
+    "volume": 0.21428571428571427,
+    "mean": 0.1576238576238576,
+    "booleanMatch": 1.0
+   },
+   "answers": [
+    {
+     "key": "brightness",
+     "choice": "b",
+     "a": 65,
+     "b": 90,
+     "want": 88
+    },
+    {
+     "key": "contrast",
+     "choice": "b",
+     "a": 78,
+     "b": 105,
+     "want": 95
+    },
+    {
+     "key": "volume",
+     "choice": "b",
+     "a": 22,
+     "b": 45,
+     "want": 60
+    },
+    {
+     "key": "compression",
+     "choice": "a",
+     "a": true,
+     "b": false,
+     "want": true
+    },
+    {
+     "key": "easyCaptions",
+     "choice": "b",
+     "a": false,
+     "b": true,
+     "want": true
+    }
+   ],
+   "clicks": 13,
+   "savedToStorage": true,
+   "pageErrors": []
+  },
+  {
+   "id": "P10",
+   "segment": "일반·보호자",
+   "age": 41,
+   "mode": "gentle",
+   "target": {
+    "brightness": 78,
+    "contrast": 85,
+    "volume": 28,
+    "compression": true,
+    "easyCaptions": true
+   },
+   "fitted": {
+    "brightness": 75,
+    "contrast": 78,
+    "volume": 22,
+    "compression": true,
+    "easyCaptions": true
+   },
+   "default": {
+    "brightness": 85,
+    "contrast": 90,
+    "volume": 35,
+    "compression": true,
+    "easyCaptions": false
+   },
+   "errorDefault": {
+    "brightness": 0.12727272727272726,
+    "contrast": 0.1111111111111111,
+    "volume": 0.1,
+    "mean": 0.11279461279461278,
+    "booleanMatch": 0.5
+   },
+   "errorFitted": {
+    "brightness": 0.05454545454545454,
+    "contrast": 0.15555555555555556,
+    "volume": 0.08571428571428572,
+    "mean": 0.0986050986050986,
+    "booleanMatch": 1.0
+   },
+   "answers": [
+    {
+     "key": "brightness",
+     "choice": "equal",
+     "a": 65,
+     "b": 90,
+     "want": 78
+    },
+    {
+     "key": "contrast",
+     "choice": "a",
+     "a": 78,
+     "b": 105,
+     "want": 85
+    },
+    {
+     "key": "volume",
+     "choice": "a",
+     "a": 22,
+     "b": 45,
+     "want": 28
+    },
+    {
+     "key": "compression",
+     "choice": "a",
+     "a": true,
+     "b": false,
+     "want": true
+    },
+    {
+     "key": "easyCaptions",
+     "choice": "b",
+     "a": false,
+     "b": true,
+     "want": true
+    }
+   ],
+   "clicks": 13,
+   "savedToStorage": true,
+   "pageErrors": []
+  }
+ ]
+}
