@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "PariView 시청 설정",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "PariView에서 고른 소리·밝기·대비를 크롬의 다른 영상에도 적용해요",
   "permissions": ["storage"],
   "action": {
@@ -22,8 +22,8 @@
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"],
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["settings.js", "content.js"],
       "all_frames": true,
       "run_at": "document_idle"
     }

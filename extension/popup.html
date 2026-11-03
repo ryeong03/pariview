@@ -4,62 +4,67 @@
 <meta charset="utf-8">
 <title>PariView 시청 설정</title>
 <style>
-  :root{--ink:#0d0e11;--muted:#858893;--line:#e7e8eb;--surface:#f9f9fa;--brand:#fa0030}
+  :root{--ink:#15161a;--muted:#626671;--line:#e7e8eb;--surface:#f7f8fa;--brand:#fa0030}
   *{box-sizing:border-box;margin:0}
-  body{width:300px;padding:20px;font:14px/1.5 -apple-system,"Apple SD Gothic Neo","Pretendard",sans-serif;color:var(--ink);background:#fff}
-  header{display:flex;align-items:center;gap:8px;margin-bottom:16px}
-  header img{width:22px;height:22px}
-  header b{font-size:15px}
-  h1{font-size:18px;letter-spacing:-.4px;margin-bottom:6px}
-  p{color:var(--muted);font-size:13px}
-  .values{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0}
-  .values div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
-  .values small{display:block;color:var(--muted);font-size:11px}
-  .values strong{font-size:16px}
-  .toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .toggle b{display:block;font-size:14px}
-  .toggle small{color:var(--muted);font-size:12px}
-  .switch{flex:none;width:40px;height:24px;border-radius:12px;border:0;background:#c9cbd1;padding:3px;cursor:pointer}
-  .switch span{display:block;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .15s}
-  .switch[aria-checked="true"]{background:var(--brand)}
-  .switch[aria-checked="true"] span{transform:translateX(16px)}
-  .actions{display:flex;flex-direction:column;align-items:flex-start;gap:4px;margin-top:14px}
+  body{width:340px;padding:18px;font:14px/1.55 -apple-system,"Apple SD Gothic Neo","Pretendard",sans-serif;color:var(--ink);background:#fff}
+  header{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+  header img{width:24px;height:24px} header b{font-size:16px}
+  h1{font-size:19px;letter-spacing:-.5px;margin-bottom:7px}
+  h2{font-size:13px;margin-top:12px} p{color:var(--muted);font-size:13px}
+  .status{padding:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+  .status-label{color:#003cdc;font-size:11px;font-weight:700;display:block;margin-bottom:5px}
+  .status-detail{margin-top:8px;font-size:12px}
+  .values{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0 10px}
+  .values div{border:1px solid var(--line);border-radius:12px;padding:9px 11px}
+  .values small{display:block;color:var(--muted);font-size:11px} .values strong{font-size:16px}
+  .toggle{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .toggle b{display:block;font-size:13px} .toggle small{color:var(--muted);font-size:11px}
+  .switch{flex:none;width:42px;height:26px;border-radius:13px;border:0;background:#858993;padding:3px;cursor:pointer}
+  .switch span{display:block;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .15s}
+  .switch[aria-checked="true"]{background:var(--brand)} .switch[aria-checked="true"] span{transform:translateX(16px)}
+  button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #003cdc;outline-offset:3px}
+  .actions{display:flex;flex-direction:column;align-items:flex-start;gap:5px;margin-top:10px}
   .primary{display:block;width:100%;margin-top:16px;padding:12px;border:0;border-radius:24px;background:var(--brand);color:#fff;font-size:14px;font-weight:600;cursor:pointer}
-  .link{border:0;background:none;color:var(--ink);font-size:13px;font-weight:600;cursor:pointer;padding:0}
-  .updated,.note{color:var(--muted);font-size:11px}
-  .note{margin-top:12px}
+  .link{border:0;background:none;color:#003cdc;font-size:13px;font-weight:600;cursor:pointer;padding:0}
+  .updated,.note{color:var(--muted);font-size:11px}.note{margin-top:12px}
+  details{font-size:12px;color:var(--muted);margin-bottom:12px} summary{cursor:pointer} details p{font-size:12px;margin-top:7px}
+  footer{margin-top:12px;font-size:11px} footer a{color:#003cdc}
   [hidden]{display:none!important}
 </style>
 </head>
 <body>
 <header><img src="icons/icon32.png" alt=""><b>PariView 시청 설정</b></header>
-
+<section class="status" aria-live="polite" aria-atomic="true">
+  <span class="status-label">현재 탭</span>
+  <h1 id="status-title">적용 상태를 확인하고 있어요</h1>
+  <p id="status-desc">영상 페이지와 연결하고 있어요</p>
+  <p id="status-detail" class="status-detail" hidden></p>
+</section>
 <section id="empty" hidden>
-  <h1>아직 가져온 설정이 없어요</h1>
-  <p>PariView에서 감각 피팅을 마치고 저장하면 설정이 자동으로 들어와요</p>
+  <p class="note">PariView에서 화면과 소리를 맞추고 저장해주세요</p>
   <button id="open-empty" class="primary">PariView 열기</button>
 </section>
-
 <section id="ready" hidden>
-  <h1>이 설정으로 영상을 보고 있어요</h1>
-  <p>유튜브처럼 크롬에서 재생하는 영상에 적용돼요</p>
+  <h2>저장한 설정</h2>
   <div class="values">
     <div><small>화면 밝기</small><strong id="v-brightness"></strong></div>
     <div><small>화면 대비</small><strong id="v-contrast"></strong></div>
-    <div><small>소리 크기</small><strong id="v-volume"></strong></div>
+    <div><small>원래 음량에 곱하는 비율</small><strong id="v-volume"></strong></div>
     <div><small>음량 변화 완화</small><strong id="v-compression"></strong></div>
   </div>
+  <details><summary>색감·소리 세부 설정</summary><p id="v-details"></p></details>
   <div class="toggle">
-    <div><b>다른 영상에도 적용하기</b><small>끄면 원래 화면과 소리로 돌아가요</small></div>
+    <div><b>다른 영상에도 적용하기</b><small>끄면 화면과 소리 효과를 해제해요</small></div>
     <button id="enabled" class="switch" role="switch" aria-checked="true" aria-label="다른 영상에도 적용하기"><span></span></button>
   </div>
   <div class="actions">
     <button id="open-ready" class="link">PariView에서 다시 맞추기 →</button>
     <span id="updated" class="updated"></span>
   </div>
-  <p class="note">소리는 페이지를 한 번 누른 뒤부터 맞춰져요 DRM이 걸린 영상은 화면만 맞춰져요</p>
 </section>
-
+<p class="note">영상 플레이어의 음량·음소거는 그대로 유지돼요<br>장면 안내·자막·AI 분석은 유튜브에 적용되지 않아요</p>
+<footer><a href="install.html" target="_blank" rel="noopener">설치와 사용 안내</a></footer>
+<script src="settings.js"></script>
 <script src="popup.js"></script>
 </body>
 </html>
