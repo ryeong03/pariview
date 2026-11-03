@@ -33,7 +33,7 @@
   .note { font-size: 11.5pt; line-height: 1.4; color: var(--muted); }
 
   /* header */
-  header { height: 120.5mm; display: grid; grid-template-columns: 1fr 150mm; gap: 8mm; position: relative; }
+  header { height: 84.2mm; display: grid; grid-template-columns: 1fr 150mm; gap: 8mm; position: relative; }
   .brand { display: flex; align-items: center; gap: 3mm; height: 13mm; }
   .brand .symbol { height: 12mm; }
   .brand .wordmark { height: 12.5mm; }
@@ -53,7 +53,7 @@
   .demo-qr span { display: block; font-size: 11pt; color: var(--muted); margin-top: 1mm; line-height: 1.35; }
 
   /* 1 */
-  #s1 { height: 156.2mm; }
+  #s1 { height: 159.9mm; }
   .s1-top { display: grid; grid-template-columns: 182mm 1fr 196mm; gap: 6mm; height: 66mm; }
   .box { background: var(--panel-2); border-radius: 4mm; padding: 3.2mm 4.5mm; }
   .box h3 { font-size: 18pt; font-weight: 700; margin-bottom: 2mm; }
@@ -75,7 +75,7 @@
   .ev .ref { font-size: 11pt; color: var(--blue); margin-top: 1.5mm; }
 
   /* 2 */
-  #s2 { height: 190.0mm; }
+  #s2 { height: 243.1mm; }
   .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6mm; }
   .step { background: var(--panel-2); border-radius: 4mm; padding: 4mm 4.5mm 4.5mm; }
   .step .label { font-size: 14pt; font-weight: 800; color: var(--red); letter-spacing: 1pt; }
@@ -105,7 +105,7 @@
   .profile-basis b { color: var(--cyan); margin-right: 3mm; }
 
   /* 3 */
-  #s3 { height: 127.4mm; }
+  #s3 { height: 131.1mm; }
   .s3 { display: grid; grid-template-columns: 300mm 1fr; gap: 7mm; }
   .arch { width: 100%; height: 84mm; }
   .map-box { margin-top: 3mm; }
@@ -119,7 +119,7 @@
   .tech p { font-size: 12.5pt; color: var(--muted); line-height: 1.4; margin-top: .8mm; }
 
   /* 4 + 5 */
-  .bottom { height: 154.8mm; display: grid; grid-template-columns: 262mm 1fr; gap: 6mm; }
+  .bottom { height: 130.6mm; display: grid; grid-template-columns: 262mm 1fr; gap: 6mm; }
   table { width: 100%; border-collapse: separate; border-spacing: 0 1.5mm; font-size: 13.5pt; }
   th { font-size: 14pt; padding: 3mm; text-align: center; background: var(--panel-2); }
   th.pv { background: var(--red); border-radius: 3mm 3mm 0 0; }
@@ -316,7 +316,7 @@
   .effects3.col div > div { display: block; padding: 0; border: 0; background: none; }
   .effects3.col svg { width: 9mm; height: 9mm; margin: 0; }
   .effects3.col b { font-size: 13.5pt; } .effects3.col span { font-size: 11.5pt; margin-top: .6mm; }
-  .shots3 { display: grid; grid-template-columns: 1fr 1.25fr 1.2fr; gap: 5mm; }
+  .shots3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5mm; }
   .shot { background: var(--panel-2); border-radius: 2mm; border: .35mm solid var(--line); padding: 3.5mm 4mm; }
   .shot-t { font-size: 20pt; font-weight: 800; margin-bottom: 2.5mm; }
   .shot-t i { font-style: normal; color: var(--lime); margin-right: 3mm; font-size: 17pt; }
@@ -343,8 +343,8 @@
   .abox.web { border-color: var(--lime); } .abox.ext { border-color: var(--cyan); } .abox.site { border-color: var(--red); } .abox.srv, .abox.ana { border-color: var(--line); }
   .abox.srv { grid-column: 1 / 2; } .abox.ana { grid-column: 3 / 6; }
   .aarr { display: flex; align-items: center; justify-content: center; font-size: 11pt; color: var(--muted); text-align: center; }
-  .bottom .scenes { margin-top: 4mm; margin-bottom: 0; }
-  .bottom .scenes img { aspect-ratio: auto; height: 17mm; }
+  .bottom .scenes { margin-top: 4mm; margin-bottom: 3mm; }
+  .bottom .scenes img { aspect-ratio: auto; height: 22mm; }
   .adopt { margin-top: 3.5mm; padding: 3mm 4mm; border-left: .8mm solid var(--lime); background: var(--panel-2); border-radius: 1.5mm; }
   .adopt b { display: block; font-size: 14pt; color: var(--lime); }
   .adopt span { display: block; font-size: 13pt; line-height: 1.4; margin-top: 1mm; }
@@ -359,31 +359,65 @@
   .adopt.soft { border-left-color: var(--cyan); margin-top: 3mm; }
   .adopt.soft b { color: var(--cyan); }
 
-  .arch7 { width: 100%; height: auto; display: block; }
+  .arch8 { width: 100%; height: auto; display: block; }
   .lab-line { font-size: 12pt; color: var(--muted); }
 
   .rlink b { font-size: 15.5pt; }
   .rlink em { margin-top: .4mm; }
-  .research { gap: 2.4mm; }
+  .research { gap: 2mm; }
+
+  /* ===== v7: no hero art, bigger solution shots, fewer words ===== */
+  header.hero5 { display: grid; grid-template-columns: 1fr 176mm; gap: 10mm; align-items: center; }
+  .hero5 .brand { height: 13mm; }
+  .hero5 h1 { margin-top: 4mm; font-size: 54pt; letter-spacing: -2.1pt; line-height: 1.08; }
+  .hero5 .formal { margin-top: 4mm; font-size: 23pt; font-weight: 700; line-height: 1.45; }
+  .hero5 .affil { margin-top: 3mm; font-size: 15pt; color: var(--text); }
+  .hero5 .qr-row { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .hero5 .qr-row .demo-qr img { width: 34mm; height: 34mm; }
+  .hero5 .qr-row .demo-qr b { font-size: 14pt; }
+  .hero5 .live { grid-column: 1 / -1; border-left: 0; border-top: .5mm solid var(--lime); padding: 2.5mm 0 0; }
+  .hero5 .live b { font-size: 15pt; } .hero5 .live span { font-size: 12.5pt; }
+  .shots3 { gap: 6mm; }
+  .shot > img { height: 158mm; }
+  .shot .compare { height: 158mm; }
+  .shot-t { font-size: 22pt; }
+  .shot p { font-size: 16pt; margin-top: 3.5mm; }
+  .compare figcaption { font-size: 12.5pt; height: 6.5mm; }
+  .r3t { font-size: 16pt; }
+  .exist b, .difs b, .effects3.col b { font-size: 15pt; }
+  .exist span, .difs span, .effects3.col span { font-size: 12.5pt; }
+  .exist-sum { font-size: 13pt; }
+  .adopt b { font-size: 16pt; } .adopt span { font-size: 14pt; }
+  .next { font-size: 14pt; margin-top: 3mm; }
+  .rlink b { font-size: 17pt; } .rlink em { font-size: 13pt; } .rlink small { font-size: 11.5pt; }
+  .sub-flows { font-size: 14pt; }
+
+  .shot .stack { display: flex; flex-direction: column; justify-content: space-between; gap: 4mm; height: 176mm; }
+  .shot .stack > img, .shot .stack figure { flex: 0 1 auto; min-height: 0; }
+  .shot .stack > img, .shot .stack figure img { width: 100%; height: auto; max-height: 100%; object-fit: contain; object-position: top; display: block; border-radius: 1.5mm; }
+  .shot .stack figure { margin: 0; display: flex; flex-direction: column; }
+  .shot .stack figure img { flex: 0 1 auto; min-height: 0; }
+  .shot .stack figcaption { font-size: 12.5pt; color: var(--muted); margin-bottom: 1.2mm; white-space: nowrap; overflow: hidden; height: 6.5mm; }
+  .shot .stack figcaption b { display: inline-block; padding: .4mm 1.8mm; margin-right: 1.5mm; border: .3mm solid var(--muted); border-radius: 1mm; color: var(--text); font-size: 11pt; }
+  .shot .stack figcaption b.on { border-color: var(--lime); color: var(--lime); }
+  .shot p { font-size: 17pt; font-weight: 600; }
+
+  .rlink.ai { border-left-color: var(--cyan); }
+  .rlink.ai em { color: var(--cyan); }
 </style>
 </head>
 <body>
 <div class="poster" id="poster">
 
 <div class="block topbar"><span>이화여자대학교 공과대학 · 2026 캡스톤디자인 · 사회기여형</span><span class="team">팀 Lucent · 정아윤 · 박세령 · 정서윤</span></div>
-<header class="block hero4">
+<header class="block hero5">
   <div class="hero-left">
     <div class="brand"><img class="symbol" src="assets/logo-symbol-3d.png" alt=""><img class="wordmark" src="assets/logo-wordmark-3d.png" alt="PariView"></div>
     <h1>화면과 소리,<br><em>내가 정하면 안 되나요?</em></h1>
-    <p class="formal"><mark>감각 과부하 감소</mark>와 <mark>미디어 접근성 향상</mark>을 위한<br><mark>적응형 시청 시스템</mark></p>
-    <p class="affil">소리·빛에 민감한 이용자가 같은 장면을 비교해 고른 설정으로 영상을 보고, 크롬에서도 이어서 쓰는 시청 시스템</p>
-    <div class="qr-row"><div class="demo-qr"><img src="assets/qr-demo.svg" alt=""><b>웹에서 체험하기</b></div><div class="demo-qr"><img src="assets/qr-youtube.svg" alt=""><b>유튜브에서 익스텐션 써보기</b></div><div class="live"><b>공개 배포 중</b><span>pariview-production.up.railway.app<br>영상 3편 × 45초 · 크롬 익스텐션 포함</span></div></div>
+    <p class="formal"><mark>감각 과부하 감소</mark>와 <mark>미디어 접근성 향상</mark>을 위한 <mark>적응형 시청 시스템</mark></p>
+    <p class="affil">소리·빛에 민감한 이용자가 같은 장면을 비교해 고른 설정으로 보고, 크롬에서도 이어서 쓰는 시청 시스템</p>
   </div>
-  <div class="hero-right">
-    <img class="hero-shot" src="assets/hero-studio.png" alt="">
-    <img class="falcon" src="assets/falcon-render.png" alt="">
-    <div class="hero-cap">실제 화면 · 시청 스튜디오 · 영상 바로 아래에서 밝기·소리·자막을 조절해요</div>
-  </div>
+  <div class="qr-row"><div class="demo-qr"><img src="assets/qr-demo.svg" alt=""><b>웹에서 체험하기</b></div><div class="demo-qr"><img src="assets/qr-youtube.svg" alt=""><b>유튜브에서 익스텐션 써보기</b></div><div class="live"><b>공개 배포 중</b><span>pariview-production.up.railway.app<br>영상 3편 × 45초 · 크롬 익스텐션 포함</span></div></div>
 </header>
 
 <section id="s1" class="block sec">
@@ -408,33 +442,37 @@
   <div class="row3">
     <div class="r3 cmp"><div class="r3t">기존 기능 비교</div>
       <ul class="exist">
-        <li><b>대사 강조</b><span>Amazon Prime Video Dialogue Boost · 배경음 대비 대사 크기 선택</span></li>
-        <li><b>섬광 완화 · 구간 표시</b><span>Apple Dim Flashing Lights · 자동 감광과 타임라인 표시</span></li>
-        <li><b>밝기 · 음량 직접 조절</b><span>기기·플레이어 설정 · 값은 내가 찾아야 해요</span></li>
+        <li><b>대사 강조</b><span>Prime Video Dialogue Boost</span></li>
+        <li><b>섬광 완화 · 구간 표시</b><span>Apple Dim Flashing Lights</span></li>
+        <li><b>밝기 · 음량 직접 조절</b><span>기기 · 플레이어 설정</span></li>
       </ul>
-      <p class="exist-sum">기능이 플랫폼마다 흩어져 있고, 같은 장면으로 비교해 저장하는 흐름은 없어요</p></div>
+      <p class="exist-sum">플랫폼마다 흩어져 있고, 같은 장면으로 비교해 저장하는 흐름은 없어요</p></div>
     <div class="arr">→</div>
     <div class="r3 dif"><div class="r3t">PariView의 차별점</div>
-      <ol class="difs"><li><b>진단이 아니라 비교로</b><span>같은 장면을 A/B로 보고 지금 편한 쪽을 골라요 · 비교 → 저장 → 재조절이 한 흐름</span></li><li><b>화면·소리·자막을 한 흐름에서</b><span>밝기·대비·채도·EQ·압축·쉬운 자막까지 5단계</span></li><li><b>저장한 설정을 어디서나</b><span>크롬 익스텐션이 유튜브 등 지원 영상에 적용</span></li></ol></div>
+      <ol class="difs"><li><b>진단이 아니라 비교로</b><span>AI 추천 시작점 → 같은 장면 A/B → 저장 → 재조절</span></li><li><b>화면·소리·자막을 한 흐름에서</b><span>5단계 비교</span></li><li><b>저장한 설정을 어디서나</b><span>크롬 익스텐션 · 유튜브 등</span></li></ol></div>
     <div class="arr">→</div>
     <div class="r3 val"><div class="r3t">이용자 가치 · 기대효과</div>
       <div class="effects3 col">
-        <div><svg viewBox="0 0 64 64" fill="none" stroke="#cdff5f" stroke-width="3" stroke-linecap="round"><path d="M8 26h10l12-10v32L18 38H8z"/><path d="M40 22q6 10 0 20"/></svg><div><b>감각 부담을 내 설정으로</b><span>비교해 고르고 언제든 되돌려요</span></div></div>
-        <div><svg viewBox="0 0 64 64" fill="none" stroke="#4df3ff" stroke-width="3" stroke-linecap="round"><rect x="6" y="12" width="52" height="34" rx="4"/><path d="M22 54h20M26 30l6 6 10-12"/></svg><div><b>기존 영상 그대로, 플랫폼 밖에서도</b><span>같은 설정을 지원 영상에</span></div></div>
-        <div><svg viewBox="0 0 64 64" fill="none" stroke="#ff2e63" stroke-width="3" stroke-linecap="round"><path d="M8 56V26l24-16 24 16v30"/><path d="M24 56V38h16v18"/></svg><div><b>특수교육 · 복지기관 도입 제안</b><span>기관 시청 환경 · OTT 접근성 옵션</span></div></div>
+        <div><svg viewBox="0 0 64 64" fill="none" stroke="#cdff5f" stroke-width="3" stroke-linecap="round"><path d="M8 26h10l12-10v32L18 38H8z"/><path d="M40 22q6 10 0 20"/></svg><div><b>감각 부담을 내 설정으로</b><span>언제든 되돌리기</span></div></div>
+        <div><svg viewBox="0 0 64 64" fill="none" stroke="#4df3ff" stroke-width="3" stroke-linecap="round"><rect x="6" y="12" width="52" height="34" rx="4"/><path d="M22 54h20M26 30l6 6 10-12"/></svg><div><b>기존 영상 그대로, 플랫폼 밖에서도</b><span>크롬 익스텐션</span></div></div>
+        <div><svg viewBox="0 0 64 64" fill="none" stroke="#ff2e63" stroke-width="3" stroke-linecap="round"><path d="M8 56V26l24-16 24 16v30"/><path d="M24 56V38h16v18"/></svg><div><b>특수교육 · 복지기관 도입 제안</b><span>OTT 접근성 옵션</span></div></div>
       </div></div>
   </div>
 </section>
 
 <section id="s2" class="block sec">
-  <div class="sec-head"><span class="no">2</span><h2>주요 서비스 흐름</h2><span class="tag tag-left">HOW · 실제 화면</span><img class="wizard-head" src="assets/wizard-render.png" alt=""></div>
+  <div class="sec-head"><span class="no">2</span><h2>핵심 솔루션 · 실제 화면</h2><img class="wizard-head" src="assets/wizard-render.png" alt=""></div>
   <div class="shots3">
-    <div class="shot"><div class="shot-t"><i>01</i>선호 비교</div><img src="assets/step2.png" alt=""><p>다섯 프로필 중 출발점을 고르고, <b>같은 장면</b>을 밝기·대비·소리·음량 변화·쉬운 자막 순서로 다섯 번 A/B 비교해요 두 화면을 함께 0.75배속으로 볼 수 있어요</p></div>
-    <div class="shot"><div class="shot-t"><i>02</i>개인 설정</div><div class="compare"><figure><figcaption><b>원본</b>밝기 100 · 대비 100 · 기본 자막</figcaption><img src="assets/compare-original.png" alt=""></figure><figure><figcaption><b class="on">맞춤</b>밝기 55 · 대비 110 · 채도 45 · 노란 쉬운 자막</figcaption><img src="assets/compare-custom.png" alt=""></figure></div><p>고른 값이 <b>같은 프레임</b>에 바로 적용돼요 원본과 맞춤을 나란히 비교하고 기본값으로 돌아갈 수 있어요</p></div>
-    <div class="shot"><div class="shot-t"><i>03</i>시청 중 재조절 · 크롬에서 이어서</div><img src="assets/studio-popup.png" alt=""><p>영상 바로 아래 dock에서 <b>보면서 다시 조절</b>하고 저장해요 저장한 설정은 크롬 익스텐션이 유튜브 등 지원 영상에 적용하고, 팝업에서 켜고 끌 수 있어요</p></div>
+    <div class="shot"><div class="shot-t"><i>01</i>비교</div>
+      <div class="stack"><img src="assets/step1.png" alt=""><img src="assets/step2.png" alt=""></div>
+      <p>같은 장면을 A/B로 보고 지금 편한 쪽을 골라요</p></div>
+    <div class="shot"><div class="shot-t"><i>02</i>적용</div>
+      <div class="stack"><figure><figcaption><b>원본</b>밝기 100 · 대비 100 · 기본 자막</figcaption><img src="assets/compare-original.png" alt=""></figure><figure><figcaption><b class="on">맞춤</b>밝기 55 · 대비 110 · 채도 45 · 노란 쉬운 자막</figcaption><img src="assets/compare-custom.png" alt=""></figure></div>
+      <p>고른 빛·소리·자막 설정을 영상에 바로 적용해요</p></div>
+    <div class="shot"><div class="shot-t"><i>03</i>재조절 · 크롬에서 이어서</div>
+      <div class="stack"><img src="assets/studio-popup.png" alt=""><img src="assets/chrome-view-top.png" alt=""></div>
+      <p>보면서 다시 조절하고 원본과 바로 비교해요</p></div>
   </div>
-  <div class="profiles-title"><h3>5가지 감각 프로필</h3><span>진단이 아닌 시작점이에요 · 고른 뒤 비교하며 언제든 바꿀 수 있어요</span></div>
-  <div class="pstrip" id="profiles"></div>
 </section>
 
 <section id="s3" class="block sec">
@@ -445,7 +483,7 @@
       <div class="rlink"><b>🎚️ 환경 조절</b><em>→ 화면·소리 항목을 나눠 조절</em><small>📄 NICE CG142 · 성인 자폐 진단·관리 지침</small></div>
       <div class="rlink"><b>🕹️ 사용자 통제</b><em>→ 선택 · 건너뛰기 · 원본 복귀</em><small>📄 Unwin et al. 2022 · 아동 41명</small></div>
       <div class="rlink"><b>🎬 시청각 반응</b><em>→ 소리·빛 변화를 함께 표시 · 사전 예고</em><small>📄 Matsuzaki et al. 2022 · 영화 시청 MEG</small></div>
-      <p class="lab-line">📚 검토 자료 17건 · 논문 11 · 전문자료 6 · 출처 전체는 QR</p>
+      <p class="lab-line">📚 논문 11 · 전문자료 6 · 출처는 QR</p>
     </div>
     <div class="tech">
       <div class="flow">
@@ -460,12 +498,9 @@
         <div class="arrow">→</div>
         <div class="node out">나에게 맞는 출력<small>원본 비교 · 기본값 복귀</small></div>
       </div>
-      <div class="sub-flows">
-        <p><b>장면 데이터</b> 자막·장면 구간(scenes.js) → 자막 표시 · 놓친 내용 탐색</p>
-        <p><b>영상 측정</b> ffmpeg 라우드니스·밝기 → 장면별 map.json → 감각 지도 · 사전 예고 (소리: 직전보다 18LU 이상 급상승 또는 중앙값 +12LU · 빛: 밝기 45 이상 변화 · 5초에 하나만)</p>
-      </div>
+      <div class="sub-flows"><p><b>🤖 AI 추천 · Claude</b> 선택한 필요·현재 설정 → 검토된 후보에서 시작 설정 선택 · 미리보기·수정·취소 · 연결 없으면 규칙 기반</p><p><b>장면 데이터</b> scenes.js → 자막 · 놓친 내용 &nbsp;&nbsp; <b>영상 측정</b> ffmpeg → map.json → 감각 지도 · 사전 예고</p></div>
       <div class="map-box">
-        <h3>영상 신호로 측정한 감각 지도<small>Tears of Steel 45초 발췌 장면 · 소리 EBU R128 라우드니스 · 빛 프레임 평균 밝기 · 음영 = 변화 구간 · ▲ = 사전 예고</small></h3>
+        <h3>영상 신호로 측정한 감각 지도<small>Tears of Steel 45초 · 음영 = 변화 구간 · ▲ = 사전 예고</small></h3>
         <svg id="map-chart" viewBox="0 0 1000 58" role="img" aria-label="소리 크기와 화면 밝기 측정 곡선과 사전 예고 시점"></svg>
       </div>
     </div>
@@ -475,92 +510,41 @@
 <div class="block bottom">
   <section class="sec">
     <div class="sec-head"><span class="no">4</span><h2>시스템 구조도</h2></div>
-    <svg class="arch7" viewBox="0 0 1000 338" role="img" aria-label="시스템 구조도: 사용자, PariView 웹, 저장소, 크롬 익스텐션, 다른 사이트 영상, Python 서버, ffmpeg 분석">
-      <defs>
-        <linearGradient id="gPink" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff5c9a"/><stop offset="1" stop-color="#7a1f4a"/></linearGradient>
-        <linearGradient id="gLime" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#cdff5f"/><stop offset="1" stop-color="#2f6b1e"/></linearGradient>
-        <linearGradient id="gCyan" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4df3ff"/><stop offset="1" stop-color="#145a73"/></linearGradient>
-        <linearGradient id="gBlue" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6aa8ff"/><stop offset="1" stop-color="#1c2f8a"/></linearGradient>
-        <linearGradient id="gRed" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff7a5c"/><stop offset="1" stop-color="#8a1d2e"/></linearGradient>
-        <linearGradient id="gViolet" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c38bff"/><stop offset="1" stop-color="#4a1f8a"/></linearGradient>
-        <linearGradient id="gGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe03d"/><stop offset="1" stop-color="#8a5a12"/></linearGradient>
-        <radialGradient id="hi" cx=".5" cy=".15" r=".7"><stop offset="0" stop-color="#fff" stop-opacity=".45"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
-        <marker id="aw" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#f3f2f8"/></marker>
-      </defs>
-      <g font-family="Pretendard, 'Apple SD Gothic Neo', sans-serif" text-anchor="middle" fill="#fff">
-        <!-- lines (drawn first, under tiles) -->
-        <g stroke-width="3.2" fill="none" marker-end="url(#aw)">
-          <path d="M150 95 H212" stroke="#aaa7bd"/>
-          <path d="M410 95 H472" stroke="#cdff5f"/>
-          <path d="M610 95 H672" stroke="#4df3ff"/>
-          <path d="M810 95 H872" stroke="#ff7a5c"/>
-          <path d="M311 220 V165" stroke="#c38bff"/>
-          <path d="M560 220 V168 H420" stroke="#ffe03d"/>
-        </g>
-        <g font-size="11.5" fill="#f3f2f8">
-          <text x="181" y="84">사용</text>
-          <text x="441" y="84" fill="#cdff5f">저장</text>
-          <text x="641" y="84" fill="#4df3ff">동기화</text>
-          <text x="841" y="84" fill="#ff7a5c">적용</text>
-          <text x="322" y="200" fill="#c38bff" text-anchor="start">질문 2개 → 추천</text>
-          <text x="500" y="184" fill="#ffe03d">장면별 map.json → 감각 지도 · 사전 예고</text>
-        </g>
-        <!-- row 1 tiles -->
-        <g>
-          <rect x="20" y="40" width="130" height="110" rx="26" fill="url(#gPink)"/><rect x="20" y="40" width="130" height="110" rx="26" fill="url(#hi)"/>
-          <circle cx="85" cy="78" r="12" fill="none" stroke="#fff" stroke-width="3"/><path d="M62 118q0-20 23-20t23 20" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
-          <text x="85" y="140" font-size="15" font-weight="700">사용자</text>
-        </g>
-        <g>
-          <rect x="212" y="40" width="198" height="110" rx="26" fill="url(#gLime)"/><rect x="212" y="40" width="198" height="110" rx="26" fill="url(#hi)"/>
-          <image href="assets/icons/html5.svg" x="258" y="60" width="26" height="26"/><image href="assets/icons/css.svg" x="298" y="60" width="26" height="26"/><image href="assets/icons/javascript.svg" x="338" y="60" width="26" height="26"/>
-          <text x="311" y="112" font-size="16" font-weight="800">PariView 웹</text><text x="311" y="134" font-size="11.5" fill="#eaffc8">피팅 UI · 렌더링 · localStorage</text>
-        </g>
-        <g>
-          <rect x="472" y="40" width="138" height="110" rx="26" fill="url(#gCyan)"/><rect x="472" y="40" width="138" height="110" rx="26" fill="url(#hi)"/>
-          <ellipse cx="541" cy="66" rx="24" ry="8" fill="none" stroke="#fff" stroke-width="3"/><path d="M517 66v26q0 8 24 8t24-8V66" fill="none" stroke="#fff" stroke-width="3"/>
-          <text x="541" y="122" font-size="15" font-weight="700">저장소</text><text x="541" y="138" font-size="10.5" fill="#dff9ff">localStorage · chrome.storage</text>
-        </g>
-        <g>
-          <rect x="672" y="40" width="138" height="110" rx="26" fill="url(#gBlue)"/><rect x="672" y="40" width="138" height="110" rx="26" fill="url(#hi)"/>
-          <image href="assets/icons/googlechrome.svg" x="724" y="56" width="34" height="34"/>
-          <text x="741" y="116" font-size="15" font-weight="700">크롬 익스텐션</text><text x="741" y="134" font-size="10.5" fill="#dce8ff">content script · 팝업</text>
-        </g>
-        <g>
-          <rect x="872" y="40" width="118" height="110" rx="26" fill="url(#gRed)"/><rect x="872" y="40" width="118" height="110" rx="26" fill="url(#hi)"/>
-          <image href="assets/icons/youtube.svg" x="914" y="56" width="34" height="34"/>
-          <text x="931" y="116" font-size="14" font-weight="700">다른 사이트 영상</text><text x="931" y="134" font-size="10.5" fill="#ffe3dc">유튜브 등 지원 영상</text>
-        </g>
-        <!-- row 2 tiles -->
-        <g>
-          <rect x="212" y="220" width="198" height="110" rx="26" fill="url(#gViolet)"/><rect x="212" y="220" width="198" height="110" rx="26" fill="url(#hi)"/>
-          <image href="assets/icons/python.svg" x="262" y="240" width="28" height="28"/><image href="assets/icons/docker.svg" x="300" y="240" width="28" height="28"/><image href="assets/icons/railway.svg" x="338" y="240" width="28" height="28"/>
-          <text x="311" y="294" font-size="16" font-weight="800">Python 서버</text><text x="311" y="314" font-size="11.5" fill="#efe3ff">Docker · Railway 공개 배포 · 추천 API</text>
-        </g>
-        <g>
-          <rect x="472" y="220" width="198" height="110" rx="26" fill="url(#gGold)"/><rect x="472" y="220" width="198" height="110" rx="26" fill="url(#hi)"/>
-          <image href="assets/icons/ffmpeg.svg" x="555" y="240" width="32" height="32"/>
-          <text x="571" y="294" font-size="16" font-weight="800">ffmpeg 신호 분석</text><text x="571" y="314" font-size="11.5" fill="#fff4cc">라우드니스 · 밝기 → 장면별 map.json</text>
-        </g>
+    <svg class="arch8" viewBox="0 0 1000 308" role="img" aria-label="시스템 구조도">
+      <defs><marker id="ah" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,1 L12,6 L0,11 z" fill="#aaa7bd"/></marker></defs>
+      <g font-family="Pretendard, 'Apple SD Gothic Neo', sans-serif">
+      <text x="55" y="22" text-anchor="middle" font-size="11" letter-spacing="2" fill="#aaa7bd">USER</text><text x="255" y="22" text-anchor="middle" font-size="11" letter-spacing="2" fill="#aaa7bd">CLIENT</text><text x="485" y="22" text-anchor="middle" font-size="11" letter-spacing="2" fill="#aaa7bd">STORAGE</text><text x="695" y="22" text-anchor="middle" font-size="11" letter-spacing="2" fill="#aaa7bd">EXTENSION</text><text x="910" y="22" text-anchor="middle" font-size="11" letter-spacing="2" fill="#aaa7bd">EXTERNAL</text>
+      <rect x="0" y="34" width="110" height="86" rx="8" fill="#231f35" stroke="#3a3456" stroke-width="2.2"/><circle cx="55" cy="60" r="10" fill="none" stroke="#f3f2f8" stroke-width="2.4"/><path d="M36 92q0-16 19-16t19 16" fill="none" stroke="#f3f2f8" stroke-width="2.4" stroke-linecap="round"/><text x="55" y="110" text-anchor="middle" font-size="13" font-weight="700" fill="#f3f2f8">사용자</text>
+      <rect x="150" y="34" width="210" height="86" rx="8" fill="#231f35" stroke="#cdff5f" stroke-width="2.2"/><image href="assets/icons/html5.svg" x="214" y="46" width="22" height="22"/><image href="assets/icons/css.svg" x="244" y="46" width="22" height="22"/><image href="assets/icons/javascript.svg" x="274" y="46" width="22" height="22"/><text x="255" y="88" text-anchor="middle" font-size="15" font-weight="800" fill="#f3f2f8">PariView 웹</text><text x="255" y="106" text-anchor="middle" font-size="10.5" fill="#aaa7bd">피팅 UI · CSS filter · Web Audio</text>
+      <rect x="400" y="34" width="170" height="86" rx="8" fill="#231f35" stroke="#4df3ff" stroke-width="2.2"/><text x="485" y="74" text-anchor="middle" font-size="15" font-weight="800" fill="#f3f2f8">설정 저장</text><text x="485" y="92" text-anchor="middle" font-size="10.5" fill="#aaa7bd">localStorage · chrome.storage</text>
+      <rect x="610" y="34" width="170" height="86" rx="8" fill="#231f35" stroke="#6aa8ff" stroke-width="2.2"/><image href="assets/icons/googlechrome.svg" x="684" y="46" width="22" height="22"/><text x="695" y="88" text-anchor="middle" font-size="15" font-weight="800" fill="#f3f2f8">크롬 익스텐션</text><text x="695" y="106" text-anchor="middle" font-size="10.5" fill="#aaa7bd">content script · 팝업</text>
+      <rect x="820" y="34" width="180" height="86" rx="8" fill="#231f35" stroke="#ff7a5c" stroke-width="2.2"/><image href="assets/icons/youtube.svg" x="899" y="46" width="22" height="22"/><text x="910" y="88" text-anchor="middle" font-size="15" font-weight="800" fill="#f3f2f8">다른 사이트 영상</text><text x="910" y="106" text-anchor="middle" font-size="10.5" fill="#aaa7bd">유튜브 등 지원 영상</text>
+      <text x="255" y="300" text-anchor="middle" font-size="11" letter-spacing="2" fill="#aaa7bd">SERVER</text><text x="485" y="300" text-anchor="middle" font-size="11" letter-spacing="2" fill="#aaa7bd">ANALYSIS</text><text x="695" y="300" text-anchor="middle" font-size="11" letter-spacing="2" fill="#aaa7bd">DATA</text>
+      <rect x="150" y="208" width="210" height="76" rx="8" fill="#231f35" stroke="#c38bff" stroke-width="2.2"/><image href="assets/icons/python.svg" x="203" y="220" width="22" height="22"/><image href="assets/icons/claude.svg" x="233" y="220" width="22" height="22"/><image href="assets/icons/docker.svg" x="263" y="220" width="22" height="22"/><image href="assets/icons/railway.svg" x="293" y="220" width="22" height="22"/><text x="255" y="262" text-anchor="middle" font-size="15" font-weight="800" fill="#f3f2f8">Python 서버 · AI 추천 API</text><text x="255" y="280" text-anchor="middle" font-size="10.5" fill="#aaa7bd">Claude 구조화 출력 · 미연결 시 규칙 기반</text>
+      <rect x="400" y="208" width="170" height="76" rx="8" fill="#231f35" stroke="#ffe03d" stroke-width="2.2"/><image href="assets/icons/ffmpeg.svg" x="474" y="220" width="22" height="22"/><text x="485" y="262" text-anchor="middle" font-size="15" font-weight="800" fill="#f3f2f8">ffmpeg 신호 분석</text><text x="485" y="280" text-anchor="middle" font-size="10.5" fill="#aaa7bd">라우드니스 · 밝기 측정</text>
+      <rect x="610" y="208" width="170" height="76" rx="8" fill="#231f35" stroke="#ffe03d" stroke-width="2.2"/><text x="695" y="248" text-anchor="middle" font-size="15" font-weight="800" fill="#f3f2f8">장면별 map.json</text><text x="695" y="266" text-anchor="middle" font-size="10.5" fill="#aaa7bd">감각 지도 · 사전 예고</text>
+      <path d="M110 77 H146" stroke="#aaa7bd" stroke-width="2.4" fill="none" marker-end="url(#ah)"/><text x="128" y="70" text-anchor="middle" font-size="10.5" fill="#aaa7bd">사용</text><path d="M360 77 H396" stroke="#aaa7bd" stroke-width="2.4" fill="none" marker-end="url(#ah)"/><text x="378" y="70" text-anchor="middle" font-size="10.5" fill="#aaa7bd">저장</text><path d="M570 77 H606" stroke="#aaa7bd" stroke-width="2.4" fill="none" marker-end="url(#ah)"/><text x="588" y="70" text-anchor="middle" font-size="10.5" fill="#aaa7bd">동기화</text><path d="M780 77 H816" stroke="#aaa7bd" stroke-width="2.4" fill="none" marker-end="url(#ah)"/><text x="798" y="70" text-anchor="middle" font-size="10.5" fill="#aaa7bd">적용</text>
+      <path d="M255 208 V124" stroke="#aaa7bd" stroke-width="2.4" fill="none" marker-end="url(#ah)"/><text x="240" y="150" text-anchor="end" font-size="10.5" fill="#aaa7bd">AI 추천</text><path d="M570 246 H606" stroke="#aaa7bd" stroke-width="2.4" fill="none" marker-end="url(#ah)"/><path d="M695 208 V166" stroke="#aaa7bd" stroke-width="2.4" fill="none"/><path d="M695 166 H300" stroke="#aaa7bd" stroke-width="2.4" fill="none"/><path d="M300 166 V124" stroke="#aaa7bd" stroke-width="2.4" fill="none" marker-end="url(#ah)"/>
+      <text x="500" y="158" text-anchor="middle" font-size="10.5" fill="#aaa7bd">측정 데이터</text>
       </g>
     </svg>
-    <div class="scenes"><div class="scenes-title">실제 영화 3편 × 45초 장면 · CC BY</div>
+  </section>
+  <section class="sec">
+    <div class="sec-head"><span class="no">5</span><h2>기대효과 및 향후 발전 방향</h2></div>
+    <div class="adopt"><b>특수교육 · 복지기관 도입 제안</b><span>기관 시청 환경에 설치형으로, OTT·플레이어에는 접근성 옵션으로</span></div>
+    <div class="adopt soft"><b>지금 되는 것</b><span>영상 3편 × 45초 · 프로필 5 · 5단계 비교 · 되돌리기 · 크롬 익스텐션 · 자동 테스트 32항목 · 당사자 사용 확인</span></div>
+    <div class="scenes"><div class="scenes-title">실제 영화 3편 × 45초 · CC BY</div>
       <figure><img src="assets/tears-lab.jpg" alt=""><figcaption>Tears of Steel<small>빛·소리 급변</small></figcaption></figure>
       <figure><img src="assets/sintel.jpg" alt=""><figcaption>Sintel<small>조용한 실내 대화</small></figcaption></figure>
       <figure><img src="assets/bunny.jpg" alt=""><figcaption>Big Buck Bunny<small>밝은 풀밭 · 잦은 컷</small></figcaption></figure>
     </div>
-  </section>
-  <section class="sec">
-    <div class="sec-head"><span class="no">5</span><h2>기대효과 및 향후 발전 방향</h2></div>
-    <div class="adopt"><b>특수교육 · 복지기관 도입 제안</b><span>기관의 시청 환경에 설치형으로 두고, OTT·플레이어에는 접근성 옵션으로 제안해요 이용자는 자기 설정을 가지고 다녀요</span></div>
-    <div class="adopt soft"><b>지금 되는 것</b><span>영상 3편 × 45초 · 5 시작 프로필 · 5단계 A/B 비교 · 원본 비교와 되돌리기 · 크롬 익스텐션으로 유튜브 등 지원 영상에 적용 · 자동 테스트 32항목 통과 · 신경다양성 당사자 사용 확인</span></div>
-    <p class="next"><b>향후</b> 고른 값 근처에서 한 번 더 비교하는 2단계 비교 · 사용성 평가(SUS) 표준화 · 지원 영상 범위 확대</p>
-    <div class="qr-card"><img src="assets/qr-github.svg" alt=""><div><b>상세 구조 · 검증 · 근거</b><span>기술 구조도, 자동 검증 항목, 연구 근거 17건은 GitHub README에 있어요</span></div></div>
+    <p class="next"><b>향후</b> 2단계 비교 · 사용성 평가(SUS) · 지원 영상 확대</p>
+
   </section>
 </div>
 
 <footer class="block">
-  <p class="credits">검토 자료 17건 · 학술논문 11편, 전문자료 6건(AAO · AOA · ASHA · NICE CG142 · NICE CG170 · NIMH RDoC) · 설문은 팀이 구글 폼으로 진행한 온라인 조사 · 76명 응답 · 신경다양성 당사자 20%<br>영화 Tears of Steel © Blender Foundation CC BY 3.0 · Pretendard OFL · 통계 출처 통계청 2025 고령자 통계, 국민건강보험공단 2024, 방송통신위원회 2024 방송매체 이용행태조사</p>
+  <p class="credits">영화 Tears of Steel · Sintel · Big Buck Bunny © Blender Foundation CC BY · Pretendard OFL · 통계 통계청 2025 · 국민건강보험공단 2024 · 방송통신위원회 2024</p>
 </footer>
 
 </div>
@@ -583,11 +567,7 @@ const features = {
   soft: ['부드러운 색감', '쉬운 자막', '작은 음량·고음 완화'],
   everyday: ['따뜻한 색온도', '급격한 소리 변화 완화', '20분\u00a0시청\u00a0휴식\u00a0안내'],
 };
-try {
-  const { modes } = await import('../web/dist/settings.js');
-  const neon = { gentle: '#ff4fd8', focus: '#ffe03d', clarity: '#5dff9e', soft: '#4df3ff', everyday: '#b78bff' };
-  document.getElementById('profiles').innerHTML = modes.map(m => `<div class="prow" style="--c:${neon[m.id] || m.color}"><b class="en">${m.en}</b><span class="ko">${m.title}</span><span class="who">${who[m.id].replace('<br>', ' ')}</span><span class="feat">${features[m.id].join(' · ')}</span><span class="vals">초기 밝기 ${m.values.brightness} · 대비 ${m.values.contrast} · 소리 ${m.values.volume}</span></div>`).join('');
-} catch (e) { errors.push('profiles:' + e.message); }
+
 try {
   const map = await (await fetch('../web/dist/assets/scenes/tears-lab-map.json')).json();
   const svg = document.getElementById('map-chart');
@@ -606,7 +586,7 @@ try {
   el('text', { x: 0, y: 45, 'font-size': 9, fill: '#aaa7bd' }, svg, '평균, 0–255');
   for (const t of [0, 15, 30, 45]) { const tx = Math.min(t, d); el('line', { x1: x(tx), x2: x(tx), y1: laneL[1], y2: laneL[1] + 4, stroke: '#aaa7bd', 'stroke-width': 1.5 }, svg); el('text', { x: x(tx), y: 56, 'font-size': 10, fill: '#aaa7bd', 'text-anchor': t === 0 ? 'start' : t === 45 ? 'end' : 'middle' }, svg, `${t}초`); }
   for (const e of (map.noticeEvents || [])) el('path', { d: `M${x(e.at) - 5},54 L${x(e.at) + 5},54 L${x(e.at)},48 Z`, fill: '#cdff5f' }, svg);
-  const mapTitle = document.querySelector('.map-box h3 small'); if (mapTitle) mapTitle.textContent += ` · 사전 예고 ${(map.noticeEvents || []).length}회 · 변화 구간 ${map.events.length}개`;
+  const mapTitle = document.querySelector('.map-box h3 small'); if (mapTitle) mapTitle.textContent += ` · 예고 ${(map.noticeEvents || []).length}회`;
 } catch (e) { errors.push('map:' + e.message); }
 await document.fonts.ready;
 await Promise.all([...document.images].map(img => img.complete ? null : new Promise(r => { img.onload = img.onerror = r; })));
