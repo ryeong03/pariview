@@ -1,0 +1,10 @@
+Tears of Steel (2012)
+Copyright Blender Foundation | mango.blender.org
+Creative Commons Attribution 3.0 Unported
+https://creativecommons.org/licenses/by/3.0/
+Official film and license: https://mango.blender.org/about/
+Official YouTube: https://www.youtube.com/watch?v=R6MlUcmOul8
+Source: https://download.blender.org/demo/movies/ToS/tears_of_steel_720p.mov
+This prototype uses a 12-second excerpt, 00:47–00:59, resized and re-encoded
+The viewer can adjust brightness, contrast and audio
+The excerpt is not an endorsement by the Blender Foundation

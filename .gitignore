@@ -2,7 +2,7 @@
 __pycache__/
 .venv/
 web/.openai/
-assets/
+/assets/
 research/*.png
 research/*.jpg
 research/reference-*.txt
@@ -15,3 +15,6 @@ layout-debug.png
 PariView_A1_300dpi.png
 PariView_UI_detail.png
 validation.json
+web/dist/assets/rejected-drafts/
+research/ui-guide.txt
+web/extension-test-profile/

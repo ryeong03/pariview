@@ -1,0 +1,9 @@
+/* alltology-04 copy helpers: device-specific wording (layout stays in product.css) */
+.copy-mobile{display:none}
+.mobile-install-note{margin:0 auto 16px;text-align:center;color:var(--muted,#858893);font-size:14px}
+@media(max-width:700px){
+  .copy-desktop{display:none}
+  span.copy-mobile{display:inline}
+  p.copy-mobile{display:block}
+  .install-steps a[download]{display:none}
+}

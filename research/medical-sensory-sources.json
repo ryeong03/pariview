@@ -1,0 +1,210 @@
+{
+  "project": "PariView",
+  "verified_on": "2026-11-04",
+  "scope": "안과·이비인후과/청각학·정신건강의학과 관련 평가·분류·치료 근거와 제품 설계의 적용 한계",
+  "sources": [
+    {
+      "id": "M1",
+      "type": "professional_guideline",
+      "authors": [
+        "Jacobs, Deborah S.",
+        "Afshari, Natalie A.",
+        "Bishop, Rachel J.",
+        "Keenan, Jeremy D.",
+        "Lee, Jimmy",
+        "Shen, Tueng T.",
+        "Vitale, Susan"
+      ],
+      "year": 2023,
+      "online_year": 2022,
+      "title": "Refractive Errors Preferred Practice Pattern®",
+      "journal": "Ophthalmology",
+      "volume": "130",
+      "issue": "3",
+      "pages": "P1–P60",
+      "doi": "10.1016/j.ophtha.2022.10.031",
+      "url": "https://www.aaojournal.org/article/S0161-6420%2822%2900867-3/fulltext/",
+      "additional_url": "https://www.aao.org/Assets/91d7451b-4a87-465f-b4a9-d4ee61a50b11/638967400654330000/refractive-errors-ppp-updated-2025-pdf",
+      "verified": "출판사 서지 및 AAO 공개 지침 Refraction 항목 확인. 직접 열기 일부 403; 검색에 노출된 원문 해당 문단 확인.",
+      "relevance": "환자 응답에 따른 자각적 굴절 정밀조정. PariView에는 반복 비교 절차만 설계 비유로 참고."
+    },
+    {
+      "id": "M2",
+      "type": "professional_guideline",
+      "corporate_author": "American Optometric Association",
+      "title": "Comprehensive Adult Eye and Vision Examination, Second Edition",
+      "url": "https://www.aoa.org/AOA/Documents/Practice%20Management/Clinical%20Guidelines/EBO%20Guidelines/Comprehensive%20Adult%20Eye%20and%20Vision%20Examination%2C%20Second%20Edition.pdf",
+      "verified": "기관 공개 PDF의 대비감도 및 눈부심 검사 설명 확인.",
+      "relevance": "시력만으로 모든 시각 기능을 설명하지 않음. 대비와 눈부심을 별도 항목으로 다룸."
+    },
+    {
+      "id": "M3",
+      "type": "professional_practice_portal",
+      "corporate_author": "American Speech-Language-Hearing Association",
+      "title": "Tinnitus and Hyperacusis",
+      "url": "https://www.asha.org/practice-portal/clinical-topics/tinnitus-and-hyperacusis/",
+      "verified": "원문 Definitions, Assessment of Hyperacusis, Additional Testing, Management Options 확인.",
+      "relevance": "소리내성 문제의 구분, 반복 평가와 개인·생활 맥락, CBT·소리치료·상담의 임상적 위치."
+    },
+    {
+      "id": "M4",
+      "type": "expert_consensus_delphi",
+      "authors": [
+        "Swedo, Susan E.",
+        "Baguley, David M.",
+        "Denys, Damiaan",
+        "Dixon, Laura J.",
+        "Erfanian, Mercede",
+        "Fioretti, Alessandra",
+        "Jastreboff, Pawel J.",
+        "Kumar, Sukhbinder",
+        "Rosenthal, M. Zachary",
+        "Rouw, Romke",
+        "Schiller, Daniela",
+        "Simner, Julia",
+        "Storch, Eric A.",
+        "Taylor, Steven",
+        "Vander Werff, Kathy R.",
+        "Altimus, Cara M.",
+        "Raver, Sylvina M."
+      ],
+      "year": 2022,
+      "title": "Consensus Definition of Misophonia: A Delphi Study",
+      "journal": "Frontiers in Neuroscience",
+      "volume": "16",
+      "article_number": "841816",
+      "doi": "10.3389/fnins.2022.841816",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8969743/",
+      "verified": "PubMed 서지 및 Europe PMC 공식 원문 XML에서 정의·맥락·분류 한계 확인.",
+      "relevance": "특정 소리의 패턴·의미·통제감·상황이 관련. 단순 음량 문제와 동일시하지 않음. 합의 정의이지 치료 RCT 아님."
+    },
+    {
+      "id": "M5",
+      "type": "clinical_guideline",
+      "corporate_author": "National Institute for Health and Care Excellence",
+      "title": "Autism spectrum disorder in adults: diagnosis and management (CG142)",
+      "url": "https://www.nice.org.uk/guidance/CG142/chapter/Recommendations",
+      "sections": [
+        "1.1.8",
+        "1.3.2"
+      ],
+      "verified": "NICE 공식 권고 해당 절 확인. 직접 열기 403인 경우 검색에 노출된 해당 원문 사용.",
+      "relevance": "빛·소리·공간을 개인의 감각 필요에 맞춰 조정하고 휴식·예측 가능성을 고려."
+    },
+    {
+      "id": "M6",
+      "type": "research_framework_not_diagnostic",
+      "corporate_author": "National Institute of Mental Health",
+      "title": "About RDoC; Arousal and Regulatory Systems",
+      "url": "https://www.nimh.nih.gov/research/research-funded-by-nimh/rdoc/about-rdoc",
+      "additional_urls": [
+        "https://www.nimh.nih.gov/research/research-funded-by-nimh/rdoc/constructs/arousal-and-regulatory-systems",
+        "https://www.nimh.nih.gov/research/research-funded-by-nimh/rdoc/resources/rdoc-frequently-asked-questions-faq"
+      ],
+      "verified": "공식 연구틀 설명·진단용이 아니라는 명시 확인.",
+      "relevance": "주의·정서·각성 같은 기능을 차원별로 보는 연구 관점. 제품 진단 또는 감각 유형 검사가 아님."
+    },
+    {
+      "id": "M7",
+      "type": "review_conceptual_model",
+      "authors": [
+        "Dunn, Winnie"
+      ],
+      "year": 2001,
+      "title": "The sensations of everyday life: empirical, theoretical, and pragmatic considerations",
+      "journal": "American Journal of Occupational Therapy",
+      "volume": "55",
+      "issue": "6",
+      "pages": "608–620",
+      "doi": "10.5014/ajot.55.6.608",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/12959225/",
+      "verified": "저자 초록·서지 확인.",
+      "relevance": "감각추구·회피·민감·낮은등록의 네 패턴. 작업치료 기반 모델이며 정신과 공인 4유형 진단분류가 아님."
+    },
+    {
+      "id": "M8",
+      "type": "randomized_crossover_studies",
+      "authors": [
+        "Blackburn, Marcus K.",
+        "Lamb, Randy D.",
+        "Digre, Kathleen B.",
+        "Smith, A. Gordon",
+        "Warner, Judith E. A.",
+        "McClane, Robert W.",
+        "Nandedkar, Sanjeev D.",
+        "Langeberg, Wendy J.",
+        "Holubkov, Richard",
+        "Katz, Bradley J."
+      ],
+      "year": 2009,
+      "title": "FL-41 tint improves blink frequency, light sensitivity, and functional limitations in patients with benign essential blepharospasm",
+      "journal": "Ophthalmology",
+      "volume": "116",
+      "issue": "5",
+      "pages": "997–1001",
+      "doi": "10.1016/j.ophtha.2008.12.031",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19410958/",
+      "verified": "PubMed의 저자 초록·서지 확인.",
+      "relevance": "안검경련 환자의 렌즈 연구. 화면 색 필터·신경다양성 전체의 효과로 일반화 불가."
+    },
+    {
+      "id": "M9",
+      "type": "randomized_waitlist_controlled_trial",
+      "authors": [
+        "Jüris, Linda",
+        "Andersson, Gerhard",
+        "Larsen, Hans Christian",
+        "Ekselius, Lisa"
+      ],
+      "year": 2014,
+      "title": "Cognitive behaviour therapy for hyperacusis: a randomized controlled trial",
+      "journal": "Behaviour Research and Therapy",
+      "volume": "54",
+      "pages": "30–37",
+      "doi": "10.1016/j.brat.2014.01.001",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24508581/",
+      "verified": "PubMed 저자 초록·서지 확인.",
+      "relevance": "청각과민 환자60명 CBT 연구. LDL 등 지표의 차이, 불안 척도에서는 유의한 집단 차이 없음. 대기군 비교·제품 효과 연구 아님."
+    },
+    {
+      "id": "M10",
+      "type": "randomized_waitlist_controlled_trial",
+      "authors": [
+        "Jager, Inge J.",
+        "Vulink, Nienke C. C.",
+        "Bergfeld, Isidoor O.",
+        "van Loon, Arnoud J. J. M.",
+        "Denys, Damiaan A. J. P."
+      ],
+      "year": 2021,
+      "online_year": 2020,
+      "title": "Cognitive behavioral therapy for misophonia: A randomized clinical trial",
+      "journal": "Depression and Anxiety",
+      "volume": "38",
+      "issue": "7",
+      "pages": "708–718",
+      "doi": "10.1002/da.23127",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8359510/",
+      "verified": "PubMed 저자 초록, Europe PMC 원문 XML의 초록·출판연도 확인.",
+      "relevance": "미소포니아 환자54명, 3개월 집단 CBT 대기군 비교. 여러 치료 요소의 묶음으로 개별 UI 기능에 효과를 이전할 수 없음."
+    },
+    {
+      "id": "M11",
+      "type": "clinical_guideline",
+      "corporate_author": "National Institute for Health and Care Excellence",
+      "title": "Autism spectrum disorder in under 19s: support and management (CG170)",
+      "url": "https://www.nice.org.uk/guidance/cg170/chapter/recommendations",
+      "sections": [
+        "1.6.1",
+        "1.6.2"
+      ],
+      "verified": "공식 권고 해당 절 확인.",
+      "relevance": "자폐 아동·청소년의 말·언어 문제에 대한 auditory integration training 및 neurofeedback 사용을 권고하지 않음. 적용범위를 넓혀 모든 감각치료 금지로 오독하지 않음."
+    }
+  ],
+  "design_status": "연구/지침을 참고한 자체 설계안. 임상 검증 도구 또는 치료 프로토콜이 아님.",
+  "links_to_previous_review": [
+    "literature-review.txt",
+    "sources.json"
+  ]
+}
