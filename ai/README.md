@@ -3,36 +3,28 @@
 `python3 ai/server.py`로 API와 `web/dist` 정적 파일을 같은 origin에서 제공함
 Python 표준 라이브러리만 사용하며 서버는 파일이나 사용자 응답을 디스크에 쓰지 않음
 
-## Railway 환경변수
+## Claude API 환경변수
 
 | 이름 | 값 |
 |---|---|
-| `ANTHROPIC_BASE_URL` | 선택 사항 · 학교 LiteLLM 사용 시 `<학교 게이트웨이 주소>` · 로컬 예시 `http://localhost:4000` · 없으면 Anthropic 직접 연결 |
-| `ANTHROPIC_AUTH_TOKEN` | 선택 사항 · 학교 LiteLLM Virtual Key · 게이트웨이에서 이 값이 있으면 우선 사용 |
-| `ANTHROPIC_API_KEY` | Anthropic 직접 연결용 API 키 · 게이트웨이에서는 기존 Railway 값을 Virtual Key 호환 입력으로 사용 가능 |
+| `ANTHROPIC_API_KEY` | 서버에서 사용할 Claude API 키 · 예시 `<your-api-key>` |
+| `ANTHROPIC_BASE_URL` | 선택 사항 · Claude Messages API 호환 주소 · 로컬 예시 `http://localhost:4000` |
+| `ANTHROPIC_AUTH_TOKEN` | 선택 사항 · 호환 주소에서 사용할 Bearer 토큰 · 예시 `<your-auth-token>` |
 | `PARIVIEW_AI_ENABLED` | `1` |
-| `PARIVIEW_AI_MODEL` | 공급자가 허용한 정확한 모델 이름 · 학교 권장 `claude-sonnet-4-6` · 가벼운 시험 `claude-haiku-4-5-20251001` |
+| `PARIVIEW_AI_MODEL` | 사용할 정확한 Claude 모델 ID · 예시 `claude-sonnet-4-6` |
 | `HOST` | 기본 `0.0.0.0` |
 | `PORT` | Railway 제공값 또는 기본 `8080` |
 | `PARIVIEW_AI_MAX_CALLS_PER_HOUR` | 선택 사항 · 기본 `60` |
-| `PARIVIEW_AI_DEBUG` | 선택 사항 · `1`이면 공급자 호출 실패 시 `provider_error <예외> status=<HTTP 코드> type=<Anthropic 오류 종류>` 한 줄만 로그에 남김 · 응답 본문·키·사용자 문장은 남기지 않음 · 원인 확인 후 끄기 |
+| `PARIVIEW_AI_DEBUG` | 선택 사항 · `1`이면 제한된 오류 종류와 HTTP 상태만 기록 · 키·응답 본문·사용자 문장은 기록하지 않음 |
 
 모델은 환경변수로 명시하며 코드가 다른 모델을 자동 선택하지 않음
-학교 연결은 LiteLLM이 제공하는 Anthropic Messages 호환 `/v1/messages`를 사용하고 Virtual Key를 `Authorization: Bearer`로 전달함
-공급자 응답의 HTTP 리다이렉트는 거부하여 Bearer 토큰이나 API 키가 다른 URL로 자동 전달되지 않게 함
-`ANTHROPIC_AUTH_TOKEN`이 비어 있으면 현재 `ANTHROPIC_API_KEY` 값을 학교 Virtual Key로 재사용하므로 기존 Railway 비밀값을 복사하거나 읽을 필요가 없음
-`ANTHROPIC_BASE_URL`이 없으면 `https://api.anthropic.com/v1/messages`와 `x-api-key`를 사용하는 기존 Anthropic 직접 연결을 유지함
-공급자 상태는 학교 게이트웨이면 `litellm`, 직접 연결이면 `anthropic`으로 표시하며 URL이나 인증값은 반환하지 않음
-준비된 후보 ID만 고르는 작업이라 `output_config.effort`는 `low`, thinking 토큰을 포함해 `max_tokens`는 4000으로 둠
-`output_config.format`의 JSON Schema와 `effort`는 Messages 요청 본문에 함께 보내며 최종 후보는 공급자와 무관하게 서버에서 다시 검증함
-키는 프런트 코드·정적 파일·요청 본문·로그에 포함하지 않음 · 붙여넣을 때 들어간 앞뒤 공백·줄바꿈·따옴표는 서버가 제거함
+`ANTHROPIC_BASE_URL`을 생략하면 Anthropic Claude API에 직접 연결함
+호환 주소를 지정하면 `/v1/messages`를 사용하고 `ANTHROPIC_AUTH_TOKEN`을 우선하며, 비어 있으면 `ANTHROPIC_API_KEY`를 Bearer 토큰으로 사용함
+HTTP 리다이렉트는 거부하여 인증값이 다른 주소로 자동 전달되지 않게 함
+키는 프런트 코드·정적 파일·요청 본문·로그에 포함하지 않으며 최종 후보는 서버에서 다시 검증함
 
 - [Claude 모델 공식 문서](https://platform.claude.com/docs/en/models/overview)
 - [Claude Structured Outputs 공식 문서](https://platform.claude.com/docs/en/build-with-claude/structured-outputs)
-- [LiteLLM Claude Code 연결 공식 문서](https://docs.litellm.ai/docs/proxy/client_setup/claude_code)
-- [LiteLLM 게이트웨이 클라이언트 공식 문서](https://docs.litellm.ai/docs/proxy/client_setup/overview)
-- [LiteLLM Messages `output_config` 공식 예시](https://docs.litellm.ai/docs/providers/bigmodel#anthropic-messages-api)
-- [LiteLLM `output_config.format` 호환 변경 기록](https://docs.litellm.ai/release_notes/v1.107.0rc1/v1-107-0-rc-1)
 
 ## 동작과 근거 경계
 
@@ -139,9 +131,3 @@ uv run --with playwright python web/validate_recommendation.py
 노란 자막 켜기·끄기·이전 저장 형식이 규칙 제안·모의 AI·공급자 실패에서도 유지되는지 검사
 브라우저는 기본 제안·수정·취소·저장·다음 비교·모의 AI 성공/실패와 390/768/1440 화면, 실제 app 통합 hook 검사
 자동 테스트는 공급자 모의응답을 사용하며 실제 사용자 효과 평가를 포함하지 않음
-
-공개 배포 `ba21103`에서 2026-11-04 별도로 실제 UI 요청 1회를 확인함 (`claude-sonnet-4-6`, LiteLLM 경로)
-HTTP 200 · `source=ai` · `status=ai_generated` · 약 4.3초 응답으로, `keep` 시작점과 `sound_changes`·`high_sound`, 다음 비교 `volume`을 반환함
-기존 밝기·음량·노란 자막을 유지하면서 제안한 값의 미리보기·확정 저장을 확인했고 입력 문장은 브라우저 저장 공간에 남지 않았음
-이는 한 요청의 연결·동작 확인이며 반복 성공률이나 추천 효과 측정이 아님
-이전 Anthropic 직접 연결의 401 응답은 과거 기록이며, 학교가 제공한 게이트웨이 경로를 설정한 뒤 위 실제 응답을 확인함

@@ -20,3 +20,6 @@ web/dist/assets/rejected-drafts/
 research/ui-guide.txt
 web/extension-test-profile/
 handoff/
+
+# Local poster history
+/poster/versions/

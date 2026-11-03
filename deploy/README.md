@@ -7,7 +7,7 @@ Static text responses support gzip with a bounded memory cache and `Vary: Accept
 Static responses keep `no-cache` and add `no-transform` so intermediaries preserve the server's encoding choice
 Video, ZIP, font and image files are not recompressed; byte-range requests use the original bytes
 
-In Railway, connect `ryeong03/pariview` on `main` with the repository root as the root directory
+In Railway, connect this repository's `main` branch with the repository root as the root directory
 The Dockerfile is detected automatically; no build or start command override is needed
 Generate a public domain targeting port 8080 and set the healthcheck path to `/healthz`
 If choosing another target port, set the Railway `PORT` variable to the same value
@@ -28,16 +28,16 @@ Set these service variables directly in Railway, then apply the deployment
 
 | Variable | Purpose |
 |---|---|
-| `ANTHROPIC_API_KEY` | Server-side Anthropic key; also accepted as an existing Virtual Key when a gateway is configured |
-| `ANTHROPIC_BASE_URL` | Optional Messages-compatible gateway base URL supplied by the provider; omit for direct Anthropic access |
-| `ANTHROPIC_AUTH_TOKEN` | Optional gateway Virtual Key; takes priority over `ANTHROPIC_API_KEY` on a gateway |
+| `ANTHROPIC_API_KEY` | Server-side Claude API key, for example `<your-api-key>` |
+| `ANTHROPIC_BASE_URL` | Optional Claude Messages API-compatible base URL, for example `http://localhost:4000` |
+| `ANTHROPIC_AUTH_TOKEN` | Optional Bearer token for a compatible base URL, for example `<your-auth-token>` |
 | `PARIVIEW_AI_ENABLED` | Set to `1` to enable provider calls |
-| `PARIVIEW_AI_MODEL` | Exact model allowed by the provider, for example `claude-sonnet-4-6`; no automatic model switching |
+| `PARIVIEW_AI_MODEL` | Exact Claude model ID, for example `claude-sonnet-4-6`; no automatic model switching |
 | `PARIVIEW_AI_DEBUG` | Keep `0` normally; `1` enables only bounded HTTP status/error-type diagnostics |
 
-A configured gateway uses `/v1/messages` with Bearer authentication; direct Anthropic access uses `x-api-key`
-An existing Virtual Key in `ANTHROPIC_API_KEY` can remain there without reading or copying it
-Provider redirects are rejected, and public status reports only `anthropic` or `litellm`, never the endpoint or key
+When `ANTHROPIC_BASE_URL` is omitted, the server connects directly to the Anthropic Claude API
+A compatible base URL uses `/v1/messages` and prefers `ANTHROPIC_AUTH_TOKEN`; when it is empty, `ANTHROPIC_API_KEY` is used as the Bearer token
+HTTP redirects are rejected, and the public status response never includes the endpoint or credentials
 
 Without these settings, the recommendation uses the prepared research-based defaults
 Provider failures also fall back to those defaults; only a validated provider response is labelled as an AI recommendation

@@ -17,7 +17,7 @@ def main():
     handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(ROOT))
     server = http.server.ThreadingHTTPServer(('127.0.0.1', 0), handler)
     threading.Thread(target=server.serve_forever, daemon=True).start()
-    # Optional: render another copy, e.g. a versions/ snapshot — python3 poster/render.py poster/versions/v5/PariView_A1.html
+    # Optional: render another HTML file inside the repo — python3 poster/render.py path/to/PariView_A1.html
     html = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else HERE / 'PariView_A1.html'
     out = html.parent
     url = f'http://127.0.0.1:{server.server_port}/{html.relative_to(ROOT).as_posix()}'
