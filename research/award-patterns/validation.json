@@ -1,0 +1,119 @@
+{
+  "pages": [
+    {
+      "page": 1,
+      "content_bottom": 920.875,
+      "footer_top": 1065.484375,
+      "gap": 144.609375,
+      "horizontal_overflow": []
+    },
+    {
+      "page": 2,
+      "content_bottom": 967.921875,
+      "footer_top": 1065.484375,
+      "gap": 97.5625,
+      "horizontal_overflow": []
+    },
+    {
+      "page": 3,
+      "content_bottom": 868.28125,
+      "footer_top": 1065.484375,
+      "gap": 197.203125,
+      "horizontal_overflow": []
+    },
+    {
+      "page": 4,
+      "content_bottom": 931.5625,
+      "footer_top": 1065.484375,
+      "gap": 133.921875,
+      "horizontal_overflow": []
+    },
+    {
+      "page": 5,
+      "content_bottom": 908.890625,
+      "footer_top": 1065.484375,
+      "gap": 156.59375,
+      "horizontal_overflow": []
+    },
+    {
+      "page": 6,
+      "content_bottom": 775.640625,
+      "footer_top": 1065.484375,
+      "gap": 289.84375,
+      "horizontal_overflow": []
+    },
+    {
+      "page": 7,
+      "content_bottom": 812.265625,
+      "footer_top": 1065.484375,
+      "gap": 253.21875,
+      "horizontal_overflow": []
+    },
+    {
+      "page": 8,
+      "content_bottom": 908.21875,
+      "footer_top": 1065.484375,
+      "gap": 157.265625,
+      "horizontal_overflow": []
+    },
+    {
+      "page": 9,
+      "content_bottom": 903.3125,
+      "footer_top": 1065.484375,
+      "gap": 162.171875,
+      "horizontal_overflow": []
+    },
+    {
+      "page": 10,
+      "content_bottom": 929.421875,
+      "footer_top": 1065.484375,
+      "gap": 136.0625,
+      "horizontal_overflow": []
+    },
+    {
+      "page": 11,
+      "content_bottom": 849.640625,
+      "footer_top": 1065.484375,
+      "gap": 215.84375,
+      "horizontal_overflow": []
+    },
+    {
+      "page": 12,
+      "content_bottom": 901.21875,
+      "footer_top": 1065.484375,
+      "gap": 164.265625,
+      "horizontal_overflow": []
+    },
+    {
+      "page": 13,
+      "content_bottom": 866.96875,
+      "footer_top": 1065.484375,
+      "gap": 198.515625,
+      "horizontal_overflow": []
+    }
+  ],
+  "fonts": [
+    {
+      "family": "Pretendard",
+      "status": "loaded"
+    },
+    {
+      "family": "Pretendard",
+      "status": "loaded"
+    },
+    {
+      "family": "Pretendard",
+      "status": "loaded"
+    }
+  ],
+  "broken_images": [],
+  "broken_anchors": [],
+  "external_links": 19,
+  "page_errors": [],
+  "source_cases": 10,
+  "rubric_total": 100,
+  "pass": true,
+  "pdf_pages": 13,
+  "pdf_links": 58,
+  "pdf_page_size": "A4"
+}

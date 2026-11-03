@@ -143,6 +143,7 @@ flowchart LR
 
 - [A1 포스터 PDF](poster/PariView_A1.pdf) · [이전 버전 기록](poster/versions/README.md)
 - [연구 근거·설계 전략 PDF](PariView_Research_and_Strategy.pdf)
+- [수상 사례·100점 심사 대응 PDF](research/award-patterns/PariView_Award_Strategy.pdf): 5개 대학 관련 대상 사례 10건과 포스터 구성·도입 모델 제안
 - [제공용 실험·설문 서식](analysis/user-study/field-kit/README.txt): 실제 응답이 없는 별도 평가 설계예요
 
 ## 폴더
@@ -161,6 +162,7 @@ flowchart LR
 | `analysis/user-study/field-kit/` | 제공용 실험 절차·설문지·빈 기록표·집계 스크립트 |
 | `poster/` | A1 포스터 소스·PDF·이미지와 이전 버전 |
 | `research/` | 문헌 정리와 출처 |
+| `research/award-patterns/` | 수상 사례 출처·심사 대응 보고서·포스터 참고 자료 |
 | `Dockerfile`, `deploy/` | Railway Python 서버 배포 설정과 운영 안내 |
 
 ## 오픈소스로 넓혀가는 시청 접근성
