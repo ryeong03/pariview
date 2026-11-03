@@ -81,3 +81,19 @@ body.reduce-motion .studio-title-pair h2 span{animation:none}
 body{word-break:keep-all;overflow-wrap:break-word}
 h1,h2,h3{text-wrap:balance}
 p,li,small{text-wrap:pretty}
+
+/* "세부 설정 펼치기" must read as a button: outlined pill, 40px tall, hover inverts, state shown by border/background */
+#expand-settings{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 16px;margin-left:auto;border:1.5px solid #0d0e11;border-radius:999px;background:#fff;color:#0d0e11;font-size:15px;font-weight:700;line-height:1;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s}
+#expand-settings:hover{background:#0d0e11;color:#fff}
+#expand-settings:focus-visible{outline:3px solid #003cdc;outline-offset:3px}
+#expand-settings[aria-expanded="true"]{background:#f3f4f6;border-color:#c9cbd1;color:#4e5968}
+#expand-settings[aria-expanded="true"]:hover{background:#e5e7eb;color:#0d0e11}
+@media(max-width:760px){.dock-heading{flex-wrap:wrap}#expand-settings{width:100%;justify-content:center;margin:8px 0 0}}
+/* Reserve the taller button and its tab gap so the collapsed map row still fits on laptop screens. */
+@media(min-width:761px){.stage-card{max-width:min(1080px,calc((100dvh - 478px)*var(--scene-ratio,2.397)))}}
+
+/* fit the dock column (140px) and keep clear of the tab row; chevron rotates via dock-motion.js */
+#expand-settings{padding:0 12px;font-size:14px;max-width:100%;margin-bottom:10px}
+#expand-settings .chev{display:inline-flex;width:16px;height:16px;flex:none}
+#expand-settings .chev svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:760px){#expand-settings{width:auto;margin:0}}
