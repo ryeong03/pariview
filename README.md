@@ -13,7 +13,7 @@
 - 웹 데모: [PariView 바로 열기](https://pariview-production.up.railway.app/)
 - 로컬 실행: `HOST=127.0.0.1 PORT=4178 python3 ai/server.py` → http://127.0.0.1:4178
 - Claude 추천 연결: [Railway 환경변수 안내](ai/README.md) · 키를 설정하기 전에도 연구 기반 기본 제안을 이용할 수 있어요
-- 크롬 확장 프로그램: [`pariview-extension.zip`](pariview-extension.zip)을 풀고 `chrome://extensions`에서 개발자 모드 → 압축해제된 확장 프로그램을 로드합니다
+- 크롬 확장 프로그램: [`pariview-extension.zip`](pariview-extension.zip)을 풀고 `chrome://extensions`에서 개발자 모드 → 압축해제된 확장 프로그램을 로드합니다 · [설치 안내](extension/README.md)
 
 ## 화면
 
@@ -100,8 +100,8 @@ flowchart LR
 | 화면 동작 | `uv run --with playwright python web/validate.py` (1440·1280·768·390 폭, 5프로필, 비교, 저장, 초기화, 재생, 모바일, 모션 줄이기) | 오류 0건, 리소스 실패 0건 |
 | 추천 | `python3 -m unittest ai.test_recommendation -v`, `uv run --with playwright python web/validate_recommendation.py` | 13개 테스트, 정책 입력 61개 일치, 브라우저 9개 흐름 통과 · 실제 Claude 호출은 키 설정 후 확인 |
 | 영상 비교 | 3편 길이·장면 전환·12초 이후 탐색·동시 재생·0.75배속 확인 | 각 45초, 화면 동기화 및 설정 유지 통과 |
-| 확장 프로그램 | Chromium에 `--load-extension`으로 설치해 연결 → 저장 → 다른 페이지 적용 → 초기화 → 끄고 켜기 → 재생 유지 | 6개 항목 통과 |
-| 피팅 흐름 | [AI 페르소나 10명 시뮬레이션](analysis/simulation/REPORT.md) 대상층별 페르소나가 실제 UI로 피팅을 끝까지 진행 | 원하는 값과의 평균 오차 0.189 → 0.077, 10명 모두 오차 감소, 켜기/끄기 항목 일치 70% → 100% |
+| 확장 프로그램 v0.3.0 | 웹 연결 6개, 오디오·상태 16개, 공개 앱 → 실제 YouTube·SPA 이동 10개 ([검증 기록](extension/tests/VALIDATION.md)) | 32개 항목 통과, 최종 ZIP 설치로 오디오·상태 16개 재확인 · 소리는 디지털 출력 신호로 확인 |
+| 피팅 흐름 | [사용자 시나리오 10종 시뮬레이션](analysis/simulation/REPORT.md) 대상층별 페르소나가 실제 UI로 피팅을 끝까지 진행 | 원하는 값과의 평균 오차 0.189 → 0.077, 10명 모두 오차 감소, 켜기/끄기 항목 일치 70% → 100% |
 
 시뮬레이션은 페르소나마다 정해둔 목표값에 피팅 흐름이 얼마나 다가가는지를 확인한 결과예요 고정된 두 값 중에서만 고르는 구조라 큰 소리가 필요한 페르소나는 최대 선택지에서 멈추는 한계도 함께 찾았어요
 
@@ -132,7 +132,7 @@ flowchart LR
 | `web/validate.py` | 화면 동작 검증 |
 | `extension/` | 크롬 확장 프로그램 소스 |
 | `analysis/sensory_map.py` | 감각 지도 측정 |
-| `analysis/simulation/` | AI 페르소나 시뮬레이션, 실제 사용자 평가지 |
+| `analysis/simulation/` | 사용자 시나리오 시뮬레이션, 실제 사용자 평가지 |
 | `research/` | 문헌 정리와 출처 |
 | `Dockerfile`, `deploy/` | Railway Python 서버 배포 설정과 운영 안내 |
 
