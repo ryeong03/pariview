@@ -1,0 +1,8 @@
+**
+!Dockerfile
+!deploy/
+!deploy/default.conf.template
+!web/
+!web/dist/
+!web/dist/**
+web/dist/assets/rejected-drafts/
