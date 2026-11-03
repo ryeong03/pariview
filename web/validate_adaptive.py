@@ -51,15 +51,45 @@ def main():
         base, storage = settings(), stored()
         start()
         first = question()
+        page.evaluate("window.checkedMedia=[...document.querySelectorAll('.fit-preview')]")
         for choice in ['a', 'b', 'a']:
             page.locator(f'[data-choose="{choice}"]').click()
             assert state()['answered'] == 0
+            assert page.evaluate("checkedMedia.every((v,i)=>v===document.querySelectorAll('.fit-preview')[i] && v.hasAttribute('src'))")
         page.locator('#finish-fitting').click()
+        assert page.evaluate("checkedMedia.every(v=>!v.hasAttribute('src') && !v.isConnected)")
         assert state()['answered'] == 0 and state()['settings'] == base
         assert not page.evaluate('window.__pariview.fitSnapshot.history.length')
         page.keyboard.press('Escape')
         assert settings() == base and stored() == storage
-        checks.append('pending choice is neither counted nor saved on early finish or cancel')
+        checks.append('pending choices reuse both media nodes; retiring a question releases video downloads; early finish and cancel do not count or save pending answers')
+
+        # Delay completion of the first play promises after the browser starts playback.
+        # Cancelling and replaying must not let the older completion pause the new request.
+        start()
+        q = question(); lower = 'a' if q['a'] < q['b'] else 'b'
+        page.evaluate("""() => {
+            window.originalPlay=HTMLMediaElement.prototype.play;
+            let calls=0; const pending=[];
+            HTMLMediaElement.prototype.play=function(){
+                const playback=originalPlay.call(this);
+                if(calls++ < 3)return playback.then(()=>new Promise(resolve=>pending.push(resolve)));
+                return playback;
+            };
+            window.pendingPlayback=()=>pending.length;
+            window.releasePlayback=()=>pending.splice(0).forEach(resolve=>resolve());
+        }""")
+        listen = page.locator(f'[data-listen="{lower}"]')
+        listen.click(); page.wait_for_function('pendingPlayback()===3')
+        assert listen.get_attribute('aria-busy') == 'true'
+        listen.click()  # Explicit cancel while preparing.
+        assert listen.get_attribute('aria-busy') == 'false'
+        listen.click(); page.wait_for_function('window.__pariview.comparisonPlaying')
+        page.evaluate('releasePlayback()'); page.wait_for_timeout(200)
+        assert page.evaluate("window.__pariview.comparisonPlaying && [...document.querySelectorAll('#film,.fit-preview')].every(v=>!v.paused)")
+        page.evaluate('() => { HTMLMediaElement.prototype.play=originalPlay; }')
+        page.keyboard.press('Escape')
+        checks.append('loading can be cancelled; completion of an older play request cannot stop the newer playback')
 
         start()
         low_questions = []

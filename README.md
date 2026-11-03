@@ -123,7 +123,7 @@ flowchart LR
 | 영상 비교 | 3편 길이·장면 전환·12초 이후 탐색·동시 재생·0.75배속 확인 | 각 45초, 화면 동기화 및 설정 유지 통과 |
 | 확장 프로그램 v0.3.1 | 웹 연결 6개, 오디오·상태 16개, 공개 앱 → 실제 YouTube·SPA 이동 10개 ([검증 기록](extension/tests/VALIDATION-0.3.1.md)) | 32개 항목 통과, 최종 ZIP 설치로 오디오·상태 16개 재확인 · 소리는 디지털 출력 신호로 확인 |
 | 당사자 참여 검증 | 신경다양성 당사자 참여 · 사용자 확인 | 완료 |
-| 적응형 피팅 | `node web/test_adaptive_fit.mjs`, `uv run --with playwright python web/validate_adaptive.py --base-url http://127.0.0.1:4178` | 엔진 23개 통과, 실제 브라우저 5개 통합 흐름 통과 · 확정·되돌리기·추가 비교·조건 변경·기록·취소·저장 포함 |
+| 적응형 피팅 | `node web/test_adaptive_fit.mjs`, `uv run --with playwright python web/validate_adaptive.py --base-url http://127.0.0.1:4178` | 엔진 23개 통과, 실제 브라우저 6개 통합 흐름 통과 · 확정·되돌리기·추가 비교·조건 변경·기록·취소·저장·준비 중 재생 취소 포함 |
 | 합성 비교 평가 | [동일 5회·3축·추정기 비교](research/adaptive-fitting/README.txt), 조건별 500건 × 5조건 × 2정책 | 5,000회 실행과 동일 seed 재현 확인 · 실제 참여자 수치와 구분 |
 
 이전 고정 비교 방식의 [10종 시나리오 기록](analysis/simulation/REPORT.md)은 과거 구현 자료로 보관해요 현재 적응형 엔진의 성능이나 당사자의 시청 편안함·사용성(SUS) 점수로 쓰지 않아요
