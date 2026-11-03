@@ -174,7 +174,8 @@ function renderCaptions(){
  const easy=settings.easyCaptions&&!original,el=$('#film-caption'),cue=currentScene.captions.find(c=>video.currentTime>=c.start&&video.currentTime<c.end);
  el.hidden=!settings.captions||!cue;
  const text=cue?(easy?cue.easy:cue.text):'';if(el.textContent!==text){el.replaceChildren();const span=document.createElement('span');span.textContent=text;el.append(span);}
- el.style.fontSize=settings.captionSize+'px';el.style.fontWeight=settings.boldCaptions?'700':'400';el.style.color=settings.captionYellow&&!original?'#ffe03d':'';
+ const captionStyle=original?defaults:settings;
+ el.style.fontSize=captionStyle.captionSize+'px';el.style.fontWeight=captionStyle.boldCaptions?'700':'400';el.style.color=captionStyle.captionYellow?'#ffe03d':'';
  const seen=currentScene.captions.filter(c=>furthestTime>=c.start),key=`${currentScene.id}-${seen.length}-${easy}`;
  if(key===captionHistoryKey)return;captionHistoryKey=key;
  $('#caption-history').innerHTML=seen.length?seen.map((c,i)=>`<div class="caption-entry"><time>${formatTime(c.start)}</time><div>${escapeHTML(easy?c.easy:c.text)}<button class="text-link" ${i===0?'id="caption-seek"':''} data-caption-at="${c.start}">이 대사 다시 보기 ↗</button></div></div>`).join(''):`<p class="empty-state">${currentScene.captions.length?'재생한 장면의 대사가 여기에 남아요':'이 장면에는 대사가 없어요 장면 기록으로 다시 살펴볼 수 있어요'}</p>`;
