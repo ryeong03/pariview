@@ -144,7 +144,7 @@ function renderNotice(t){
  if(noticeShown!==next){
   noticeShown=next;const c=noticeCopy(next);
   el.dataset.kind=next.type==='소리 변화'?'sound':next.type==='빛 변화'?'light':'both';
-  el.innerHTML=`<span class="notice-count" aria-hidden="true"><b>${sec}</b><small>초 뒤</small></span><span class="notice-icons" aria-hidden="true">${c.icons.map(i=>`<svg><use href="#${i}"/></svg>`).join('')}</span><span class="notice-text"><b>${c.title}</b><small>${c.sub}</small></span><span class="sr-only">곧 ${c.title} ${c.sub}</span>`;
+  el.innerHTML=`<span class="notice-count" aria-hidden="true"><b>${sec}</b><small>초 뒤</small></span><span class="notice-icons" aria-hidden="true">${c.icons.map(i=>`<svg><use href="#${i}"/></svg>`).join('')}</span><span class="notice-text" aria-hidden="true"><b>${c.title}</b><small>${c.sub}</small></span><span class="sr-only">곧 ${c.title} ${c.sub}</span>`;
  } else el.querySelector('.notice-count b').textContent=sec;
  el.hidden=false;
 }
