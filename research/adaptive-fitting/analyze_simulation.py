@@ -65,6 +65,8 @@ def main():
     fig.suptitle(f'합성 데이터 시뮬레이션 · 조건별 {metadata["n_per_condition"]}개 선호점',fontweight='bold',fontsize=14)
     fig.supxlabel('띠·오차막대: 합성 사례 재표집 95% 구간 · 왼쪽은 모델 일치 조건 · 오른쪽 음수는 적응형 오차가 더 작음',fontsize=9)
     for ext in ['png','pdf','svg']:fig.savefig(out/f'comparison-overview.{ext}',dpi=220)
+    svg_path=out/'comparison-overview.svg'
+    svg_path.write_text('\n'.join(line.rstrip() for line in svg_path.read_text().splitlines())+'\n')
     plt.close(fig)
     fig,axes=plt.subplots(2,3,figsize=(12,7),layout='constrained')
     for ax,(sid,s) in zip(axes.flat,summaries.items()):
