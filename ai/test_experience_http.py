@@ -45,6 +45,31 @@ class ExperienceHTTPTests(unittest.TestCase):
         finally:
             connection.close()
 
+    def status(self):
+        host, port = self.httpd.server_address
+        connection = http.client.HTTPConnection(host, port, timeout=5)
+        try:
+            connection.request('GET', '/api/recommendation/status')
+            response = connection.getresponse()
+            return response.status, response.getheader('Cache-Control'), json.loads(response.read())
+        finally:
+            connection.close()
+
+    def test_status_reports_the_selected_provider_without_exposing_configuration(self):
+        direct_env = {'PARIVIEW_AI_ENABLED': '1', 'ANTHROPIC_API_KEY': 'direct-key',
+                      'PARIVIEW_AI_MODEL': 'claude-sonnet-4-6'}
+        gateway_env = {'PARIVIEW_AI_ENABLED': '1', 'ANTHROPIC_BASE_URL': 'http://gateway.test:4000',
+                       'ANTHROPIC_AUTH_TOKEN': 'school-virtual-key', 'PARIVIEW_AI_MODEL': 'claude-sonnet-4-6'}
+        for env, provider in [(direct_env, 'anthropic'), (gateway_env, 'litellm')]:
+            with self.subTest(provider=provider), patch.dict(os.environ, env, clear=True):
+                status, cache, body = self.status()
+            self.assertEqual((status, cache), (200, 'no-store'))
+            self.assertEqual(body['provider'], provider)
+            self.assertIs(body['configured'], True)
+            serialized = json.dumps(body)
+            self.assertNotIn('key', serialized.lower())
+            self.assertNotIn('gateway.test', serialized)
+
     def test_experience_only_and_trimmed_maximum_use_default_answers(self):
         for text in ['폭발 장면에서 깜짝 놀라요', ' \n' + '🎬' * 300 + '\t ']:
             with patch.object(server, 'call_provider') as provider:

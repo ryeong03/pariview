@@ -28,9 +28,16 @@ Set these service variables directly in Railway, then apply the deployment
 
 | Variable | Purpose |
 |---|---|
-| `ANTHROPIC_API_KEY` | Server-side Claude provider key, never placed in frontend files |
+| `ANTHROPIC_API_KEY` | Server-side Anthropic key; also accepted as an existing Virtual Key when a gateway is configured |
+| `ANTHROPIC_BASE_URL` | Optional Messages-compatible gateway base URL supplied by the provider; omit for direct Anthropic access |
+| `ANTHROPIC_AUTH_TOKEN` | Optional gateway Virtual Key; takes priority over `ANTHROPIC_API_KEY` on a gateway |
 | `PARIVIEW_AI_ENABLED` | Set to `1` to enable provider calls |
-| `PARIVIEW_AI_MODEL` | Explicit Claude model ID, for example `claude-haiku-5-5` |
+| `PARIVIEW_AI_MODEL` | Exact model allowed by the provider, for example `claude-sonnet-4-6`; no automatic model switching |
+| `PARIVIEW_AI_DEBUG` | Keep `0` normally; `1` enables only bounded HTTP status/error-type diagnostics |
+
+A configured gateway uses `/v1/messages` with Bearer authentication; direct Anthropic access uses `x-api-key`
+An existing Virtual Key in `ANTHROPIC_API_KEY` can remain there without reading or copying it
+Provider redirects are rejected, and public status reports only `anthropic` or `litellm`, never the endpoint or key
 
 Without these settings, the recommendation uses the prepared research-based defaults
 Provider failures also fall back to those defaults; only a validated provider response is labelled as an AI recommendation

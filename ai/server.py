@@ -100,11 +100,43 @@ class StaticGzipCache:
 
 
 GZIP_CACHE = StaticGzipCache()
+DIRECT_ANTHROPIC_URL = 'https://api.anthropic.com/v1/messages'
+
+
+def secret_value(name):
+    # Railway values pasted with spaces, newlines or quotes would pass a simple configured check but break a header.
+    return os.environ.get(name, '').strip().strip('"\'').strip()
 
 
 def api_key():
-    # Railway values pasted with spaces, newlines or quotes would pass the configured check but break the header
-    return os.environ.get('ANTHROPIC_API_KEY', '').strip().strip('"\'').strip()
+    return secret_value('ANTHROPIC_API_KEY')
+
+
+def auth_token():
+    """Prefer a LiteLLM virtual key, while accepting the existing API_KEY variable on a gateway."""
+    return secret_value('ANTHROPIC_AUTH_TOKEN') or api_key()
+
+
+def provider_endpoint():
+    """Return (provider, endpoint), or an empty endpoint for an invalid configured gateway URL."""
+    raw = os.environ.get('ANTHROPIC_BASE_URL', '').strip().strip('"\'').strip()
+    if not raw:
+        return 'anthropic', DIRECT_ANTHROPIC_URL
+    try:
+        parsed = urllib.parse.urlsplit(raw)
+        if (parsed.scheme not in {'http', 'https'} or not parsed.netloc or parsed.username or parsed.password
+                or parsed.query or parsed.fragment):
+            return 'litellm', ''
+        path = parsed.path.rstrip('/')
+        if path.endswith('/v1/messages'):
+            endpoint_path = path
+        elif path.endswith('/v1'):
+            endpoint_path = path + '/messages'
+        else:
+            endpoint_path = path + '/v1/messages'
+        return 'litellm', urllib.parse.urlunsplit((parsed.scheme, parsed.netloc, endpoint_path, '', ''))
+    except (TypeError, ValueError):
+        return 'litellm', ''
 
 
 def provider_error_summary(error):
@@ -126,11 +158,36 @@ def provider_error_summary(error):
     return f'provider_error {type(error).__name__} status={status or "-"} type={kind or "-"}'
 
 
+class RejectProviderRedirects(urllib.request.HTTPRedirectHandler):
+    """Never forward provider credentials to a URL returned by another server."""
+    def _reject(self, request, response, code, message, headers):
+        try:
+            response.close()
+        except Exception:
+            pass
+        raise urllib.error.HTTPError(request.full_url, code, 'Provider redirects are not allowed', headers, None)
+
+    http_error_301 = _reject
+    http_error_302 = _reject
+    http_error_303 = _reject
+    http_error_307 = _reject
+    http_error_308 = _reject
+
+
+PROVIDER_OPENER = urllib.request.build_opener(RejectProviderRedirects())
+
+
+def open_provider(request, timeout=10):
+    return PROVIDER_OPENER.open(request, timeout=timeout)
+
+
 def configuration():
     enabled = os.environ.get('PARIVIEW_AI_ENABLED', '').strip() == '1'
     model = os.environ.get('PARIVIEW_AI_MODEL', '').strip()
-    return {'configured': enabled and bool(api_key()) and model.startswith('claude-'),
-            'model': model}
+    provider, endpoint = provider_endpoint()
+    credential = auth_token() if provider == 'litellm' else api_key()
+    return {'configured': enabled and bool(endpoint) and bool(credential) and model.startswith('claude-'),
+            'model': model, 'provider': provider, 'endpoint': endpoint}
 
 
 def call_provider(plan):
@@ -169,10 +226,14 @@ def call_provider(plan):
         # Thinking tokens count toward max_tokens, so 4000 leaves room before a max_tokens stop forces the default.
         'output_config': {'effort': 'low', 'format': {'type': 'json_schema', 'schema': schema}}
     }
-    request = urllib.request.Request('https://api.anthropic.com/v1/messages', data=json.dumps(packet).encode(),
-                                     headers={'x-api-key': api_key(), 'anthropic-version': '2023-06-01', 'Content-Type': 'application/json'}, method='POST')
+    headers = {'anthropic-version': '2023-06-01', 'Content-Type': 'application/json'}
+    if config['provider'] == 'litellm':
+        headers['Authorization'] = f'Bearer {auth_token()}'
+    else:
+        headers['x-api-key'] = api_key()
+    request = urllib.request.Request(config['endpoint'], data=json.dumps(packet).encode(), headers=headers, method='POST')
     # No retries: a slow/unavailable provider yields the ready-to-use default.
-    with urllib.request.urlopen(request, timeout=10) as response:
+    with open_provider(request, timeout=10) as response:
         raw = response.read(262_145)
     if len(raw) > 262_144:
         raise ValueError('Provider response too large')
@@ -288,7 +349,8 @@ class Handler(BaseHTTPRequestHandler):
                 self._json({'status': 'ok'}, head=head)
                 return
             if path == '/api/recommendation/status':
-                self._json({'configured': configuration()['configured'], 'provider': 'anthropic',
+                config = configuration()
+                self._json({'configured': config['configured'], 'provider': config['provider'],
                             'evidenceVersion': CATALOG['version'], 'defaultAvailable': True}, head=head)
                 return
             if path.startswith('/api/'):

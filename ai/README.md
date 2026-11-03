@@ -7,20 +7,32 @@ Python 표준 라이브러리만 사용하며 서버는 파일이나 사용자 �
 
 | 이름 | 값 |
 |---|---|
-| `ANTHROPIC_API_KEY` | 사용자가 Railway 서버 환경에 직접 등록하는 Claude API 키 |
+| `ANTHROPIC_BASE_URL` | 선택 사항 · 학교 LiteLLM 사용 시 `<학교 게이트웨이 주소>` · 로컬 예시 `http://localhost:4000` · 없으면 Anthropic 직접 연결 |
+| `ANTHROPIC_AUTH_TOKEN` | 선택 사항 · 학교 LiteLLM Virtual Key · 게이트웨이에서 이 값이 있으면 우선 사용 |
+| `ANTHROPIC_API_KEY` | Anthropic 직접 연결용 API 키 · 게이트웨이에서는 기존 Railway 값을 Virtual Key 호환 입력으로 사용 가능 |
 | `PARIVIEW_AI_ENABLED` | `1` |
-| `PARIVIEW_AI_MODEL` | `claude-sonnet-5-5` |
+| `PARIVIEW_AI_MODEL` | 공급자가 허용한 정확한 모델 이름 · 학교 권장 `claude-sonnet-4-6` · 가벼운 시험 `claude-haiku-4-5-20251001` |
 | `HOST` | 기본 `0.0.0.0` |
 | `PORT` | Railway 제공값 또는 기본 `8080` |
 | `PARIVIEW_AI_MAX_CALLS_PER_HOUR` | 선택 사항 · 기본 `60` |
 | `PARIVIEW_AI_DEBUG` | 선택 사항 · `1`이면 공급자 호출 실패 시 `provider_error <예외> status=<HTTP 코드> type=<Anthropic 오류 종류>` 한 줄만 로그에 남김 · 응답 본문·키·사용자 문장은 남기지 않음 · 원인 확인 후 끄기 |
 
 모델은 환경변수로 명시하며 코드가 다른 모델을 자동 선택하지 않음
-`claude-sonnet-5-5`를 사용함 · 준비된 후보 ID만 고르는 작업이라 `output_config.effort`는 `low`, thinking 토큰을 포함해 `max_tokens`는 4000으로 둠 · `claude-haiku-5-5`로 바꿔도 같은 설정으로 동작하며 실제 계정의 접근 권한과 호출 성공은 배포 후 확인 필요
+학교 연결은 LiteLLM이 제공하는 Anthropic Messages 호환 `/v1/messages`를 사용하고 Virtual Key를 `Authorization: Bearer`로 전달함
+공급자 응답의 HTTP 리다이렉트는 거부하여 Bearer 토큰이나 API 키가 다른 URL로 자동 전달되지 않게 함
+`ANTHROPIC_AUTH_TOKEN`이 비어 있으면 현재 `ANTHROPIC_API_KEY` 값을 학교 Virtual Key로 재사용하므로 기존 Railway 비밀값을 복사하거나 읽을 필요가 없음
+`ANTHROPIC_BASE_URL`이 없으면 `https://api.anthropic.com/v1/messages`와 `x-api-key`를 사용하는 기존 Anthropic 직접 연결을 유지함
+공급자 상태는 학교 게이트웨이면 `litellm`, 직접 연결이면 `anthropic`으로 표시하며 URL이나 인증값은 반환하지 않음
+준비된 후보 ID만 고르는 작업이라 `output_config.effort`는 `low`, thinking 토큰을 포함해 `max_tokens`는 4000으로 둠
+`output_config.format`의 JSON Schema와 `effort`는 Messages 요청 본문에 함께 보내며 최종 후보는 공급자와 무관하게 서버에서 다시 검증함
 키는 프런트 코드·정적 파일·요청 본문·로그에 포함하지 않음 · 붙여넣을 때 들어간 앞뒤 공백·줄바꿈·따옴표는 서버가 제거함
 
 - [Claude 모델 공식 문서](https://platform.claude.com/docs/en/models/overview)
 - [Claude Structured Outputs 공식 문서](https://platform.claude.com/docs/en/build-with-claude/structured-outputs)
+- [LiteLLM Claude Code 연결 공식 문서](https://docs.litellm.ai/docs/proxy/client_setup/claude_code)
+- [LiteLLM 게이트웨이 클라이언트 공식 문서](https://docs.litellm.ai/docs/proxy/client_setup/overview)
+- [LiteLLM Messages `output_config` 공식 예시](https://docs.litellm.ai/docs/providers/bigmodel#anthropic-messages-api)
+- [LiteLLM `output_config.format` 호환 변경 기록](https://docs.litellm.ai/release_notes/v1.107.0rc1/v1-107-0-rc-1)
 
 ## 동작과 근거 경계
 

@@ -3,11 +3,14 @@ import json
 import io
 import os
 from contextlib import redirect_stderr, redirect_stdout
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 import random
 import shutil
 import subprocess
+import threading
 import unittest
+import urllib.error
 from unittest.mock import patch
 
 from ai.domain import CATALOG, ROOT, ai_plan, compose, default_selection, output_schema, prepare
@@ -44,13 +47,39 @@ class RecommendationTests(unittest.TestCase):
         self.assertEqual(result['settings']['brightness'], 77)
         self.assertEqual(result['nextComparison']['axis'], 'brightness')
 
-    def test_only_anthropic_key_and_claude_model_enable_provider(self):
+    def test_only_supported_credentials_and_claude_model_enable_provider(self):
         with patch.dict(os.environ, {'PARIVIEW_AI_ENABLED': '1', 'OPENAI_API_KEY': 'not-used', 'PARIVIEW_AI_MODEL': 'claude-haiku-5-5'}):
             self.assertFalse(server.configuration()['configured'])
+        with patch.dict(os.environ, {'PARIVIEW_AI_ENABLED': '1', 'ANTHROPIC_AUTH_TOKEN': 'gateway-only',
+                                     'PARIVIEW_AI_MODEL': 'claude-sonnet-4-6'}):
+            self.assertFalse(server.configuration()['configured'])
         with self.enabled():
-            self.assertTrue(server.configuration()['configured'])
+            config = server.configuration()
+            self.assertTrue(config['configured'])
+            self.assertEqual((config['provider'], config['endpoint']), ('anthropic', server.DIRECT_ANTHROPIC_URL))
             with patch.dict(os.environ, {'PARIVIEW_AI_MODEL': 'gpt-5.4-mini'}):
                 self.assertFalse(server.configuration()['configured'])
+        gateway = {'PARIVIEW_AI_ENABLED': '1', 'ANTHROPIC_BASE_URL': 'http://gateway.test:4000',
+                   'ANTHROPIC_AUTH_TOKEN': 'virtual-key', 'PARIVIEW_AI_MODEL': 'claude-sonnet-4-6'}
+        with patch.dict(os.environ, gateway, clear=True):
+            config = server.configuration()
+            self.assertTrue(config['configured'])
+            self.assertEqual((config['provider'], config['endpoint']),
+                             ('litellm', 'http://gateway.test:4000/v1/messages'))
+
+    def test_invalid_gateway_urls_stay_unconfigured_without_a_provider_call(self):
+        invalid = ['ftp://gateway.test:4000', 'http://', 'http://user:password@gateway.test:4000',
+                   'http://gateway.test:4000?key=value', 'http://gateway.test:4000#fragment']
+        for base in invalid:
+            env = {'PARIVIEW_AI_ENABLED': '1', 'ANTHROPIC_BASE_URL': base,
+                   'ANTHROPIC_AUTH_TOKEN': 'virtual-key', 'PARIVIEW_AI_MODEL': 'claude-sonnet-4-6'}
+            with self.subTest(base=base), patch.dict(os.environ, env, clear=True), \
+                    patch.object(server, 'call_provider') as provider:
+                config = server.configuration()
+                result = server.recommend({'experience': '문장을 서버 밖에 기록하지 마세요'})
+            self.assertEqual((config['configured'], config['provider'], config['endpoint']), (False, 'litellm', ''))
+            self.assertEqual((result['source'], result['status']), ('rules', 'unconfigured'))
+            provider.assert_not_called()
 
     def test_original_and_explicit_responses_are_preserved(self):
         payload = {'currentSettings': {'brightness': 67, 'volume': 20}, 'answers': {'concerns': ['light', 'sound'], 'goal': 'original'}}
@@ -214,7 +243,7 @@ class RecommendationTests(unittest.TestCase):
             def __exit__(self, *args): pass
             def read(self, limit):
                 return json.dumps({'stop_reason': 'end_turn', 'content': [{'type': 'text', 'text': json.dumps(selection)}]}).encode()
-        with self.enabled(), patch.object(server.urllib.request, 'urlopen', return_value=Response()) as opening:
+        with self.enabled(), patch.object(server, 'open_provider', return_value=Response()) as opening:
             result = server.recommend(payload)
         packet = json.loads(opening.call_args.args[0].data)
         self.assertEqual(len(packet['messages']), 1)
@@ -284,7 +313,7 @@ class RecommendationTests(unittest.TestCase):
         for body in responses:
             server.AI_COOLDOWN_UNTIL = 0
             stdout, stderr = io.StringIO(), io.StringIO()
-            with self.enabled(), patch.object(server.urllib.request, 'urlopen', return_value=Response(body)), \
+            with self.enabled(), patch.object(server, 'open_provider', return_value=Response(body)), \
                     redirect_stdout(stdout), redirect_stderr(stderr):
                 result = server.recommend(payload)
             self.assertEqual(result, compose(prepare({}), status='default_provider'))
@@ -317,7 +346,7 @@ class RecommendationTests(unittest.TestCase):
             def __exit__(self, *args): pass
             def read(self, limit):
                 return json.dumps({'stop_reason': 'end_turn', 'content': [{'type': 'text', 'text': json.dumps(default_selection(plan))}]}).encode()
-        with self.enabled(), patch.object(server.urllib.request, 'urlopen', return_value=Response()) as opening:
+        with self.enabled(), patch.object(server, 'open_provider', return_value=Response()) as opening:
             self.assertEqual(server.call_provider(plan), default_selection(plan))
             request = opening.call_args.args[0]
             body = json.loads(request.data)
@@ -337,8 +366,88 @@ class RecommendationTests(unittest.TestCase):
         class Refusal(Response):
             def read(self, limit):
                 return b'{"stop_reason":"refusal","content":[{"type":"text","text":"no"}]}'
-        with self.enabled(), patch.object(server.urllib.request, 'urlopen', return_value=Refusal()), self.assertRaises(ValueError):
+        with self.enabled(), patch.object(server, 'open_provider', return_value=Refusal()), self.assertRaises(ValueError):
             server.call_provider(plan)
+
+    def test_litellm_gateway_uses_bearer_token_and_explicit_model(self):
+        plan = prepare({})
+        class Response:
+            def __enter__(self): return self
+            def __exit__(self, *args): pass
+            def read(self, limit):
+                return json.dumps({'stop_reason': 'end_turn', 'content': [
+                    {'type': 'text', 'text': json.dumps(default_selection(plan))}]}).encode()
+        environments = [
+            ({'ANTHROPIC_AUTH_TOKEN': ' "school-virtual-key" ', 'ANTHROPIC_API_KEY': 'compatibility-key'},
+             'school-virtual-key'),
+            ({'ANTHROPIC_API_KEY': " 'compatibility-key' "}, 'compatibility-key'),
+        ]
+        for credentials, expected in environments:
+            env = {'PARIVIEW_AI_ENABLED': '1', 'ANTHROPIC_BASE_URL': 'http://gateway.test:4000/',
+                   'PARIVIEW_AI_MODEL': 'claude-sonnet-4-6', **credentials}
+            with self.subTest(credentials=set(credentials)), patch.dict(os.environ, env, clear=True), \
+                    patch.object(server, 'open_provider', return_value=Response()) as opening:
+                self.assertEqual(server.call_provider(plan), default_selection(plan))
+            request = opening.call_args.args[0]
+            body = json.loads(request.data)
+            self.assertEqual(request.full_url, 'http://gateway.test:4000/v1/messages')
+            self.assertEqual(request.get_header('Authorization'), f'Bearer {expected}')
+            self.assertIsNone(request.get_header('X-api-key'))
+            self.assertEqual(request.get_header('Anthropic-version'), '2023-06-01')
+            self.assertEqual(body['model'], 'claude-sonnet-4-6')
+            self.assertEqual(body['output_config']['effort'], 'low')
+            self.assertEqual(body['output_config']['format']['type'], 'json_schema')
+            self.assertNotIn(expected, request.data.decode())
+            self.assertNotIn('thinking', body)
+
+    def test_gateway_base_url_accepts_root_v1_or_messages_route(self):
+        for base in ['http://gateway.test:4000', 'http://gateway.test:4000/',
+                     'http://gateway.test:4000/v1', 'http://gateway.test:4000/v1/messages']:
+            with self.subTest(base=base), patch.dict(os.environ, {'ANTHROPIC_BASE_URL': base}, clear=True):
+                self.assertEqual(server.provider_endpoint(), ('litellm', 'http://gateway.test:4000/v1/messages'))
+
+    def test_provider_redirect_is_rejected_before_bearer_reaches_another_origin(self):
+        class Receiver(BaseHTTPRequestHandler):
+            requests = []
+            def do_POST(self):
+                self.__class__.requests.append(dict(self.headers))
+                self.send_response(200)
+                self.end_headers()
+            def log_message(self, *args):
+                pass
+        receiver = ThreadingHTTPServer(('127.0.0.1', 0), Receiver)
+        receiver.daemon_threads = True
+        receiver_thread = threading.Thread(target=receiver.serve_forever, daemon=True)
+        receiver_thread.start()
+
+        target = f'http://127.0.0.1:{receiver.server_port}/collect'
+        class Redirector(BaseHTTPRequestHandler):
+            def do_POST(self):
+                self.send_response(302)
+                self.send_header('Location', target)
+                self.end_headers()
+            def log_message(self, *args):
+                pass
+        redirector = ThreadingHTTPServer(('127.0.0.1', 0), Redirector)
+        redirector.daemon_threads = True
+        redirect_thread = threading.Thread(target=redirector.serve_forever, daemon=True)
+        redirect_thread.start()
+        try:
+            env = {'PARIVIEW_AI_ENABLED': '1',
+                   'ANTHROPIC_BASE_URL': f'http://127.0.0.1:{redirector.server_port}',
+                   'ANTHROPIC_AUTH_TOKEN': 'redirect-test-token', 'PARIVIEW_AI_MODEL': 'claude-sonnet-4-6'}
+            with patch.dict(os.environ, env, clear=True), self.assertRaises(urllib.error.HTTPError) as raised:
+                server.call_provider(prepare({}))
+            self.assertEqual(raised.exception.code, 302)
+            raised.exception.close()
+            self.assertEqual(Receiver.requests, [])
+        finally:
+            redirector.shutdown()
+            redirector.server_close()
+            redirect_thread.join(timeout=2)
+            receiver.shutdown()
+            receiver.server_close()
+            receiver_thread.join(timeout=2)
 
     def test_browser_and_server_policy_parity(self):
         rng = random.Random(42)
