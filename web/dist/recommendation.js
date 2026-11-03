@@ -84,7 +84,7 @@ export function initRecommendation(hooks={}) {
     if(main){preview.src=main.currentSrc||main.src;preview.poster=main.poster;preview.addEventListener('loadedmetadata',()=>{preview.currentTime=Math.min(main.currentTime||0,Math.max(0,preview.duration-1));},{once:true});}
     const update=()=>{
       preview.style.filter=`brightness(${draft.brightness}%) contrast(${draft.contrast}%) saturate(${draft.saturation}%) sepia(${draft.warmth*.35}%)`;
-      const caption=body.querySelector('.pv-rec-caption');caption.hidden=!draft.captions;caption.style.fontSize=`${draft.captionSize}px`;caption.textContent=draft.easyCaptions?'자막 예시 · 같은 장면을 비교해요':'자막 예시 · 동일한 장면의 설정을 비교해요';
+      const caption=body.querySelector('.pv-rec-caption');caption.hidden=!draft.captions;caption.style.fontSize=`${draft.captionSize}px`;caption.style.color=draft.captionYellow?'#ffe03d':'';caption.textContent=draft.easyCaptions?'자막 예시 · 같은 장면을 비교해요':'자막 예시 · 동일한 장면의 설정을 비교해요';
       if(previewNodes){const n=previewNodes;n.lowpass.frequency.value=20000*Math.pow(.16,draft.highCut/100);n.eq.gain.value=draft.dialogueBoost?4:0;n.gain.gain.value=draft.volume/100;n.eq.disconnect();n.compressor.disconnect();n.eq.connect(draft.compression?n.compressor:n.gain);if(draft.compression)n.compressor.connect(n.gain);}
       if(previewing)hooks.onPreview?.({...draft});
     };

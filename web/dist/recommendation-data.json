@@ -1,7 +1,7 @@
 {
   "version": "2026-11-04-v1",
   "boundary": "연구는 개인차와 조절 과정의 설계 근거예요 아래 조합과 수치, 추천 성능을 직접 검증한 것은 아니에요",
-  "defaults": {"profileId":"everyday","brightness":85,"contrast":90,"saturation":100,"warmth":0,"volume":35,"highCut":0,"compression":true,"notices":true,"dialogueBoost":false,"autoBrightness":false,"captions":true,"easyCaptions":false,"captionSize":20,"boldCaptions":false,"breakReminder":false,"backgroundReduction":0,"transitionSoftening":false},
+  "defaults": {"profileId":"everyday","brightness":85,"contrast":90,"saturation":100,"warmth":0,"volume":35,"highCut":0,"compression":true,"notices":true,"dialogueBoost":false,"autoBrightness":false,"captions":true,"easyCaptions":false,"captionSize":20,"boldCaptions":false,"captionYellow":false,"breakReminder":false,"backgroundReduction":0,"transitionSoftening":false},
   "ranges": {"brightness":[45,100],"contrast":[65,110],"saturation":[40,110],"warmth":[0,60],"volume":[0,70],"highCut":[0,100],"captionSize":[16,30],"backgroundReduction":[0,60]},
   "profiles": ["gentle","focus","clarity","soft","everyday"],
   "inputs": {

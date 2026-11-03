@@ -11,7 +11,7 @@ HTML = '''<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewp
 <link rel="stylesheet" href="/styles.css"><button data-action="ai-recommend">연구 기반 PariView-AI 추천받기</button>
 <video id="film" src="/assets/scenes/tears-lab.mp4" muted></video><script type="module">
 import {initRecommendation} from '/recommendation.js'; import {defaults} from '/settings.js';
-window.recState={settings:{...defaults},saved:0,preview:null,compared:null};
+window.recState={settings:{...defaults,captionYellow:true},saved:0,preview:null,compared:null};
 window.rec=initRecommendation({getSettings:()=>({...recState.settings}),
 onPreview:next=>{recState.preview=next},onCancelPreview:()=>{recState.preview=null},
 onApply:(next,meta)=>{recState.settings=next;recState.saved++;recState.meta=meta},
@@ -38,6 +38,7 @@ def main():
         assert page.locator('.pv-rec-method').inner_text()=='연구 기반 기본 제안'
         assert page.evaluate('recState.saved')==0
         assert page.locator('[data-setting="brightness"]').input_value()=='77'
+        assert page.locator('.pv-rec-caption').evaluate('(el)=>getComputedStyle(el).color')=='rgb(255, 224, 61)'
         assert '미연결' not in page.locator('.pv-rec').inner_text()
         assert '오류' not in page.locator('.pv-rec').inner_text()
         checks.append('unconfigured gracefully offers honest default with no save')
@@ -45,19 +46,20 @@ def main():
         page.locator('[data-preview]').click();page.wait_for_function('recState.preview?.brightness===72')
         assert page.evaluate('recState.settings.brightness')==85
         page.locator('[data-cancel]').click()
-        assert page.evaluate('recState.preview===null && recState.saved===0 && recState.settings.brightness===85')
+        assert page.evaluate('recState.preview===null && recState.saved===0 && recState.settings.brightness===85 && recState.settings.captionYellow===true')
         checks.append('edit and preview are reversible on cancel')
         open_form();submit();page.locator('[data-setting="brightness"]').fill('71')
         page.locator('[data-apply]').click()
-        assert page.evaluate('recState.saved===1 && recState.settings.brightness===71 && recState.meta.edited')
+        assert page.evaluate('recState.saved===1 && recState.settings.brightness===71 && recState.meta.edited && recState.settings.captionYellow===true')
         checks.append('only explicit apply saves edited settings')
         open_form();submit();page.locator('[data-compare]').click()
-        assert page.evaluate('recState.saved===1 && recState.compared.axis==="brightness"')
+        assert page.evaluate('recState.saved===1 && recState.compared.axis==="brightness" && recState.compared.next.captionYellow===true')
         checks.append('next comparison transfers draft without saving')
         page.route('**/api/recommendation/status',lambda route:route.fulfill(json={'configured':True}))
         page.route('**/api/recommendation',lambda route:route.fulfill(json={'source':'ai','evidenceVersion':'2026-11-04-v1','selection':{'actionIds':['softer_light'],'nextComparisonId':'brightness'}}))
         open_form();submit()
         assert page.locator('.pv-rec-method').inner_text()=='AI 추천'
+        assert page.locator('.pv-rec-caption').evaluate('(el)=>getComputedStyle(el).color')=='rgb(255, 224, 61)'
         page.locator('[data-cancel]').click();checks.append('valid mocked AI response has distinct provenance')
         page.unroute('**/api/recommendation')
         page.route('**/api/recommendation',lambda route:route.fulfill(json={'source':'ai','evidenceVersion':'2026-11-04-v1','selection':{'actionIds':['invented'],'nextComparisonId':'diagnosis'}}))
@@ -68,6 +70,14 @@ def main():
         page.route('**/api/recommendation',lambda route:route.fulfill(status=503,body='unavailable'))
         open_form();submit();assert page.locator('.pv-rec-method').inner_text()=='연구 기반 기본 제안'
         page.locator('[data-cancel]').click();checks.append('provider HTTP failure quietly returns default')
+        for value in [True,False,None]:
+            page.evaluate('(value)=>{if(value===null)delete recState.settings.captionYellow;else recState.settings.captionYellow=value}',value)
+            open_form();submit()
+            color=page.locator('.pv-rec-caption').evaluate('(el)=>getComputedStyle(el).color')
+            assert color==('rgb(255, 224, 61)' if value else 'rgb(255, 255, 255)')
+            page.locator('[data-apply]').click()
+            assert page.evaluate('recState.settings.captionYellow') is (value is True)
+        checks.append('yellow, white and legacy preferences survive preview and apply without colour recommendations')
         for width in [390,768,1440]:
             page.set_viewport_size({'width':width,'height':900});open_form();submit()
             overflow=page.locator('.pv-rec').evaluate('(el)=>el.scrollWidth>el.clientWidth+1')
@@ -79,6 +89,7 @@ def main():
         checks.append('390/768/1440 responsive layout, research links and Escape close')
         page.unroute('**/api/recommendation');page.unroute('**/api/recommendation/status')
         page.set_viewport_size({'width':1440,'height':1000})
+        page.evaluate('localStorage.setItem("pariview-fit-v1",JSON.stringify({settings:{brightness:85,captionYellow:true}}))')
         page.goto(args.base_url+'/');page.wait_for_function('window.__pariview?.recommendationUI')
         page.locator('.hero-actions [data-action="fit"]').click()
         assert page.locator('.mode-option').count()==5
@@ -94,8 +105,10 @@ def main():
         page.locator('[data-cancel]').click()
         after=page.evaluate('({settings:window.__pariview.settings,stored:localStorage.getItem("pariview-fit-v1"),original:window.__pariview.original})')
         assert before==after
+        assert after['settings']['captionYellow'] is True
         open_integrated();submit();page.locator('[data-setting="brightness"]').fill('74');page.locator('[data-apply]').click()
         assert page.evaluate('JSON.parse(localStorage.getItem("pariview-fit-v1")).settings.brightness')==74
+        assert page.evaluate('JSON.parse(localStorage.getItem("pariview-fit-v1")).settings.captionYellow') is True
         open_integrated();submit();page.locator('[data-compare]').click()
         assert page.locator('#fit-dialog').is_visible()
         assert '밝기' in page.locator('.fit-heading').inner_text()

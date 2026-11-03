@@ -63,6 +63,28 @@ class RecommendationTests(unittest.TestCase):
         self.assertEqual(result['settings']['volume'], 20)
         self.assertNotIn(result['nextComparison']['axis'], ['brightness', 'volume'])
 
+    def test_user_caption_color_survives_rules_ai_and_failure(self):
+        # Legacy saves default to white; only explicit booleans change the colour.
+        for settings, expected in [({}, False), ({'captionYellow': True}, True), ({'captionYellow': False}, False),
+                                   ({'captionYellow': 'true'}, False), ({'captionYellow': 1}, False)]:
+            payload = {'currentSettings': settings, 'answers': {'concerns': ['text'], 'captionStyle': 'simple'}}
+            with self.subTest(settings=settings):
+                result = server.recommend(payload)
+                self.assertIs(result['settings']['captionYellow'], expected)
+                self.assertEqual(result['source'], 'rules')
+                with self.enabled(), patch.object(server, 'call_provider', side_effect=default_selection):
+                    server.AI_COOLDOWN_UNTIL = 0
+                    result = server.recommend(payload)
+                    self.assertEqual(result['source'], 'ai')
+                    self.assertIs(result['settings']['captionYellow'], expected)
+                with self.enabled(), patch.object(server, 'call_provider', side_effect=TimeoutError):
+                    server.AI_COOLDOWN_UNTIL = 0
+                    result = server.recommend(payload)
+                    self.assertEqual(result['source'], 'rules')
+                    self.assertIs(result['settings']['captionYellow'], expected)
+                self.assertTrue(all('captionYellow' not in a['changes'] for a in result['actions']))
+        self.assertTrue(all('captionYellow' not in a['adjust'] for a in CATALOG['actions']))
+
     def test_tie_unsure_and_skip_are_not_equivalent(self):
         for outcome in ['equal', 'skip', 'a', 'b']:
             plan = prepare({'comparisons': [{'axis': 'brightness', 'outcome': outcome}]})
@@ -146,15 +168,18 @@ class RecommendationTests(unittest.TestCase):
     def test_browser_and_server_policy_parity(self):
         rng = random.Random(42)
         cases = [{}]
-        for _ in range(60):
+        for index in range(60):
             answers = {k: rng.choice(list(v)) for k,v in CATALOG['inputs'].items() if k != 'concerns'}
             answers['concerns'] = rng.sample(list(CATALOG['inputs']['concerns']), rng.randrange(7))
-            cases.append({'answers': answers, 'currentSettings': {'brightness': rng.randrange(35,110), 'volume': rng.randrange(0,80)},
+            color = {} if index % 3 == 0 else {'captionYellow': index % 3 == 1}
+            cases.append({'answers': answers, 'currentSettings': {'brightness': rng.randrange(35,110), 'volume': rng.randrange(0,80), **color},
                           'comparisons': [{'axis': c['id'], 'outcome': rng.choice(['a','equal','unsure','skip'])} for c in CATALOG['comparisons'] if rng.random()<.3]})
-        script = "import fs from 'node:fs'; import {prepareRecommendation,composeRecommendation} from './web/dist/recommendation-engine.js'; const c=JSON.parse(fs.readFileSync('web/dist/recommendation-data.json')); const cases=JSON.parse(fs.readFileSync(0,'utf8')); console.log(JSON.stringify(cases.map(p=>composeRecommendation(prepareRecommendation(p,c),c))));"
+        script = "import fs from 'node:fs'; import {defaults,ranges} from './web/dist/settings.js'; import {prepareRecommendation,composeRecommendation} from './web/dist/recommendation-engine.js'; const c=JSON.parse(fs.readFileSync('web/dist/recommendation-data.json')); const cases=JSON.parse(fs.readFileSync(0,'utf8')); console.log(JSON.stringify({defaults,ranges,results:cases.map(p=>composeRecommendation(prepareRecommendation(p,c),c))}));"
         completed = subprocess.run([NODE, '--input-type=module', '-e', script], input=json.dumps(cases), cwd=ROOT, text=True, capture_output=True, check=True)
         client = json.loads(completed.stdout)
-        for payload, js in zip(cases, client):
+        self.assertEqual(client['defaults'], CATALOG['defaults'])
+        self.assertEqual(client['ranges'], CATALOG['ranges'])
+        for payload, js in zip(cases, client['results']):
             py = compose(prepare(payload)); py.pop('status')
             self.assertEqual(js, py)
 

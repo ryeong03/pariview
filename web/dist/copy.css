@@ -69,3 +69,15 @@ body.reduce-motion .approved-hero::before{animation:none;display:none}
 }
 @media(prefers-reduced-motion:reduce){.studio-title-pair h2 span{animation:none}}
 body.reduce-motion .studio-title-pair h2 span{animation:none}
+
+/* Yellow captions: keep the color toggle visible in the compact dock without adding height
+   (desktop: two short rows without descriptions; mobile: two toggles side by side). Expanded view shows descriptions */
+.preferences:not(.expanded) #settings-cognitive:not([hidden]){display:grid;grid-template-columns:1fr;gap:4px;align-content:center}
+.preferences:not(.expanded) #settings-cognitive>.toggle-setting:has(#captionYellow){display:flex}
+.preferences:not(.expanded) #settings-cognitive>.toggle-setting small{display:none}
+@media(max-width:760px){.preferences:not(.expanded) #settings-cognitive:not([hidden]){grid-template-columns:1fr 1fr;column-gap:18px}}
+
+/* Korean line breaking: wrap at word boundaries so a syllable or particle never drops alone to the next line */
+body{word-break:keep-all;overflow-wrap:break-word}
+h1,h2,h3{text-wrap:balance}
+p,li,small{text-wrap:pretty}
