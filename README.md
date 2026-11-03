@@ -141,6 +141,10 @@ flowchart LR
 - [`research/sources.json`](research/sources.json), [`research/medical-sensory-sources.json`](research/medical-sensory-sources.json): 서지와 확인 기록
 - 웹의 "설계의 근거" 화면은 관찰된 연구 결과와 우리가 제안하는 경험을 구분해서 보여줘요
 
+- [A1 포스터 PDF](poster/PariView_A1.pdf) · [이전 버전 기록](poster/versions/README.md)
+- [연구 근거·설계 전략 PDF](PariView_Research_and_Strategy.pdf)
+- [제공용 실험·설문 서식](analysis/user-study/field-kit/README.txt): 실제 응답이 없는 별도 평가 설계예요
+
 ## 폴더
 
 | 경로 | 내용 |
@@ -153,7 +157,9 @@ flowchart LR
 | `web/validate.py` | 화면 동작 검증 |
 | `extension/` | 크롬 확장 프로그램 소스 |
 | `analysis/sensory_map.py` | 감각 지도 측정 |
-| `analysis/simulation/` | 사용자 시나리오 시뮬레이션, 실제 사용자 평가지 |
+| `analysis/simulation/` | 사용자 시나리오 시뮬레이션 방법과 결과 |
+| `analysis/user-study/field-kit/` | 제공용 실험 절차·설문지·빈 기록표·집계 스크립트 |
+| `poster/` | A1 포스터 소스·PDF·이미지와 이전 버전 |
 | `research/` | 문헌 정리와 출처 |
 | `Dockerfile`, `deploy/` | Railway Python 서버 배포 설정과 운영 안내 |
 
