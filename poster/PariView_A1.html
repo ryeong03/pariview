@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>PariView — 감각 과부하 감소와 미디어 접근성 향상을 위한 적응형 시청 시스템 · A1</title>
+<style>
+  @page { size: 594mm 841mm; margin: 0; }
+  @font-face { font-family: "Pretendard"; font-weight: 400; src: url("assets/Pretendard-Regular.woff2") format("woff2"); }
+  @font-face { font-family: "Pretendard"; font-weight: 600; src: url("assets/Pretendard-SemiBold.woff2") format("woff2"); }
+  @font-face { font-family: "Pretendard"; font-weight: 700 900; src: url("assets/Pretendard-Bold.woff2") format("woff2"); }
+  * { box-sizing: border-box; }
+  :root {
+    --bg: #15131f; --panel: #1e1b2c; --panel-2: #272339; --line: #36314c;
+    --text: #f3f2f8; --muted: #aaa7bd; --red: #ff3d63; --blue: #8fb0ff; --gold: #ffc35a;
+  }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: "Pretendard", "Apple SD Gothic Neo", sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  h1, h2, h3, p, ul { margin: 0; padding: 0; }
+  li { list-style: none; }
+  svg { display: block; }
+  svg text { font-family: "Pretendard", "Apple SD Gothic Neo", sans-serif; }
+  .poster { width: 594mm; height: 841mm; padding: 18mm 20mm 16mm; display: flex; flex-direction: column; gap: 5mm; overflow: hidden; }
+  .block { flex: none; overflow: hidden; }
+
+  /* section frame */
+  .sec { background: var(--panel); border-radius: 6mm; padding: 6mm 7mm; }
+  .sec-head { display: flex; align-items: center; gap: 4mm; margin-bottom: 4mm; }
+  .sec-head .no { display: inline-flex; align-items: center; justify-content: center; width: 12mm; height: 12mm; border-radius: 3mm; background: var(--red); font-size: 19pt; font-weight: 800; }
+  .sec-head h2 { font-size: 28pt; font-weight: 800; letter-spacing: -.6pt; }
+  .sec-head .tag { margin-left: auto; font-size: 12pt; letter-spacing: 1.6pt; color: var(--muted); }
+  .muted { color: var(--muted); }
+  .note { font-size: 11.5pt; line-height: 1.4; color: var(--muted); }
+
+  /* header */
+  header { height: 97mm; display: grid; grid-template-columns: 1fr 150mm; gap: 8mm; position: relative; }
+  .brand { display: flex; align-items: center; gap: 4mm; height: 11mm; }
+  .brand .symbol { height: 10mm; }
+  .brand .wordmark { height: 9mm; }
+  .brand .affil { margin-left: 5mm; font-size: 15pt; color: var(--muted); }
+  h1 { margin-top: 6mm; font-size: 58pt; font-weight: 800; letter-spacing: -2.2pt; line-height: 1.1; }
+  h1 em { font-style: normal; color: var(--red); }
+  .formal { margin-top: 5mm; font-size: 31pt; font-weight: 700; letter-spacing: -.6pt; line-height: 1.3; }
+  .formal span { color: var(--muted); font-weight: 400; }
+  .side { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; }
+  .side-bottom { display: flex; align-items: flex-end; gap: 4mm; }
+  .team { text-align: right; font-size: 20pt; line-height: 1.5; }
+  .team small { display: block; font-size: 13pt; color: var(--muted); }
+  .falcon { height: 56mm; display: block; }
+  .demo-qr { display: flex; align-items: center; gap: 4mm; background: var(--panel); padding: 3.5mm 4mm; border-radius: 4mm; }
+  .demo-qr img { width: 33mm; height: 33mm; background: #fff; padding: 1.5mm; border-radius: 2mm; }
+  .demo-qr b { display: block; font-size: 16pt; }
+  .demo-qr span { display: block; font-size: 11pt; color: var(--muted); margin-top: 1mm; line-height: 1.35; }
+
+  /* 1 */
+  #s1 { height: 140mm; }
+  .s1-top { display: grid; grid-template-columns: 182mm 1fr 196mm; gap: 6mm; height: 66mm; }
+  .box { background: var(--panel-2); border-radius: 4mm; padding: 4.5mm 5mm; }
+  .box h3 { font-size: 19pt; font-weight: 700; margin-bottom: 3mm; }
+  .problems { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; text-align: center; }
+  .problems svg { width: 22mm; height: 22mm; margin: 0 auto 2mm; }
+  .problems p { font-size: 14.5pt; line-height: 1.35; }
+  .survey { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; text-align: center; }
+  .survey b { display: block; font-size: 36pt; font-weight: 800; color: var(--red); letter-spacing: -1pt; line-height: 1.1; }
+  .survey span { display: block; font-size: 14pt; line-height: 1.35; margin-top: 1.5mm; }
+  .targets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; text-align: center; }
+  .targets svg { width: 17mm; height: 17mm; margin: 0 auto 1.5mm; }
+  .targets p { font-size: 14.5pt; font-weight: 600; line-height: 1.3; }
+  .targets small { display: block; font-size: 11.5pt; color: var(--muted); font-weight: 400; margin-top: 1mm; line-height: 1.35; }
+  .evidence { display: grid; grid-template-columns: 30mm repeat(3, 1fr); gap: 5mm; margin-top: 4mm; align-items: stretch; height: 41mm; }
+  .evidence .lab { font-size: 15pt; font-weight: 700; color: var(--red); line-height: 1.3; padding-top: 2mm; }
+  .ev { border-left: .6mm solid var(--red); padding: 1mm 0 0 4mm; }
+  .ev p { font-size: 13.5pt; line-height: 1.45; }
+  .ev .design { color: var(--muted); margin-top: 1.5mm; }
+  .ev .ref { font-size: 11pt; color: var(--blue); margin-top: 1.5mm; }
+
+  /* 2 */
+  #s2 { height: 235mm; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6mm; }
+  .step { background: var(--panel-2); border-radius: 4mm; padding: 4mm 4.5mm 4.5mm; }
+  .step .label { font-size: 14pt; font-weight: 800; color: var(--red); letter-spacing: 1pt; }
+  .step h3 { display: inline; font-size: 20pt; margin-left: 2mm; }
+  .step img { display: block; width: 100%; height: 78mm; object-fit: cover; object-position: top center; border-radius: 3mm; margin: 3mm 0; background: #fff; }
+  .step img.fit { object-fit: contain; object-position: center; }
+  .step p { font-size: 14pt; line-height: 1.4; color: var(--muted); }
+  .profiles-title { display: flex; align-items: baseline; gap: 4mm; margin: 4mm 0 2.5mm; }
+  .profiles-title h3 { font-size: 19pt; }
+  .profiles-title span { font-size: 13pt; color: var(--muted); }
+  .profiles { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4mm; }
+  .profile { background: var(--panel-2); border-radius: 4mm; border-top: 1.6mm solid var(--c); padding: 3.2mm 4mm; height: 68mm; }
+  .profile .en { font-size: 15pt; font-weight: 800; }
+  .profile .ko { font-size: 13pt; color: var(--c); font-weight: 700; margin-top: .5mm; }
+  .profile .who { font-size: 11.5pt; color: var(--muted); line-height: 1.35; margin-top: 2mm; height: 10mm; }
+  .profile ul { margin-top: 2.5mm; border-top: .3mm solid var(--line); padding-top: 2.5mm; }
+  .profile li { font-size: 12.5pt; line-height: 1.5; }
+  .profile li::before { content: ""; display: inline-block; width: 1.6mm; height: 1.6mm; border-radius: 50%; background: var(--c); margin-right: 2mm; vertical-align: middle; }
+  .profile .vals { font-size: 11pt; color: var(--muted); margin-top: 2mm; }
+
+  /* 3 */
+  #s3 { height: 149mm; }
+  .s3 { display: grid; grid-template-columns: 300mm 1fr; gap: 7mm; }
+  .arch { width: 100%; height: 80mm; }
+  .map-box { margin-top: 3mm; }
+  .map-box h3 { font-size: 15pt; }
+  .map-box h3 small { font-size: 11.5pt; color: var(--muted); font-weight: 400; margin-left: 2mm; }
+  .map-box svg { width: 100%; height: 30mm; margin-top: 1.5mm; }
+  .tech li { display: grid; grid-template-columns: 9mm 1fr; gap: 2mm; padding: 2.2mm 0; border-bottom: .3mm solid var(--line); }
+  .tech li:last-child { border-bottom: 0; }
+  .tech i { font-style: normal; font-size: 15pt; font-weight: 800; color: var(--red); }
+  .tech b { font-size: 15.5pt; }
+  .tech p { font-size: 12.5pt; color: var(--muted); line-height: 1.4; margin-top: .8mm; }
+
+  /* 4 + 5 */
+  .bottom { height: 141mm; display: grid; grid-template-columns: 262mm 1fr; gap: 6mm; }
+  table { width: 100%; border-collapse: separate; border-spacing: 0 1.5mm; font-size: 13.5pt; }
+  th { font-size: 14pt; padding: 3mm; text-align: center; background: var(--panel-2); }
+  th.pv { background: var(--red); border-radius: 3mm 3mm 0 0; }
+  td { padding: 2.5mm 3mm; text-align: center; line-height: 1.4; background: var(--panel-2); }
+  td:first-child { font-weight: 700; width: 36mm; }
+  td.pv { color: var(--text); font-weight: 700; background: #3a1d2c; }
+  .compare-note { margin-top: 2mm; }
+  .effects { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5mm; }
+  .effect { background: var(--panel-2); border-radius: 4mm; padding: 3.5mm 4.5mm; }
+  .effect b { font-size: 16pt; }
+  .effect p { font-size: 12.5pt; color: var(--muted); line-height: 1.4; margin-top: 1mm; }
+  .poc { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; margin-top: 4mm; padding: 3.5mm 4.5mm; border: .4mm solid var(--line); border-radius: 4mm; }
+  .poc .t { grid-column: 1 / -1; font-size: 13pt; font-weight: 700; color: var(--blue); }
+  .poc b { display: block; font-size: 26pt; font-weight: 800; color: var(--red); letter-spacing: -.6pt; }
+  .poc span { display: block; font-size: 11.5pt; line-height: 1.35; }
+  .next { margin-top: 3.5mm; font-size: 13pt; line-height: 1.5; }
+  .next b { color: var(--gold); }
+
+  footer { height: 20mm; display: flex; align-items: center; gap: 6mm; border-top: .4mm solid var(--line); padding-top: 3mm; }
+  footer .credits { flex: 1; font-size: 11pt; color: var(--muted); line-height: 1.45; }
+  footer .gh { display: flex; align-items: center; gap: 3mm; font-size: 12pt; }
+  footer .gh img { width: 16mm; height: 16mm; background: #fff; padding: 1mm; border-radius: 1.5mm; }
+</style>
+</head>
+<body>
+<div class="poster" id="poster">
+
+<header class="block">
+  <div>
+    <div class="brand"><img class="symbol" src="assets/pariview-symbol.svg" alt=""><img class="wordmark" src="assets/pariview-wordmark.svg" alt="PariView"><span class="affil">이화여자대학교 · 2026 공과대학 캡스톤디자인 · 사회기여형</span></div>
+    <h1>화면과 소리,<br><em>내가 정하면 안 되나요?</em></h1>
+    <p class="formal">감각 과부하 감소와 미디어 접근성 향상을 위한<br>적응형 시청 시스템</p>
+  </div>
+  <div class="side">
+    <div class="team">팀 Lucent<br>정아윤 · 박세령 · 정서윤</div>
+    <div class="side-bottom"><img class="falcon" src="assets/falcon-render.png" alt="">
+    <div class="demo-qr"><img src="assets/qr-demo.svg" alt=""><div><b>바로 체험하기</b><span>pariview-production<br>.up.railway.app</span></div></div></div>
+  </div>
+</header>
+
+<section id="s1" class="block sec">
+  <div class="sec-head"><span class="no">1</span><h2>개발 배경 및 필요성</h2><span class="tag">WHY</span></div>
+  <div class="s1-top">
+    <div class="box">
+      <h3>같은 영상, 모두에게 같은 경험일까요?</h3>
+      <div class="problems">
+        <div><svg viewBox="0 0 64 64" fill="none" stroke="#ff3d63" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 26h10l12-10v32L18 38H8z"/><path d="M40 22q6 10 0 20M47 15q12 17 0 34"/></svg><p>갑작스러운<br>음량 변화와 효과음</p></div>
+        <div><svg viewBox="0 0 64 64" fill="none" stroke="#ff3d63" stroke-width="3" stroke-linecap="round"><path d="M6 32q26-24 52 0q-26 24-52 0z"/><circle cx="32" cy="32" r="8"/><path d="M32 4v6M32 54v6M10 12l4 4M54 12l-4 4"/></svg><p>강한 명도·대비와<br>빠른 화면 전환</p></div>
+        <div><svg viewBox="0 0 64 64" fill="none" stroke="#ff3d63" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 44h12l6-12M34 20l6-8h18"/><path d="M27 26l6-4"/><circle cx="14" cy="18" r="5"/><path d="M44 40h14M44 48h10"/></svg><p>집중 흐름 단절과<br>정보 처리 부담</p></div>
+      </div>
+    </div>
+    <div class="box">
+      <h3>사용자 설문조사</h3>
+      <div class="survey">
+        <div><b>11.8%</b><span>기존 OTT 관련<br>기능 만족도</span></div>
+        <div><b>60.5%</b><span>기존 OTT 관련<br>세부 조절 기능 부족</span></div>
+        <div><b>83%</b><span>맞춤형 시청각 자극<br>최적화 기술 사용 의향</span></div>
+      </div>
+      <p class="note" style="margin-top:3mm;text-align:center">신경다양성 이용자 76명 대상 조사</p>
+    </div>
+    <div class="box">
+      <h3>타깃 사용자</h3>
+      <div class="targets">
+        <div><svg viewBox="0 0 64 64" fill="none" stroke="#f3f2f8" stroke-width="3"><circle cx="22" cy="20" r="8"/><circle cx="44" cy="22" r="7"/><path d="M6 54q0-18 16-18t16 18M34 52q2-14 12-14t12 14"/></svg><p>신경다양성 이용자<small>자폐 스펙트럼·ADHD 등<br>ADHD 진료 26만 명(2024)</small></p></div>
+        <div><svg viewBox="0 0 64 64" fill="none" stroke="#f3f2f8" stroke-width="3" stroke-linecap="round"><path d="M24 58V30q0-5 5-5t5 5v8M34 34q0-5 5-5t5 5v6M44 38q0-4 4-4t4 4v8q0 12-12 12H30q-8 0-12-8l-6-10q-2-5 3-6t8 4"/><path d="M14 10l4 6M30 4v7M46 10l-4 6"/></svg><p>감각 민감 이용자<small>빛·소리에 민감한 분</small></p></div>
+        <div><svg viewBox="0 0 64 64" fill="none" stroke="#f3f2f8" stroke-width="3" stroke-linecap="round"><circle cx="24" cy="14" r="7"/><path d="M14 58V36q0-10 10-10t10 10v22M44 30v28"/><circle cx="46" cy="18" r="6"/><path d="M40 58V36q0-8 6-8t6 8v22"/></svg><p>고령층 및 일반 이용자<small>65세 이상 20.3%(2025)<br>OTT 이용률 79.2%(2024)</small></p></div>
+      </div>
+    </div>
+  </div>
+  <div class="evidence">
+    <div class="lab">연구에서<br>출발한 설계</div>
+    <div class="ev"><p>자폐 성인 49명의 설문에서 개인별 감각 경험과 기분·피로에 따른 변화가 보고됐어요</p><p class="design">→ 진단명으로 설정을 고정하지 않고, 지금의 선호를 비교하고 다시 맞춰요</p><p class="ref">MacLennan, O’Brien &amp; Tavassoli (2022) · J Autism Dev Disord</p></div>
+    <div class="ev"><p>자폐 아동 41명이 감각실을 직접 조절한 조건에서 주의집중 증가가 관찰됐어요</p><p class="design">→ 적용·건너뛰기·원본 복귀를 사용자가 직접 결정해요</p><p class="ref">Unwin, Powell &amp; Jones (2022) · Autism</p></div>
+    <div class="ev"><p>영화 시청 과제에서 감각 특성이 다른 자폐 하위집단의 신경반응 차이가 관찰됐어요</p><p class="design">→ 소리와 빛의 변화를 함께 보여주고, 조절은 개인이 선택해요</p><p class="ref">Matsuzaki et al. (2022) · Brain &amp; Development</p></div>
+  </div>
+</section>
+
+<section id="s2" class="block sec">
+  <div class="sec-head"><span class="no">2</span><h2>PariView의 핵심 솔루션</h2><span class="tag">HOW · 실제 화면</span></div>
+  <div class="steps">
+    <div class="step"><span class="label">STEP 01</span><h3>감각 프로필 선택</h3><img class="fit" src="assets/step1.png" alt=""><p>다섯 가지 출발점 중 오늘과 가까운 모드를 골라요 질문 두 개로 추천도 받아요</p></div>
+    <div class="step"><span class="label">STEP 02</span><h3>같은 장면 반응 비교</h3><img class="fit" src="assets/step2.png" alt=""><p>밝기·대비·소리 크기·음량 변화 완화·쉬운 자막을 A/B로 다섯 번 비교해요</p></div>
+    <div class="step"><span class="label">STEP 03</span><h3>맞춤형 시청 환경</h3><img src="assets/step3.png" alt=""><p>고른 설정으로 보고 영상 아래에서 바로 다시 조절해요 원본 비교와 기본값 복귀도 한 번에</p></div>
+  </div>
+  <div class="profiles-title"><h3>5가지 감각 프로필</h3><span>진단이 아닌 시작점이에요 고른 뒤 비교하며 언제든 바꿀 수 있어요</span></div>
+  <div class="profiles" id="profiles"></div>
+</section>
+
+<section id="s3" class="block sec">
+  <div class="sec-head"><span class="no">3</span><h2>시스템 구조도 및 기술 요소</h2><span class="tag">SYSTEM</span></div>
+  <div class="s3">
+    <div>
+      <svg class="arch" viewBox="0 0 1000 290" role="img" aria-label="시스템 구조">
+        <defs><marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#aaa7bd"/></marker></defs>
+        <g font-size="19" fill="#f3f2f8">
+          <circle cx="44" cy="120" r="22" fill="none" stroke="#f3f2f8" stroke-width="3"/><path d="M14 190q0-40 30-40t30 40" fill="none" stroke="#f3f2f8" stroke-width="3"/><text x="44" y="220" text-anchor="middle" font-size="17">사용자</text>
+          <path d="M80 140 L118 140" stroke="#aaa7bd" stroke-width="2.5" marker-end="url(#ar)"/>
+          <rect x="122" y="14" width="420" height="262" rx="16" fill="none" stroke="#36314c" stroke-width="2.5"/>
+          <text x="140" y="44" font-size="16" fill="#aaa7bd">PariView 웹 · HTML·CSS·JavaScript</text>
+          <rect x="140" y="62" width="180" height="78" rx="10" fill="#272339"/><text x="230" y="96" text-anchor="middle" font-weight="700">피팅 UI</text><text x="230" y="122" text-anchor="middle" font-size="14" fill="#aaa7bd">프로필 · A/B 비교</text>
+          <rect x="342" y="62" width="182" height="50" rx="10" fill="#272339"/><text x="433" y="93" text-anchor="middle" font-size="16">CSS filter</text>
+          <rect x="342" y="122" width="182" height="50" rx="10" fill="#272339"/><text x="433" y="153" text-anchor="middle" font-size="16">Web Audio</text>
+          <rect x="342" y="184" width="182" height="74" rx="10" fill="#ff3d63"/><text x="433" y="215" text-anchor="middle" font-weight="700">영상 재생</text><text x="433" y="240" text-anchor="middle" font-size="14">화면 · 소리 조절</text>
+          <rect x="140" y="176" width="180" height="82" rx="10" fill="none" stroke="#8fb0ff" stroke-width="2.5"/><text x="230" y="210" text-anchor="middle" font-size="17">localStorage</text><text x="230" y="236" text-anchor="middle" font-size="13" fill="#aaa7bd">설정값 저장</text>
+          <path d="M320 92 L338 88" stroke="#aaa7bd" stroke-width="2.5" marker-end="url(#ar)"/><path d="M320 114 L338 140" stroke="#aaa7bd" stroke-width="2.5" marker-end="url(#ar)"/>
+          <path d="M433 112v8M433 172v8" stroke="#aaa7bd" stroke-width="2.5"/>
+          <path d="M230 140v32" stroke="#8fb0ff" stroke-width="2.5" marker-end="url(#ar)"/>
+
+          <rect x="600" y="14" width="390" height="262" rx="16" fill="none" stroke="#36314c" stroke-width="2.5"/>
+          <text x="618" y="44" font-size="16" fill="#aaa7bd">Chrome Extension · Manifest V3</text>
+          <rect x="618" y="62" width="168" height="78" rx="10" fill="#272339"/><text x="702" y="96" text-anchor="middle">Content</text><text x="702" y="122" text-anchor="middle">Script</text>
+          <rect x="806" y="62" width="166" height="78" rx="10" fill="none" stroke="#8fb0ff" stroke-width="2.5"/><text x="889" y="96" text-anchor="middle" font-size="16">chrome.storage</text><text x="889" y="122" text-anchor="middle" font-size="16">.local</text>
+          <rect x="618" y="176" width="236" height="82" rx="10" fill="#272339"/><text x="736" y="210" text-anchor="middle" font-size="17">다른 사이트의 영상</text><text x="736" y="236" text-anchor="middle" font-size="13" fill="#aaa7bd">같은 filter · Web Audio</text>
+          <rect x="872" y="176" width="100" height="82" rx="10" fill="#272339"/><text x="922" y="212" text-anchor="middle" font-size="17">Popup</text><text x="922" y="236" text-anchor="middle" font-size="13" fill="#aaa7bd">켜기·끄기</text>
+          <path d="M320 218 C 470 300, 560 290, 610 110" stroke="#8fb0ff" stroke-width="2.5" stroke-dasharray="8 6" marker-end="url(#ar)" fill="none"/>
+          <text x="548" y="282" font-size="14" fill="#8fb0ff" text-anchor="middle">저장 이벤트로 동기화</text>
+          <path d="M786 101h16" stroke="#aaa7bd" stroke-width="2.5" marker-end="url(#ar)"/><path d="M850 140 L760 172" stroke="#aaa7bd" stroke-width="2.5" marker-end="url(#ar)"/><path d="M922 172v-28" stroke="#aaa7bd" stroke-width="2.5" marker-end="url(#ar)"/>
+        </g>
+      </svg>
+      <div class="map-box">
+        <h3>영상 신호로 측정한 감각 지도<small>ffmpeg EBU R128 라우드니스 · 프레임 평균 밝기 · 손으로 정한 구간 대신 측정값 사용</small></h3>
+        <svg id="map-chart" viewBox="0 0 1000 120" preserveAspectRatio="none" role="img" aria-label="소리 크기와 화면 밝기 측정 곡선"></svg>
+      </div>
+    </div>
+    <ul class="tech">
+      <li><i>①</i><div><b>Chrome Extension (Manifest V3)</b><p>설치하면 저장한 설정을 다른 사이트 영상에 이어서 적용하는 시청 보조 구조</p></div></li>
+      <li><i>②</i><div><b>HTML · CSS · JavaScript</b><p>빌드 없는 정적 웹으로 다섯 프로필, A/B 비교, 세부 설정 UI 구현 · Three.js · Anime.js 3D 로고와 마스코트</p></div></li>
+      <li><i>③</i><div><b>Web Audio API · CSS filter</b><p>고음 완화 → 2–4kHz 말소리 강조 → 음량 변화 압축 → 음량 · 밝기·대비·채도·색온도</p></div></li>
+      <li><i>④</i><div><b>Content Script</b><p>웹페이지의 video 요소에 접근해 사용자 설정에 따라 화면과 소리를 조정 · DRM 영상은 화면만 조정</p></div></li>
+      <li><i>⑤</i><div><b>localStorage · chrome.storage.local</b><p>로컬 기반 설정 저장 · 서버에 개인 정보를 보내지 않아요 · Docker · Nginx · Railway로 데모 배포</p></div></li>
+    </ul>
+  </div>
+</section>
+
+<div class="block bottom">
+  <section class="sec">
+    <div class="sec-head"><span class="no">4</span><h2>기존 서비스 비교</h2></div>
+    <table>
+      <tr><th>비교 항목</th><th>기존 OTT 접근성 기능</th><th class="pv">PariView</th></tr>
+      <tr><td>지원 방식</td><td>자막·화면 해설 등<br>콘텐츠 이해 보조</td><td class="pv">감각 자극 강도 조절과<br>인지 지원</td></tr>
+      <tr><td>개인화 기준</td><td>플랫폼이 정한<br>설정 옵션</td><td class="pv">시작 프로필과<br>같은 장면 A/B 비교</td></tr>
+      <tr><td>설정 방식</td><td>기능마다 사용자가<br>찾아서 조절</td><td class="pv">모드 선택 후<br>비교로 한 번에 설정</td></tr>
+      <tr><td>적용 범위</td><td>각 OTT 안에서만</td><td class="pv">브라우저 확장으로<br>다른 사이트에도 적용</td></tr>
+      <tr><td>되돌리기</td><td>항목마다 다시 설정</td><td class="pv">원본 비교 · 기본값 복귀<br>· 확장 끄기</td></tr>
+    </table>
+  </section>
+  <section class="sec">
+    <div class="sec-head"><span class="no">5</span><h2>기대효과 및 향후 발전 방향</h2></div>
+    <div class="effects">
+      <div class="effect"><b>감각 부담 줄이기</b><p>과도한 시청각 자극을 사용자가 직접 낮출 수 있도록 지원</p></div>
+      <div class="effect"><b>미디어 접근성 향상</b><p>신경다양성 이용자의 콘텐츠 접근 장벽 완화</p></div>
+      <div class="effect"><b>개인 맞춤형 시청 환경</b><p>프로필과 비교 결과를 반영한 시청 설정</p></div>
+      <div class="effect"><b>디지털 포용 확대</b><p>다양한 감각 특성을 고려한 문화 향유 기회</p></div>
+    </div>
+    <div class="poc">
+      <span class="t">검증 · AI 페르소나 10명 시뮬레이션 · 화면 자동 검증</span>
+      <div><b>−59%</b><span>목표값과의 평균 오차<br>0.189 → 0.077</span></div>
+      <div><b>10/10</b><span>피팅 후 오차가<br>줄어든 페르소나</span></div>
+      <div><b>6/6</b><span>확장 프로그램<br>실측 항목 통과</span></div>
+    </div>
+    <p class="next"><b>향후</b> 고른 값 근처에서 한 번 더 비교하는 2단계 비교 · 실제 사용자 사용성 평가(SUS) · 영상 클립과 OTT 연동 확대</p>
+  </section>
+</div>
+
+<footer class="block">
+  <p class="credits">설문은 신경다양성 이용자 76명 대상 팀 자체 조사 · 시뮬레이션 목표값은 통계와 연구를 참고해 팀이 정했어요<br>영화 Tears of Steel © Blender Foundation CC BY 3.0 · Pretendard OFL · 통계 출처 통계청 2025 고령자 통계, 국민건강보험공단 2024, 방송통신위원회 2024 방송매체 이용행태조사</p>
+  <div class="gh"><img src="assets/qr-github.svg" alt=""><div>코드와 기록<br><span class="muted">github.com/ryeong03/pariview</span></div></div>
+</footer>
+
+</div>
+<script type="module">
+const errors = [];
+const NS = 'http://www.w3.org/2000/svg';
+const el = (name, attrs, parent, text) => { const e = document.createElementNS(NS, name); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); if (text !== undefined) e.textContent = text; parent.appendChild(e); return e; };
+const who = {
+  gentle: '자폐 스펙트럼, 감각 과민,<br>소리·빛에 민감한 분',
+  focus: 'ADHD, 집중 유지가<br>어려운 분',
+  clarity: '고령층, 청력·시력<br>저하가 있는 분',
+  soft: '아동, 발달 초기<br>사용자',
+  everyday: '일반 사용자,<br>디지털 피로가 걱정되는 분',
+};
+// Only features that are actually implemented in web/dist (mockup settings excluded)
+const features = {
+  gentle: ['급격한 음량 변화 완화', '고음 완화', '채도·대비·밝기 낮춤'],
+  focus: ['말소리 대역 강조', '음량 변화 완화', '장면 기록·놓친 내용 보기'],
+  clarity: ['2–4kHz 말소리 강조', '대비 강화', '어두운 장면 밝기 보정', '크고 굵은 자막'],
+  soft: ['부드러운 색감', '쉬운 자막', '작은 음량·고음 완화'],
+  everyday: ['따뜻한 색온도', '급격한 소리 변화 완화', '20분 시청 휴식 안내'],
+};
+try {
+  const { modes } = await import('../web/dist/settings.js');
+  document.getElementById('profiles').innerHTML = modes.map(m => `<article class="profile" style="--c:${m.color}"><div class="en">${m.en}</div><div class="ko">${m.title}</div><p class="who">${who[m.id]}</p><ul>${features[m.id].map(f => `<li>${f}</li>`).join('')}</ul><p class="vals">밝기 ${m.values.brightness} · 대비 ${m.values.contrast} · 소리 ${m.values.volume}</p></article>`).join('');
+} catch (e) { errors.push('profiles:' + e.message); }
+try {
+  const map = await (await fetch('../web/dist/assets/sensory-map.json')).json();
+  const svg = document.getElementById('map-chart');
+  const d = map.duration, x = t => 60 + 930 * t / d;
+  const laneS = [6, 52], laneL = [62, 108];
+  for (const e of map.events) { const lane = e.type === '빛 변화' ? laneL : laneS; el('rect', { x: x(e.at), y: lane[0], width: Math.max(5, x(e.end) - x(e.at)), height: lane[1] - lane[0], fill: e.type === '빛 변화' ? '#8fb0ff' : '#ff3d63', opacity: .25 }, svg); }
+  const yS = v => laneS[1] - (Math.min(-10, Math.max(-40, v)) + 40) / 30 * (laneS[1] - laneS[0]);
+  const yL = v => laneL[1] - (Math.min(160, Math.max(60, v)) - 60) / 100 * (laneL[1] - laneL[0]);
+  const path = (pts, fy) => pts.filter(p => p[1] > -69).map((p, i) => `${i ? 'L' : 'M'}${x(p[0]).toFixed(1)},${fy(p[1]).toFixed(1)}`).join(' ');
+  el('path', { d: path(map.curves.loudness, yS), stroke: '#ff3d63', 'stroke-width': 3, fill: 'none' }, svg);
+  el('path', { d: path(map.curves.luma, yL), stroke: '#8fb0ff', 'stroke-width': 3, fill: 'none' }, svg);
+  el('text', { x: 0, y: 34, 'font-size': 16, fill: '#aaa7bd' }, svg, '소리');
+  el('text', { x: 0, y: 90, 'font-size': 16, fill: '#aaa7bd' }, svg, '밝기');
+} catch (e) { errors.push('map:' + e.message); }
+await document.fonts.ready;
+await Promise.all([...document.images].map(img => img.complete ? null : new Promise(r => { img.onload = img.onerror = r; })));
+for (const img of document.images) if (!img.naturalWidth) errors.push('image:' + img.getAttribute('src'));
+for (const box of document.querySelectorAll('.block, .sec, .box, .step, .profile, .effect, .poc, .ev')) {
+  if (box.scrollHeight > box.clientHeight + 1 || box.scrollWidth > box.clientWidth + 1) errors.push('overflow:' + (box.id || box.className) + ':' + (box.scrollHeight - box.clientHeight));
+}
+const poster = document.getElementById('poster');
+if (poster.scrollHeight > poster.clientHeight + 1) errors.push('poster-overflow:' + (poster.scrollHeight - poster.clientHeight));
+document.body.dataset.layoutErrors = JSON.stringify(errors);
+</script>
+</body>
+</html>
