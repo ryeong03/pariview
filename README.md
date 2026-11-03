@@ -119,7 +119,7 @@ flowchart LR
 | 항목 | 방법 | 결과 |
 |---|---|---|
 | 화면 동작 | `uv run --with playwright python web/validate.py` (1440·1280·768·390 폭, 5프로필, 비교, 저장, 초기화, 재생, 모바일, 모션 줄이기) | 오류 0건, 리소스 실패 0건 |
-| 추천 | `python3 -m unittest ai.test_recommendation ai.test_experience_http ai.test_static_gzip -v`, `uv run --with playwright python web/validate_recommendation.py --base-url http://127.0.0.1:4178` | 서버 전체 검사 50개 통과, 규칙 64개·AI 후보 17개 입력의 JS/Python 정합, 브라우저 14개 흐름 통과 · 공급자 정상 응답은 모의 검증 · LiteLLM 게이트웨이·직접 Anthropic 연결 지원 · 게이트웨이 공개 실응답은 배포 후 확인 |
+| 추천 | `python3 -m unittest ai.test_recommendation ai.test_experience_http ai.test_static_gzip -v`, `uv run --with playwright python web/validate_recommendation.py --base-url http://127.0.0.1:4178` | 서버 전체 검사 50개 통과, 규칙 64개·AI 후보 17개 입력의 JS/Python 정합, 브라우저 14개 흐름 통과 · 모의 공급자 회귀와 별도로 학교 LiteLLM 경로의 공개 실요청 1회 AI 응답·설정 적용·저장 확인 (2026-11-04) |
 | 영상 비교 | 3편 길이·장면 전환·12초 이후 탐색·동시 재생·0.75배속 확인 | 각 45초, 화면 동기화 및 설정 유지 통과 |
 | 확장 프로그램 v0.3.1 | 웹 연결 6개, 오디오·상태 16개, 공개 앱 → 실제 YouTube·SPA 이동 10개 ([검증 기록](extension/tests/VALIDATION-0.3.1.md)) | 32개 항목 통과, 최종 ZIP 설치로 오디오·상태 16개 재확인 · 소리는 디지털 출력 신호로 확인 |
 | 당사자 참여 검증 | 신경다양성 당사자 참여 · 사용자 확인 | 완료 |
