@@ -1,6 +1,6 @@
 {
  "summary": {
-  "label": "AI 페르소나 시뮬레이션 (실제 사용자 아님)",
+  "label": "AI 페르소나 10명 시뮬레이션",
   "personas": 10,
   "meanErrorDefault": 0.1893,
   "meanErrorFitted": 0.0773,

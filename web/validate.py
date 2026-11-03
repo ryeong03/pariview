@@ -1,7 +1,8 @@
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-import json
+import json, os
 ROOT=Path(__file__).resolve().parent
+BASE_URL=os.environ.get('PARIVIEW_BASE_URL','http://127.0.0.1:4178')
 results={}
 with sync_playwright() as p:
  b=p.chromium.launch(executable_path='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',args=['--enable-webgl','--ignore-gpu-blocklist'])
@@ -9,7 +10,7 @@ with sync_playwright() as p:
  errors=[];bad=[]
  page.on('pageerror',lambda e:errors.append(str(e)))
  page.on('response',lambda r:bad.append({'url':r.url,'status':r.status}) if r.status>=400 else None)
- page.goto('http://127.0.0.1:4178',wait_until='networkidle');page.wait_for_function('window.__pariview && window.__wordmark3D && window.__pariviewMascots.length === 2')
+ page.goto(BASE_URL,wait_until='networkidle');page.wait_for_function('window.__pariview && window.__wordmark3D && window.__pariviewMascots.length === 2')
  assert page.locator('#film').get_attribute('src')=='assets/movie-hologram.mp4'
  assert page.locator('.approved-hero').count()==1 and page.locator('#journey').count()==0
  results['logo']=page.evaluate('window.__wordmark3D.engine')

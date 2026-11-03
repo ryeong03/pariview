@@ -52,10 +52,14 @@ export function createFalcon(host,{wizard=false,reduced=()=>false}={}){
   const crown=flatShape(bird,s=>{s.moveTo(-.65,1.3);s.lineTo(-.34,2.15);s.quadraticCurveTo(-.17,2.47,.07,2.28);s.quadraticCurveTo(.32,2.13,.65,2.18);s.lineTo(.29,1.91);s.lineTo(.56,1.29);s.closePath();},hatmat,.34);crown.position.z=-.17;
   tube(bird,[[-.55,1.49,.30],[0,1.45,.37],[.48,1.45,.30]],.06,coralDark);
   const buckle=new THREE.Mesh(new THREE.TorusGeometry(.1,.026,8,4),gold);buckle.position.set(.13,1.46,.43);buckle.rotation.z=Math.PI/4;bird.add(buckle);
-  wand=new THREE.Group();wand.position.set(.9,.5,.3);wand.rotation.z=-.25;bird.add(wand);
+  // The wand lives in the raised right wing so it moves with the wave; a small fist wraps its handle
+  wand=new THREE.Group();wand.position.set(.415,.293,.2);wand.rotation.z=-.25;wingR.add(wand);
   tube(wand,[[0,-.2,0],[0,.85,0]],.035,ink);tube(wand,[[0,.68,0],[0,.89,0]],.037,cream);
   star=flatShape(wand,s=>{for(let i=0;i<8;i++){const r=i%2?.045:.14,a=Math.PI*i/4;const x=Math.sin(a)*r,y=1.04+Math.cos(a)*r;i?s.lineTo(x,y):s.moveTo(x,y);}s.closePath();},gold,.035);
   star.position.z=.04;
+  oval(wingR,.44,.39,.27,.105,.09,.095,coral);
+  tube(wingR,[[.36,.42,.33],[.43,.47,.35],[.52,.42,.33]],.018);
+  tube(wingR,[[.37,.35,.33],[.45,.33,.35],[.53,.37,.32]],.016);
  }
  const shadow=new THREE.Mesh(new THREE.CircleGeometry(.85,64),new THREE.MeshBasicMaterial({color:'#ddd8d5',transparent:true,opacity:.24,depthWrite:false}));shadow.rotation.x=-Math.PI/2;shadow.scale.y=.42;shadow.position.y=-1.43;scene.add(shadow);
  const facing=wizard?-.25:.25;bird.rotation.y=facing;bird.position.y=wizard?-.36:0;
