@@ -22,7 +22,7 @@ export async function createBrand(host, reduced=()=>matchMedia('(prefers-reduced
   for(const shape of SVGLoader.createShapes(path)){
    const geo=new THREE.ExtrudeGeometry(shape,{depth:3,bevelEnabled:true,bevelSegments:3,steps:1,bevelSize:.65,bevelThickness:.65,curveSegments:20});
    if(!isWord){geo.translate(-60,-38,-1.5);geo.scale(1,-1,1);}
-   const material=new THREE.MeshPhysicalMaterial({color:host.dataset.tone==='dark'?(isWord?'#17181b':'#fa0030'):'#f6f5ff',metalness:.12,roughness:.32,clearcoat:.8,side:THREE.DoubleSide,emissive:host.dataset.tone==='dark'?'#000000':'#c5c3d1',emissiveIntensity:.15});
+   const material=new THREE.MeshPhysicalMaterial({color:host.dataset.tone==='dark'?(isWord?'#17181b':'#257f76'):'#f6f5ff',metalness:.12,roughness:.32,clearcoat:.8,side:THREE.DoubleSide,emissive:host.dataset.tone==='dark'?'#000000':'#c5c3d1',emissiveIntensity:.15});
    const mesh=new THREE.Mesh(geo,material);group.add(mesh);pieces.push(mesh);
   }
  }

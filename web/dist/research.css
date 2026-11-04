@@ -7,7 +7,7 @@
 #research-view .research-hero{text-align:center;padding:66px 0 44px}
 #research-view .research-hero .kicker{color:#6b7684;font-size:13px;letter-spacing:1.4px;margin-bottom:22px}
 #research-view .research-hero h1{font-size:42px;line-height:1.4;letter-spacing:-1.2px;font-weight:750}
-#research-view .research-hero h1 em{color:#fa0030;font-style:normal}
+#research-view .research-hero h1 em{color:#257f76;font-style:normal}
 #research-view .research-hero>p{font-size:19px;line-height:1.7;color:#4e5968;margin-top:24px}
 #research-view .research-updated{display:block;font-size:13px;line-height:1.65;color:#6b7684;margin-top:18px}
 #research-view .research-jump-nav{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:32px}
@@ -98,7 +98,7 @@
 #research-view .proposal-number{font-size:13px;font-variant-numeric:tabular-nums;color:#6b7684}
 #research-view .design-proposal h3{font-size:22px;letter-spacing:-.5px;line-height:1.5;margin:14px 0 13px;font-weight:700;word-break:keep-all}
 #research-view .design-proposal>p{font-size:15px;color:#4e5968;line-height:1.8}
-#research-view .design-proposal blockquote{font-size:16px;color:#191f28;font-weight:600;line-height:1.7;margin:22px 0;padding:0 0 0 15px;border-left:2px solid #fa0030;word-break:keep-all}
+#research-view .design-proposal blockquote{font-size:16px;color:#191f28;font-weight:600;line-height:1.7;margin:22px 0;padding:0 0 0 15px;border-left:2px solid #257f76;word-break:keep-all}
 #research-view .proposal-basis{border-top:1px solid #dfe2e7;padding-top:19px;margin-top:auto}
 #research-view .proposal-basis p{font-size:13px;color:#4e5968;line-height:1.8;margin-top:6px}
 #research-view .proposal-basis a{display:inline-block;font-size:13px;line-height:1.7;margin-top:12px}

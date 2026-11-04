@@ -18,7 +18,7 @@
 .scene-dialog-content .icon-button{flex:none;color:#6b7684}
 .scene-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .scene-option{display:flex;flex-direction:column;align-items:start;overflow:hidden;border:1px solid #e7e8eb;border-radius:12px;background:white;padding:0;text-align:left;font-family:inherit;cursor:pointer;color:#191f28}
-.scene-option[aria-pressed=true]{border:2px solid #fa0030}
+.scene-option[aria-pressed=true]{border:2px solid #257f76}
 .scene-option:focus-visible{outline:3px solid #003cdc;outline-offset:3px}
 .scene-option img{width:100%;aspect-ratio:16/9;object-fit:cover}
 .scene-option .scene-option-copy{display:flex;flex-direction:column;gap:8px;padding:16px;flex:1}
@@ -26,7 +26,7 @@
 .scene-option strong{font-size:18px;font-weight:700;line-height:1.4;letter-spacing:-.4px}
 .scene-option .scene-description{font-size:13px;color:#6b7684;line-height:1.6;flex:1}
 .scene-option .scene-choice{font-size:12px;font-weight:600;color:#003cdc;margin-top:8px}
-.scene-option[aria-pressed=true] .scene-choice{color:#d80028}
+.scene-option[aria-pressed=true] .scene-choice{color:#1d665f}
 .scene-dialog-note{font-size:13px;line-height:1.6;color:#6b7684;margin-top:22px}
 .scene-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .film-credit #scene-credit{float:none;flex:1}

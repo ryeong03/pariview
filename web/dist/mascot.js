@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {animate} from './vendor/anime.esm.min.js';
 
-// A small coral falcon, drawn as rounded 3D forms with black contour details.
+// A small mint falcon, drawn as rounded 3D forms with black contour details.
 // The two characters share one model; the studio variant adds a hat and wand.
 export function createFalcon(host,{wizard=false,reduced=()=>false}={}){
  const canvas=host.querySelector('canvas');let renderer;
@@ -13,11 +13,11 @@ export function createFalcon(host,{wizard=false,reduced=()=>false}={}){
  scene.add(new THREE.AmbientLight('#ffffff',2));const key=new THREE.DirectionalLight('#fff7ed',3);key.position.set(-3,6,8);scene.add(key);
  const fill=new THREE.DirectionalLight('#d9e4ff',1.3);fill.position.set(4,2,-3);scene.add(fill);
  const mat=(color,roughness=.75)=>new THREE.MeshStandardMaterial({color,roughness,metalness:0});
- const coral=mat('#ff604e'),coralDark=mat('#cd5145'),cream=mat('#fff5df'),ink=mat('#181a1d'),gold=mat('#ffb52e'),hatmat=mat('#292b36');
+ const coral=mat('#5cb8aa'),coralDark=mat('#2f8a7f'),cream=mat('#fff5df'),ink=mat('#181a1d'),gold=mat('#ffb52e'),hatmat=mat('#292b36');
  function oval(parent,x,y,z,sx,sy,sz,material){const mesh=new THREE.Mesh(new THREE.SphereGeometry(1,40,32),material);mesh.position.set(x,y,z);mesh.scale.set(sx,sy,sz);parent.add(mesh);return mesh;}
  function tube(parent,points,r=.025,material=ink){const curve=new THREE.CatmullRomCurve3(points.map(p=>new THREE.Vector3(...p)));const mesh=new THREE.Mesh(new THREE.TubeGeometry(curve,32,r,8,false),material);parent.add(mesh);return mesh;}
  function flatShape(parent,draw,material,depth=.1){const shape=new THREE.Shape();draw(shape);const geo=new THREE.ExtrudeGeometry(shape,{depth,bevelEnabled:true,bevelSize:.04,bevelThickness:.04,bevelSegments:3,steps:1,curveSegments:24});const mesh=new THREE.Mesh(geo,material);parent.add(mesh);return mesh;}
- // Rounded coral silhouette with tiny swept feathers and circular glasses.
+ // Rounded mint silhouette with tiny swept feathers and circular glasses.
  const points=[];for(let i=0;i<=36;i++){const t=Math.PI*i/36,y=-.68+1.5*(1-Math.cos(t))/2;const radius=Math.sin(t)*(.91-.17*Math.sin(t-Math.PI/2));points.push(new THREE.Vector2(Math.max(0,radius),y));}
  const body=new THREE.Mesh(new THREE.LatheGeometry(points,56),coral);body.scale.set(1,1.47,.76);bird.add(body);
  oval(bird,0,.72,.08,.77,.73,.63,coral);

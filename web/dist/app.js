@@ -198,7 +198,7 @@ function renderChart(){
  const labels=['밝기','대비','색','음량'];const coords=(r,i)=>[200+Math.sin(i*Math.PI/2)*r,130-Math.cos(i*Math.PI/2)*r];
  let s='';for(const r of [25,50,75,100])s+=`<polygon points="${labels.map((_,i)=>coords(r,i).join(',')).join(' ')}" fill="none" stroke="#d5d7db" stroke-width="1"/>`;
  labels.forEach((l,i)=>{const [x,y]=coords(100,i),[tx,ty]=coords(118,i);s+=`<path d="M200 130L${x} ${y}" stroke="#e7e8eb"/><text x="${tx}" y="${ty+4}" text-anchor="middle" font-family="Pretendard" font-size="13" fill="#6b7684">${l}</text>`;});
- s+=`<polygon points="${values.map((v,i)=>coords(v*100,i).join(',')).join(' ')}" fill="#fa00301c" stroke="#fa0030" stroke-width="2"/>`;
+ s+=`<polygon points="${values.map((v,i)=>coords(v*100,i).join(',')).join(' ')}" fill="#257f761c" stroke="#257f76" stroke-width="2"/>`;
  $('#profile-chart').innerHTML=s;
 }
 $('#download-profile').onclick=()=>{const report={name:'PariView 시청 설정',settings,createdAt:new Date().toISOString(),note:'선호에 따른 설정이며 감각 역치나 의료적 검사 결과가 아님',mockupOnly:['backgroundReduction','transitionSoftening']};const url=URL.createObjectURL(new Blob([JSON.stringify(report,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='pariview-settings.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};

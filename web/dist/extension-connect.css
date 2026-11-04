@@ -9,7 +9,7 @@
 .extension-actions .secondary{font-size:14px;padding:12px 18px;background:#fff}
 .extension-status .extension-release-note{font-size:13px;line-height:1.6;margin:14px 0 0 44px}
 #extension-installation{scroll-margin-top:28px}
-#extension-install-title:focus-visible{outline:2px solid var(--brand,#fa0030);outline-offset:5px;border-radius:4px}
+#extension-install-title:focus-visible{outline:2px solid var(--brand,#257f76);outline-offset:5px;border-radius:4px}
 .extension-manual-install{margin-top:14px}
 .extension-manual-install summary{cursor:pointer;color:#6b7684;font-size:14px;padding:8px 0}
 .extension-manual-install[open] summary{margin-bottom:10px}

@@ -49,8 +49,8 @@ body.reduce-motion .approved-hero::after{animation:none}
   .approved-hero{isolation:isolate}
   .approved-hero::before{content:"";position:absolute;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;z-index:-1;pointer-events:none;
     background:
-      linear-gradient(90deg,color-mix(in srgb,var(--brand,#fa0030) 20%,transparent),color-mix(in srgb,var(--brand,#fa0030) 9%,transparent) 82%,transparent) left top/0% 100% no-repeat,
-      linear-gradient(270deg,color-mix(in srgb,var(--brand,#fa0030) 20%,transparent),color-mix(in srgb,var(--brand,#fa0030) 9%,transparent) 82%,transparent) right top/0% 100% no-repeat;
+      linear-gradient(90deg,color-mix(in srgb,var(--brand,#257f76) 20%,transparent),color-mix(in srgb,var(--brand,#257f76) 9%,transparent) 82%,transparent) left top/0% 100% no-repeat,
+      linear-gradient(270deg,color-mix(in srgb,var(--brand,#257f76) 20%,transparent),color-mix(in srgb,var(--brand,#257f76) 9%,transparent) 82%,transparent) right top/0% 100% no-repeat;
     -webkit-mask-image:linear-gradient(to bottom,#000 72%,transparent);mask-image:linear-gradient(to bottom,#000 72%,transparent);
     animation:pv-curtain linear both;animation-timeline:scroll();animation-range:0 50svh}
   @keyframes pv-curtain{to{background-size:56% 100%,56% 100%}}
@@ -61,11 +61,11 @@ body.reduce-motion .approved-hero::before{animation:none;display:none}
 
 /* Studio heading accent: "편안하게 보는 방법" gets a soft brand marker that sweeps in as the heading scrolls into view.
    Final state is static when motion is reduced or scroll timelines are unsupported */
-.studio-title-pair h2 span{width:fit-content;padding:0 .12em;margin:0 -.12em;color:var(--brand,#fa0030);
-  background:linear-gradient(transparent 58%,color-mix(in srgb,var(--brand,#fa0030) 16%,transparent) 58%,color-mix(in srgb,var(--brand,#fa0030) 16%,transparent) 92%,transparent 92%) left/100% 100% no-repeat}
+.studio-title-pair h2 span{width:fit-content;padding:0 .12em;margin:0 -.12em;color:var(--brand,#257f76);
+  background:linear-gradient(transparent 58%,color-mix(in srgb,var(--brand,#257f76) 16%,transparent) 58%,color-mix(in srgb,var(--brand,#257f76) 16%,transparent) 92%,transparent 92%) left/100% 100% no-repeat}
 @supports (animation-timeline: view()) {
   .studio-title-pair h2 span{animation:pv-marker linear both;animation-timeline:view();animation-range:entry 60% cover 42%}
-  @keyframes pv-marker{from{background-size:0% 100%;color:var(--ink,#0d0e11)}60%{color:var(--brand,#fa0030)}to{background-size:100% 100%;color:var(--brand,#fa0030)}}
+  @keyframes pv-marker{from{background-size:0% 100%;color:var(--ink,#0d0e11)}60%{color:var(--brand,#257f76)}to{background-size:100% 100%;color:var(--brand,#257f76)}}
 }
 @media(prefers-reduced-motion:reduce){.studio-title-pair h2 span{animation:none}}
 body.reduce-motion .studio-title-pair h2 span{animation:none}

@@ -134,12 +134,12 @@ document.addEventListener('pariview-scene', e => onScene(e.detail));
 document.addEventListener('pariview-saved', () => { base = applied = null; token++; hideUi(); });
 
 const style = document.createElement('style');
-style.textContent = `.scene-adapt-trigger{display:inline-flex;align-items:center;gap:7px;font:inherit;font-size:13px;font-weight:600;line-height:1;padding:8px 12px;border-radius:50px;border:1px solid #ffc2cd;background:#fff5f7;color:#fa0030;cursor:pointer;white-space:nowrap}
-.scene-adapt-trigger[hidden]{display:none}.scene-adapt-trigger:hover{background:#ffecef}.scene-adapt-trigger:focus-visible{outline:3px solid #fa003066;outline-offset:2px}
-.scene-adapt-dot{width:7px;height:7px;border-radius:50%;background:#fa0030}
+style.textContent = `.scene-adapt-trigger{display:inline-flex;align-items:center;gap:7px;font:inherit;font-size:13px;font-weight:600;line-height:1;padding:8px 12px;border-radius:50px;border:1px solid #b9dfd9;background:#eef8f6;color:#257f76;cursor:pointer;white-space:nowrap}
+.scene-adapt-trigger[hidden]{display:none}.scene-adapt-trigger:hover{background:#e3f3f0}.scene-adapt-trigger:focus-visible{outline:3px solid #257f7666;outline-offset:2px}
+.scene-adapt-dot{width:7px;height:7px;border-radius:50%;background:#257f76}
 .scene-adapt-pop{position:fixed;inset:auto;margin:0;box-sizing:border-box;max-height:calc(100dvh - 24px);overflow:auto;padding:16px 18px;border:1px solid #e7e8eb;border-radius:14px;background:#fff;color:#0d0e11;box-shadow:0 16px 40px #0d0e1626;font:14px/1.55 Pretendard,system-ui,sans-serif}
 .scene-adapt-pop b{font-size:14px}.scene-adapt-pop ul{margin:8px 0 14px;padding-left:18px;color:#4e5968;font-size:13px}.scene-adapt-pop li+li{margin-top:4px}
 .scene-adapt-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}.scene-adapt-pop button{font:inherit;font-size:13px;padding:8px 14px;border-radius:50px;border:1px solid #d5d7dc;background:#fff;color:#0d0e11;cursor:pointer}
-.scene-adapt-pop button[data-adapt=undo]{border-color:#fa0030;background:#fa0030;color:#fff;font-weight:600}
+.scene-adapt-pop button[data-adapt=undo]{border-color:#257f76;background:#257f76;color:#fff;font-weight:600}
 @media(max-width:760px){.scene-adapt-trigger{padding:7px 10px;font-size:12px}}`;
 document.head.appendChild(style);
