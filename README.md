@@ -4,9 +4,10 @@
 <p><b>화면과 소리, 내가 정하면 안 되나요?</b></p>
 <p>같은 장면을 비교하며 나에게 편안한 시청 설정을 찾는 서비스</p>
 
-<a href="https://pariview-production.up.railway.app/"><img src="https://img.shields.io/badge/WEB-체험하기-FF0033?style=for-the-badge&amp;logo=googlechrome&amp;logoColor=white" alt="PariView 웹 체험" /></a>
+<a href="https://pariview-production.up.railway.app/"><img src="https://img.shields.io/badge/WEB-체험하기-257F76?style=for-the-badge&amp;logo=googlechrome&amp;logoColor=white" alt="PariView 웹 체험" /></a>
 <a href="https://youtu.be/53o3VVO-jrE"><img src="https://img.shields.io/badge/YOUTUBE-소개_영상-222222?style=for-the-badge&amp;logo=youtube&amp;logoColor=white" alt="PariView 소개 영상" /></a>
 <a href="poster/PariView_A1.pdf"><img src="https://img.shields.io/badge/POSTER-프로젝트_소개-686B76?style=for-the-badge" alt="최신 A1 포스터" /></a>
+<a href="https://github.com/ryeong03/pariview/actions/workflows/ci.yml"><img src="https://github.com/ryeong03/pariview/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI" /></a>
 
 <br/><br/>
 <img src="docs/images/hero-desktop.png" alt="PariView 첫 화면: 화면과 소리를 직접 비교하며 맞추는 시청 경험" width="900" />

@@ -23,3 +23,13 @@ handoff/
 
 # Local poster history
 /poster/versions/
+
+# Secrets (use .env.example as the template)
+.env
+.env.*
+!.env.example
+
+# Large local media and archives (keep out of git history)
+/videos/
+/assets.zip
+/poster/assets.zip

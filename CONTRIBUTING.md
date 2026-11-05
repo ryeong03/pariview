@@ -28,11 +28,13 @@ DRM·CORS 등 소리 처리가 지원되지 않는 경우에는 원래 재생을
 ## 변경 확인
 
 ```sh
-python3 -m unittest ai.test_recommendation -v
+python3 -m unittest ai.test_recommendation ai.test_experience_http ai.test_static_gzip -v
+node --test web/test_adaptive_fit.mjs
 uv run --with playwright python web/validate.py
 uv run --with playwright python web/validate_recommendation.py --base-url http://127.0.0.1:4178
 ```
 
+위 두 단위 테스트와 Docker 이미지 헬스 체크는 PR·push마다 [GitHub Actions](.github/workflows/ci.yml)에서 자동으로 실행돼요
 브라우저 검사에 쓰는 Chromium 경로와 포트는 각 스크립트 및 [배포 안내](deploy/README.md)를 참고해요
 확장 기능을 고쳤다면 [확장 검증 기록과 재현 방법](extension/tests/VALIDATION.md)도 확인해 주세요
 PR에는 바뀐 동작, 확인 방법, 화면 변경이 있을 때 전후 화면을 적어 주세요
