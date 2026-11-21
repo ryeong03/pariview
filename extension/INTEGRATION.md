@@ -62,4 +62,6 @@
 - `pariview-extension.zip`
 - `web/dist/pariview-extension.zip`
 
+세 ZIP 모두 `.gitignore` 대상인 빌드 산출물이에요 CI 아티팩트와 Docker 이미지 빌드 단계에서 만들어져요
+
 개발용 테스트·인수인계 자료는 설치 패키지에 포함하지 않아요
