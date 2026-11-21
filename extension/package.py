@@ -18,6 +18,7 @@ def build(target, prefix):
             archive.writestr(info, source.read_bytes())
 
 target = repo / 'pariview-extension.zip'
+(repo / 'web' / 'dist').mkdir(parents=True, exist_ok=True)
 build(target, 'pariview-extension/')
 shutil.copyfile(target, repo / 'web' / 'dist' / target.name)
 build(repo / 'pariview-webstore.zip', '')

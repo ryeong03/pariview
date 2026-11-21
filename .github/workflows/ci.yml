@@ -37,11 +37,51 @@ jobs:
       - name: Recommendation API (unittest)
         run: python -m unittest ai.test_recommendation ai.test_experience_http ai.test_static_gzip -v
 
+  package:
+    name: Package Chrome extension
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Build archives twice and require identical bytes
+        run: |
+          python extension/package.py
+          sha256sum pariview-extension.zip pariview-webstore.zip > first.sha256
+          python extension/package.py
+          sha256sum -c first.sha256
+          cmp pariview-extension.zip web/dist/pariview-extension.zip
+
+      - name: Check archive layout
+        run: |
+          python - <<'PY'
+          import json, zipfile
+          store = zipfile.ZipFile('pariview-webstore.zip').namelist()
+          dev = zipfile.ZipFile('pariview-extension.zip').namelist()
+          assert 'manifest.json' in store, 'Web Store zip needs manifest.json at the top level'
+          assert all(n.startswith('pariview-extension/') for n in dev), 'dev zip must unpack into one folder'
+          assert 'LICENSE' in store
+          version = json.loads(zipfile.ZipFile('pariview-webstore.zip').read('manifest.json'))['version']
+          print(f'extension v{version}: {len(store)} files')
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pariview-extension-${{ github.sha }}
+          path: |
+            pariview-extension.zip
+            pariview-webstore.zip
+          if-no-files-found: error
+          retention-days: 30
+
   docker:
     name: Docker image smoke test
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    needs: test
+    needs: [test, package]
     steps:
       - uses: actions/checkout@v4
       - name: Build image
@@ -55,6 +95,8 @@ jobs:
           done
           curl -fsS -o /dev/null http://127.0.0.1:8080/
           curl -fsS http://127.0.0.1:8080/api/recommendation/status
+          curl -fsS -o ext.zip http://127.0.0.1:8080/pariview-extension.zip
+          python3 -c "import zipfile; assert zipfile.is_zipfile('ext.zip'); print('extension zip served from image')"
       - name: Container logs
         if: always()
         run: docker logs pariview || true

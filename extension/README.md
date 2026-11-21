@@ -6,7 +6,7 @@ PC 크롬에서 PariView의 저장한 화면·소리 설정을 유튜브 등 HTM
 
 웹스토어 설치 후에는 아래 3번부터 진행해요 ZIP 직접 설치는 개발·시연용이에요
 
-1. `pariview-extension.zip`의 압축을 풀어요
+1. [PariView 웹](https://pariview-production.up.railway.app/)의 "파일로 직접 설치하기"에서 `pariview-extension.zip`을 받거나, 저장소에서 `python3 extension/package.py`로 직접 만든 뒤 압축을 풀어요
 2. `chrome://extensions` → 개발자 모드 → 압축해제된 확장 프로그램을 로드합니다 → `manifest.json`이 있는 폴더를 선택해요
 3. [PariView](https://pariview-production.up.railway.app/)를 새로고침하고 설정을 저장해요
 4. 유튜브 탭도 새로고침한 뒤 영상 페이지를 한 번 누르고 재생해요
@@ -29,8 +29,13 @@ PC 크롬에서 PariView의 저장한 화면·소리 설정을 유튜브 등 HTM
 
 ## 배포 파일
 
+ZIP은 빌드 산출물이라 저장소에 커밋하지 않아요 `python3 extension/package.py`가 고정 타임스탬프로 항상 같은 바이트의 ZIP을 만들어요
+
 - `pariview-webstore.zip`: Chrome Web Store 제출용, manifest.json이 ZIP 최상위에 있어요
 - `pariview-extension.zip`: 개발·시연용, 압축을 풀면 설치 폴더가 생겨요
+- 어디서 만들어지나요
+  - **CI**: 모든 push·PR에서 두 번 빌드해 바이트가 같은지와 ZIP 구조를 검사하고, Actions 실행 화면의 Artifacts(`pariview-extension-<커밋>`)로 30일간 올려요 웹스토어 제출 파일은 여기서 받아요
+  - **Docker / Railway**: 이미지 빌드 단계에서 만들어 `web/dist/pariview-extension.zip`에 넣어요 웹의 다운로드 링크가 이 파일을 내려줘요
 - 소스 코드는 MIT 라이선스이며 각 ZIP에 LICENSE가 포함돼요
 - [개인정보 처리 안내](privacy.html)
 
