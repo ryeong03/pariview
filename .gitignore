@@ -33,3 +33,8 @@ handoff/
 /videos/
 /assets.zip
 /poster/assets.zip
+
+# Extension archives are build outputs: extension/package.py makes them in CI and in the Docker build
+/pariview-extension.zip
+/pariview-webstore.zip
+/web/dist/pariview-extension.zip
