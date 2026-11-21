@@ -1,8 +1,13 @@
 **
 !Dockerfile
+!LICENSE
 !ai/
 !ai/*.py
 !web/
 !web/dist/
 !web/dist/**
 web/dist/assets/rejected-drafts/
+!extension/
+!extension/**
+extension/tests/
+extension/store/
