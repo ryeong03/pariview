@@ -3,6 +3,7 @@
 .extension-status-message>svg{width:26px;height:26px;flex-shrink:0;color:#858893}
 .extension-status[data-state=connected] .extension-status-message>svg,
 .extension-status[data-state=synced] .extension-status-message>svg{color:#15803d}
+.extension-status[data-awaiting-reload=true] #extension-refresh{border-color:#257f76;background:#257f76;color:#fff}
 .extension-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:22px;padding-left:44px}
 .extension-actions .primary{gap:10px;font-size:16px;padding:14px 20px}
 .extension-actions .primary svg{width:18px;height:18px}
