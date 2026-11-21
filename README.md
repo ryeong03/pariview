@@ -195,7 +195,7 @@ HOST=127.0.0.1 PORT=4178 python3 ai/server.py
 브라우저에서 `http://127.0.0.1:4178`을 열어요 AI 연결이 없어도 직접 피팅과 기본 제안을 쓸 수 있어요
 
 - [AI 설정과 개발 안내](ai/README.md)
-- [크롬 확장 프로그램 설치 안내](extension/README.md) 웹스토어 심사 중이며 개발자 모드로 시험할 수 있어요
+- 크롬 확장 프로그램: [Chrome 웹스토어에서 설치](https://chromewebstore.google.com/detail/pariview-%EC%8B%9C%EC%B2%AD-%EC%84%A4%EC%A0%95/iglphbdlmnpahdojacfkemhijagafjda) · [설치 안내](extension/README.md)
 - [기여와 검증 안내](CONTRIBUTING.md)
 
 **알아둘 점**

@@ -1,13 +1,13 @@
 # Chrome Web Store 제출 내용
 
-상태: v0.3.1 심사 제출 완료 · 검토 대기 중 · 승인 후 자동 게시 · 아직 공개 전
+상태: v0.3.1 Chrome 웹스토어 공개 · 2026-11-22 공개 페이지 확인 · https://chromewebstore.google.com/detail/pariview-%EC%8B%9C%EC%B2%AD-%EC%84%A4%EC%A0%95/iglphbdlmnpahdojacfkemhijagafjda
 
 2026-11-04 KST 최신 사용자 지시에 따라 배포 보류를 해제하고 기존 항목에서 등록을 계속함
 실제 항목 ID: `iglphbdlmnpahdojacfkemhijagafjda`
 2026-11-04 게시자 연락처의 ‘확인된 이메일 주소’ 상태를 확인한 뒤 필수 요건 재검사를 통과함
 최종 제출 후 ‘항목을 제출했습니다’와 ‘검토 대기 중’ 안내를 확인했고 상태 페이지에서도 ‘초안이 검토 대기 중입니다’로 재확인함
 검토 통과 후 자동 게시 옵션을 선택한 상태로 제출함
-공개 설치 가능한 상태로 확인되기 전까지 웹 출시 상태는 `review`, `storeUrl`은 `null`로 유지함
+공개 페이지를 확인한 뒤 `web/dist/extension-release.json`을 `published`와 스토어 URL로 바꿈
 연락처와 인증 링크/코드는 이 문서나 패키지에 보관하지 않음
 
 ## 등록 파일
